@@ -1,0 +1,22 @@
+/*custom style css*/
+
+select.input-sm{
+    height: 34px;
+    padding-right: 4px;
+}
+.excelIcon{
+    margin-right: 1em;
+    margin-top: 6px;
+}
+.modal-backdrop{
+    background: #000;
+}
+.modal-backdrop.in{
+    opacity: 0.8;
+}
+
+.login .main-panel{
+    width: 100%;
+    background: #fff;
+    margin-top: 3em;
+}
