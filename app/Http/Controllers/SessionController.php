@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Session;
 use App\Session_participants;
 use App\Formateur;
+use App\Salle;
 use App\Cour;
 use App\Http\Requests;
 
@@ -28,16 +29,22 @@ class SessionController extends Controller
             ->join('session_participants', 'session_participants.session_id', '=', 'sessions.id')
             ->select('sessions.*', 'cours.titre as titreCour', 'formateurs.nom as nomFormateur', 'session_participants.*')
             ->get();
+
         //dd($sessions);
-        return view('sessions.session_participants', ['sessions'=>$sessions]);
+        return view('sessions.session_participants', [
+            'sessions'=>$sessions,
+            'participants', $sessions
+        ]);
     }
 
     public function create(){
         $cours = Cour::all();
         $formateurs = Formateur::all();
+        $salles = Salle::all();
         return view('sessions.create', [
             'cours'=> $cours,
             'formateurs'=> $formateurs,
+            'salles'=> $salles,
         ]);
     }
 

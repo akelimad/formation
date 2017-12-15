@@ -94,19 +94,29 @@
                         </div>
 
                         <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Participants</label>
+                                    <input name="participants" id="search_participant" class="tagsinput tag-success form-control"/>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Salle</label>
+                                    <select class="selectpicker" name="statut" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                        <option disabled selected>-- select --</option>
+                                        @foreach ($salles as $salle)
+                                            <option value="{{ $salle->id }}"> {{ $salle->numero }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Description</label>
                                     <textarea class="form-control" name="description" placeholder="Description" rows="3"></textarea>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Participants</label>
-                                    <input name="participants" id="search_participant" class="tagsinput tag-success form-control"/>
                                 </div>
                             </div>
                         </div>
