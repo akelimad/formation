@@ -30,7 +30,7 @@ class SessionController extends Controller
             ->select('sessions.*', 'cours.titre as titreCour', 'formateurs.nom as nomFormateur', 'session_participants.*')
             ->get();
 
-        //dd($sessions);
+        //dd($sessions); query="SELECT s.id,p.nom from session_participants sp, participants p, sessions s where sp.session_id = s.id"
         return view('sessions.session_participants', [
             'sessions'=>$sessions,
             'participants', $sessions
