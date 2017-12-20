@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Participant;
 use App\Http\Requests;
 
-class participantController extends Controller
+class ParticipantController extends Controller
 {
     public function index(){
         $participants = Participant::all();

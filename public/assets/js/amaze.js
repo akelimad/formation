@@ -45,9 +45,9 @@
 		$('[rel="tooltip"]').tooltip();
 
 		// Init Tags Input
-		//if($(".tagsinput").length != 0){
+		if($(".tagsinput").length != 0){
 			$(".tagsinput").tagsInput();
-		//}
+		}
 
 		//  Init Bootstrap Select Picker
 		if($(".selectpicker").length != 0){

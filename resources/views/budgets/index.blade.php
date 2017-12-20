@@ -6,7 +6,16 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste de prestataires <a href="{{ url('fournisseurs/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Ajouter</a></h4>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h4 class="title">La liste des budgets</h4>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <a href="{{ url('budgets/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a>
+                        </div>
+                    </div>
+                    
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -15,23 +24,17 @@
                             <thead>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Type</th>
-                                    <th>Tel</th>
-                                    <th>Email</th>
-                                    <th>Fax</th>
-                                    <th>Personne 1er contact</th>
+                                    <th>Session</th>
+                                    <th>Montant</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($fournisseurs as $f)
+                                @foreach ($budgets as $budget)
                                 <tr>
-                                    <td> {{ $f->nom }} </td>
-                                    <td> {{ $f->type }} </td>
-                                    <td> {{ $f->tel }} </td>
-                                    <td> {{ $f->email }} </td>
-                                    <td> {{ $f->fax }} </td>
-                                    <td> {{ $f->personne_contacter }} </td>
+                                    <td> {{ $budget->nom }} </td>
+                                    <td> {{ $budget->session->nom }} </td>
+                                    <td> {{ $budget->montant }} </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
@@ -42,11 +45,8 @@
                             <tfoot>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Type</th>
-                                    <th>Tel</th>
-                                    <th>Email</th>
-                                    <th>Fax</th>
-                                    <th>Personne 1er contact</th>
+                                    <th>Session</th>
+                                    <th>Montant</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

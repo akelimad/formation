@@ -18,6 +18,7 @@
                                     <th>Type</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
+                                    <th>Rating</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -28,6 +29,7 @@
                                     <td> {{ $formateur->type }} </td>
                                     <td> {{ $formateur->email }} </td>
                                     <td> {{ $formateur->tel }} </td>
+                                    <td> {{ $formateur->rating }} % </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
@@ -41,6 +43,7 @@
                                     <th>Type</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
+                                    <th>Rating</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

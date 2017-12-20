@@ -95,15 +95,19 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <div class="form-group label-floating">
+                                <div class="form-group label-floating participants">
                                     <label class="control-label">Participants</label>
-                                    <input name="participants" id="search_participant" class="tagsinput tag-success form-control"/>
+                                    <select class="js-example-basic-multiple form-control" name="participants[]" multiple="multiple">
+                                        @foreach ($participants as $p)
+                                            <option value="{{$p->id}}">{{$p->nom}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Salle</label>
-                                    <select class="selectpicker" name="statut" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                    <label class="control-label">Salle <star>*</star></label>
+                                    <select class="selectpicker" required="" name="salle" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
                                         <option disabled selected>-- select --</option>
                                         @foreach ($salles as $salle)
                                             <option value="{{ $salle->id }}"> {{ $salle->numero }} </option>
@@ -135,20 +139,3 @@
 
 @endsection
 
-@section('javascript')
-<script>
-        $(function() {
-            $(function()
-            {
-                 $( ".tagsinput" ).autocomplete({
-                  source: "participantsNames",
-                  minLength: 3,
-                  select: function(event, ui) {
-                    $('.tagsinput').val(ui.item.nom);
-                  }
-                });
-            });
-        });
-</script>
-
-@endsection

@@ -25,6 +25,7 @@
     <link href="{{ asset('assets/css/font-muli.css')}}" rel='stylesheet' type='text/css'>
     <link href="{{ asset('assets/css/themify-icons.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/vendors/sweetalert/css/sweetalert2.min.css')}}" rel="Stylesheet" >
+    <link href="{{ asset('assets/vendors/select2/select2.min.css')}}" rel="Stylesheet" >
     <!--     custom style css     -->
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
 </head>
@@ -48,33 +49,36 @@
             <div class="sidebar-wrapper">
                 <ul class="nav">
 
-                    <li class="active">
-                        <a href="index-2.html">
+                    <li class="{{ Request::path() == '/' ? 'active' : '' }}" >
+                        <a href="{{url('/')}}">
                             <i class="fa fa-tachometer"></i>
                             <p>Tableau de board</p>
                         </a>
                     </li>
 
-                    <li>
-                        <a data-toggle="collapse" href="#Fournisseurs" class="collapsed" aria-expanded="false">
+                    <li class="{{ Request::path() == 'prestataires' ? 'active' : '' }}">
+                        <a data-toggle="collapse" href="#prestataires" class="collapsed" aria-expanded="false">
                             <i class="fa fa-handshake-o"></i>
                             <p>Prestataires
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="collapse" id="Fournisseurs" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <div class="collapse" id="prestataires" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('fournisseurs') }}"><i class="fa fa-list"></i> Prestataires</a>
+                                    <a href="{{ url('prestataires') }}"><i class="fa fa-list"></i> Prestataires</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('fournisseurs/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                                    <a href="{{ url('prestataires/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
 
-                    <li>
+                    <li class="{{ Request::path() == 'cours' ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#formations" class="collapsed" aria-expanded="false">
                             <i class="fa fa-book"></i>
                             <p>Cours
@@ -93,7 +97,7 @@
                         </div>
                     </li>
 
-                    <li>
+                    <li class="{{ Request::path() == 'salles' ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#salles" class="collapsed" aria-expanded="false">
                             <i class="fa fa-university"></i>
                             <p>Salles
@@ -112,7 +116,7 @@
                         </div>
                     </li>
 
-                    <li>
+                    <li class="{{ Request::path() == 'sessions' ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#cours" class="collapsed" aria-expanded="false">
                             <i class="fa fa-calendar"></i>
                             <p>Sessions
@@ -127,43 +131,14 @@
                                 <li>
                                     <a href="{{ url('sessions/create') }}">Ajouter</a>
                                 </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a data-toggle="collapse" href="#ps" class="collapsed" aria-expanded="false">
-                            <i class="fa fa-vcard"></i>
-                            <p>Session participante
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="ps" role="navigation" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
                                 <li>
-                                    <a href="{{ url('sessionsParticipant') }}">Session participant</a>
+                                    <a href="{{ url('budgets') }}">Budgets</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li>
-                        <a data-toggle="collapse" href="#budgets" class="collapsed" aria-expanded="false">
-                            <i class="fa fa-usd"></i>
-                            <p>Budgets
-                                <b class="caret"></b>
-                            </p>
-                        </a>
-                        <div class="collapse" id="budgets" role="navigation" aria-expanded="false" style="height: 0px;">
-                            <ul class="nav">
-                                <li>
-                                    <a href="#"><i class="fa fa-list"></i> Budgets</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class="fa fa-plus"></i> Gestion</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
+
+                    <li class="{{ Request::path() == 'budgetsFormation' ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#session" class="collapsed" aria-expanded="false">
                             <i class="fa fa-file-text-o"></i>
                             <p>Rapport
@@ -173,15 +148,15 @@
                         <div class="collapse" id="session" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="#">Session participant</a>
+                                    <a href="{{ url('budgetsFormation') }}">Standard</a>
                                 </li>
                                 <li>
-                                    <a href="#">Session d'entrainement</a>
+                                    <a href="{{ url('formationUtilisateur') }}">Personnalisé</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li>
+                    <li class="{{ Request::path() == 'evaluations' ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#evaluation" class="collapsed" aria-expanded="false">
                             <i class="fa fa-question-circle-o"></i>
                             <p>Evaluation
@@ -191,10 +166,31 @@
                         <div class="collapse" id="evaluation" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="#"><i class="fa fa-thermometer-full" aria-hidden="true"></i> A chaud</a>
+                                    <a href="{{ url('evaluations') }}"><i class="" aria-hidden="true"></i> Evaluations</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="fa fa-thermometer-empty" aria-hidden="true"></i> A froid</a>
+                                    <a href="{{ url('evaluations/create') }}"><i class="" aria-hidden="true"></i> Ajouter</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="{{ Request::path() == 'utilisateurs' ? 'active' : '' }}">
+                        <a data-toggle="collapse" href="#users" class="collapsed" aria-expanded="false">
+                            <i class="fa fa-users"></i>
+                            <p>Administration
+                                <b class="caret"></b>
+                            </p>
+                        </a>
+                        <div class="collapse" id="users" role="navigation" aria-expanded="false" style="height: 0px;">
+                            <ul class="nav">
+                                <li>
+                                    <a href="{{ url('utilisateurs') }}"><i class="" aria-hidden="true"></i> Utilisateurs</a>
+                                </li>
+                                <li>
+                                    <a href="#"><i class="" aria-hidden="true"></i> Droits d'accès</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('register') }}"><i class="" aria-hidden="true"></i> Ajouter </a>
                                 </li>
                             </ul>
                         </div>
@@ -247,30 +243,6 @@
             </div>
             <footer class="footer">
                 <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="#">
-                                    Home
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Company
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Portfolio
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    Blog
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
                     <p class="copyright pull-right">
                         &copy;
                         <script>
@@ -288,12 +260,15 @@
     <script src="{{ asset('assets/vendors/jquery-3.1.1.min.js')}}" type="text/javascript"></script> 
     <script src="{{ asset('assets/vendors/jquery-ui.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/bootstrap.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/bootstrapValidator.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/material.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/perfect-scrollbar.jquery.min.js')}}" type="text/javascript"></script>
     <!-- Forms Validations Plugin -->
     <script src="{{ asset('assets/vendors/jquery.validate.min.js')}}"></script>
     <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
     <script src="{{ asset('assets/vendors/moment.min.js')}}"></script>
+    <!--  Charts Plugin -->
+    <script src="{{ asset('assets/vendors/charts/chartjs/Chart.min.js')}}" type="text/javascript"></script>
     <!--  Charts Plugin -->
     <script src="{{ asset('assets/vendors/chartist.min.js')}}"></script>
     <!--  Plugin for the Wizard -->
@@ -303,7 +278,7 @@
     <!-- DateTimePicker Plugin -->
     <script src="{{ asset('assets/vendors/bootstrap-datetimepicker.js')}}"></script>
     <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-    <script src="../assets/js/bootstrap-checkbox-radio-switch-tags.js"></script>
+    <script src="{{ asset('assets/js/bootstrap-checkbox-radio-switch-tags.js')}}"></script>
     <!-- Vector Map plugin -->
     <script src="{{ asset('assets/vendors/jquery-jvectormap.js')}}"></script>
     <!-- Sliders Plugin -->
@@ -320,14 +295,57 @@
     <script src="{{ asset('assets/vendors/fullcalendar.min.js')}}"></script>
     <!-- TagsInput Plugin -->
     <script src="{{ asset('assets/vendors/jquery.tagsinput.js')}}"></script>
+    <!-- select2 Plugin -->
+    <script src="{{ asset('assets/vendors/select2/select2.min.js')}}"></script>
     <!-- Material Dashboard javascript methods -->
     <script src="{{ asset('assets/js/amaze.js')}}"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ asset('assets/js/demo.js')}}"></script>
+    <script src="{{ asset('assets/js/charts/chartjs-charts.js')}}"></script>
     <script type="text/javascript">
         $().ready(function() {
+
+            // Add new Line
+            $(".addLine").click(function(event){
+                event.preventDefault()
+
+                var copy = $('#budgets-wrap').find(".form-group:first").clone()
+                    copy.find('input').val('')
+                    copy.find('button').toggleClass('addLine deleteLine')
+                    copy.find('button>i').toggleClass('fa-plus fa-minus')
+
+                    var uid = uuidv4()
+
+                    $.each(copy.find('input'), function(){
+                        var name = $(this).attr('name')
+                        $(this).attr('name', name.replace('[0]', '['+uid+']'))
+                    })
+
+
+                $('#budgets-wrap').append(copy)
+            })
+
+            $('#budgets-wrap').on('click', '.deleteLine', function(){
+                $(this).closest('.form-group').remove();
+            });
+
+            function uuidv4() {
+                  return ([1e7]+-1e3).replace(/[018]/g, c =>
+                    (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+                  )
+                }
+
+
+            $('.js-example-basic-multiple').select2({
+                multiple: true,
+                width: "100%",
+                'placeholder':'Selectionnez',
+            });
+
+
             $('#formateur_modal').appendTo("body");
             $('#participant_modal').appendTo("body");
+            $('#questionnaire_modal').appendTo("body");
             $('[data-toggle="tooltip"]').tooltip();
 
             $('#datatables').DataTable({
@@ -352,7 +370,7 @@
                 $tr = $(this).closest('tr');
 
                 var data = table.row($tr).data();
-                alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
+                //alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
             });
 
             // Delete a record
@@ -376,6 +394,84 @@
                 }, 700)
             });
             demo.initFormExtendedDatetimepickers();
+
+            var MAX_OPTIONS = 30;
+            $('#surveyForm').bootstrapValidator({
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    question: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The question required and cannot be empty'
+                            }
+                        }
+                    },
+                    'option[]': {
+                        validators: {
+                            notEmpty: {
+                                message: 'The option required and cannot be empty'
+                            },
+                            stringLength: {
+                                max: 100,
+                                message: 'The option must be less than 100 characters long'
+                            }
+                        }
+                    }
+                }
+            })
+
+            // Add button click handler
+            .on('click', '.addButton', function() {
+                var $template = $('#optionTemplate'),
+                    $clone    = $template
+                                    .clone()
+                                    .removeClass('hide')
+                                    .removeAttr('id')
+                                    .insertBefore($template),
+                    $option   = $clone.find('[name="option[]"]');
+
+                // Add new field
+                $('#surveyForm').bootstrapValidator('addField', $option);
+            })
+
+            // Remove button click handler
+            .on('click', '.removeButton', function() {
+                var $row    = $(this).parents('.form-group'),
+                    $option = $row.find('[name="option[]"]');
+
+                // Remove element containing the option
+                $row.remove();
+
+                // Remove field
+                $('#surveyForm').bootstrapValidator('removeField', $option);
+            })
+
+            // Called after adding new field
+            .on('added.field.bv', function(e, data) {
+                // data.field   --> The field name
+                // data.element --> The new field element
+                // data.options --> The new field options
+
+                if (data.field === 'option[]') {
+                    if ($('#surveyForm').find(':visible[name="option[]"]').length >= MAX_OPTIONS) {
+                        $('#surveyForm').find('.addButton').attr('disabled', 'disabled');
+                    }
+                }
+            })
+
+            // Called after removing the field
+            .on('removed.field.bv', function(e, data) {
+               if (data.field === 'option[]') {
+                    if ($('#surveyForm').find(':visible[name="option[]"]').length < MAX_OPTIONS) {
+                        $('#surveyForm').find('.addButton').removeAttr('disabled');
+                    }
+                }
+            });
+
     </script>
 
     @yield('javascript')

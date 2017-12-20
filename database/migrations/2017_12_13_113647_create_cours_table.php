@@ -16,13 +16,8 @@ class CreateCoursTable extends Migration
             $table->increments('id');
             $table->string('titre');
             $table->string('description');
-            $table->string('coordinateur');
-            $table->string('sous_unite');
-            $table->integer('version');
-            $table->integer('sub_version');
             $table->string('devise');
             $table->double('prix');
-            $table->string('entreprise');
             $table->string('duree');
             $table->timestamps();
         });

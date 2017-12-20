@@ -8,7 +8,7 @@
                 <form id="LoginValidation" action="{{ url('cours') }}" method="post">
                     {{ csrf_field() }}
                     <div class="content">
-                        <h4 class="title">Ajouter cour</h4>
+                        <h4 class="title">Ajouter un cours</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
@@ -20,75 +20,17 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Coordinateur
-                                        <star>*</star>
-                                    </label>
-                                    <input class="form-control" name="coordinateur" type="text" required="true" placeholder="Coordinateur" />
+                                    <label class="control-label">Coordinateur<star>*</star> </label>
+                                    <select class="selectpicker" name="coordinateur" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                        <option disabled selected value="">-- select --</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}"> {{ $user->name }} </option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="row">
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Sous unité</label>
-                                            <select class="selectpicker" name="sous_unite" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                                <option disabled selected>-- select --</option>
-                                                <option value="Architecture Team">Architecture Team</option>
-                                                <option value="Engineering">Engineering</option>
-                                                <option value="Technical Support Team">Technical Support Team</option>
-                                                <option value="Customization Team">Customization Team</option>
-                                                <option value="QA Team">QA Team</option>
-                                                <option value="Development Team">Development Team</option>
-                                                <option value="Finance">Finance</option>
-                                                <option value="Sales">Sales</option>
-                                                <option value="Sales Canada">Sales Canada</option>
-                                                <option value="Sales France">Sales France</option>
-                                                <option value="Sales USA">Sales USA</option>
-                                                <option value="Administration">Administration</option>
-                                                <option value="IT">IT</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Version</label>
-                                            <select class="selectpicker" name="version" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                                <option disabled selected>-- select --</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group label-floating">
-                                            <label class="control-label">Sub version</label>
-                                            <select class="selectpicker" name="sub_version" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                                <option disabled selected>-- select --</option>
-                                                <option value="0">0</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-4">
@@ -181,24 +123,16 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Prix</label>
-                                            <input class="form-control" name="prix" type="text" placeholder="Prix" />
+                                            <label class="control-label">Budget</label>
+                                            <input class="form-control" name="prix" type="text" placeholder="Budget" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Entreprise</label>
-                                    <input class="form-control" name="entreprise" type="text" placeholder="Entreprise" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Durée</label>
-                                    <input class="form-control" name="duree" type="text" placeholder="HH:MM" />
+                                    <label class="control-label">Durée(Nombre de jour)</label>
+                                    <input class="form-control" name="duree" type="text" placeholder="Nomre de jour" />
                                 </div>
                             </div>
                         </div>

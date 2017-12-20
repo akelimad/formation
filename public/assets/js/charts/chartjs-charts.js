@@ -22,6 +22,7 @@ $(function () {
 						11,
 						16,
 						7,
+                        3,
 						3,
 						14
 					],
@@ -29,17 +30,19 @@ $(function () {
 						"#FF6384",
 						"#4BC0C0",
 						"#FFCE56",
-						"#E7E9ED",
+                        "green",
+						"#E7E3ED",
 						"#36A2EB"
 					],
 					label: 'My dataset' // for legend
 				}],
 				labels: [
-					"USA",
-					"Germany",
-					"Austalia",
-					"Canada",
-					"France"
+					"Transports",
+					"Salaire",
+					"Pedagogique",
+                    "Hebergement",
+					"Coûts salariaux",
+					"Autres frais"
 				]
 			},
 			options: {
@@ -112,7 +115,7 @@ $(function () {
 		data: {
 			labels: ["January", "February", "March", "April", "May", "June", "July"],
                 datasets: [{
-                    label: "My First dataset",
+                    label: "Utilisateur",
                     backgroundColor: "#FF6384",
                     borderColor: "#FF6384",
                     data: [
@@ -121,31 +124,17 @@ $(function () {
                         26, 
                         23, 
                         60, 
-                        -48, 
-                        -9
+                        48, 
+                        9
                     ],
                     fill: false,
-                }, {
-                    label: "My Second dataset",
-                    fill: false,
-                    backgroundColor: "#36A2EB",
-                    borderColor: "#36A2EB",
-                    data: [
-                        -10, 
-                        16, 
-                        72, 
-                        93, 
-                        29, 
-                        -74, 
-                        64
-                    ],
                 }]
             },
 		options: {
 			responsive: true,
 			title:{
 				display:true,
-				text:'Chart.js Line Chart'
+				text:'______'
 			},
 			tooltips: {
 				mode: 'index',
@@ -182,20 +171,20 @@ $(function () {
 
 
 
-   /*---------------------
+     /*---------------------
     ----- AREA CHART -----
     ---------------------*/
 
-	var config = {
-		type: 'line',
-		data: {
-			labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        var config = {
+        type: 'line',
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
                 datasets: [{
                     label: "My First dataset",
                     backgroundColor: "#FF8A80",
                     borderColor: "#FF8A80",
                     data: [
-                        45, 
+                        95, 
                         75, 
                         26, 
                         23, 
@@ -213,48 +202,48 @@ $(function () {
                     fill: true,
                 }]
             },
-		options: {
-			responsive: true,
-			title:{
-				display:true,
-				text:'Chart.js Area Chart'
-			},
-			tooltips: {
-				mode: 'index',
-				intersect: false,
-			},
-			hover: {
-				mode: 'nearest',
-				intersect: true
-			},
-			scales: {
-				xAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: 'Month'
-					}
-				}],
-				yAxes: [{
-					display: true,
-					scaleLabel: {
-						display: true,
-						labelString: 'Value'
-					}
-				}]
-			}
-		}
-	};
+        options: {
+            responsive: true,
+            title:{
+                display:true,
+                text:'Chart.js Area Chart'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Month'
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Value'
+                    }
+                }]
+            }
+        }
+    };
 
-	if($('#areaChart')[0]){
-		
-		// Get context with jQuery - using jQuery's .get() method.
-		var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
-		
-		//Create the line chart
-		var areaChart = new Chart(areaChartCanvas, config);
+    if($('#areaChart')[0]){
+        
+        // Get context with jQuery - using jQuery's .get() method.
+        var areaChartCanvas = $("#areaChart").get(0).getContext("2d");
+        
+        //Create the line chart
+        var areaChart = new Chart(areaChartCanvas, config);
 
-	}
+    }
 	
 	
    /*---------------------

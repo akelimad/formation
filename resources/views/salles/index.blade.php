@@ -37,7 +37,6 @@
                                     <td> {{ $salle->capacite }} </td>
                                     <td> {{ $salle->equipements }} </td>
                                     <td> {{ $salle->photo ? $salle->photo : 'Aucune photo' }} </td>
-                                    <td> statut </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>

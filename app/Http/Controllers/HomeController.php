@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use App\Session;
+
 
 class HomeController extends Controller
 {
@@ -24,6 +26,15 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $participants = \DB::table('session_participants')
+            ->join('sessions', 'sessions.id', '=', 'session_participants.session_id')
+            ->join('participants', 'participants.id', '=', 'session_participants.participant_id')
+            ->select('participants.*', 'sessions.nom as session')
+            ->get();
+        
+        return view('welcome', [
+            'participants'=> $participants,
+            'sessions'=> $participants,
+        ]);
     }
 }

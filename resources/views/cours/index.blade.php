@@ -25,10 +25,9 @@
                             <thead>
                                 <tr>
                                     <th>Titre</th>
-                                    <th>Sous unité</th>
                                     <th>Coordinateur</th>
-                                    <th>Entreprise</th>
-                                    <th>Statut</th>
+                                    <th>Durée(j)</th>
+                                    <th>Budget(DH)</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -36,10 +35,9 @@
                                 @foreach ($cours as $cour)
                                 <tr>
                                     <td> {{ $cour->titre }} </td>
-                                    <td> {{ $cour->sous_unite }} </td>
-                                    <td> {{ $cour->coordinateur }} </td>
-                                    <td> {{ $cour->entreprise }} </td>
-                                    <td> statut </td>
+                                    <td> {{ $cour->user->name }} </td>
+                                    <td> {{ $cour->duree }} </td>
+                                    <td> {{ $cour->prix }} </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
@@ -50,10 +48,9 @@
                             <tfoot>
                                 <tr>
                                     <th>Titre</th>
-                                    <th>Sous unité</th>
                                     <th>Coordinateur</th>
-                                    <th>Entreprise</th>
-                                    <th>Statut</th>
+                                    <th>Durée(j)</th>
+                                    <th>Budget(DH)</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

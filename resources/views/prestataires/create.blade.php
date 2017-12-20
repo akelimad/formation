@@ -5,14 +5,14 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('fournisseurs') }}" method="post">
+                <form id="LoginValidation" action="{{ url('prestataires') }}" method="post">
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title">Ajouter un prestataire</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Nom<star>*</star> </label>
+                                    <label class="control-label">Nom complet<star>*</star> </label>
                                     <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" />
                                 </div>
                             </div>
@@ -77,6 +77,20 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Personne de premier contact</label>
                                     <input class="form-control" name="personne_contacter" type="text" placeholder="Personne de premier contact" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Type d'entreprise</label>
+                                    <input class="form-control" name="type_entreprise" type="text" placeholder="Type d'entreprise" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Qualification</label>
+                                    <input class="form-control" name="qualification" type="text" placeholder="Personne de premier contact" />
                                 </div>
                             </div>
                         </div>

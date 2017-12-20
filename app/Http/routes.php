@@ -11,33 +11,39 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::auth();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index');
+
+Route::get('/utilisateurs', 'UserController@users');
+Route::get('/t', 'UserController@test');
 
 Route::get('cours', 'CourController@index');
 Route::get('cours/create', 'CourController@create');
 Route::post('cours', 'CourController@store');
 
 Route::get('sessions', 'SessionController@index');
-Route::get('sessionsParticipant', 'SessionController@index_session_participant');
 Route::get('sessions/create', 'SessionController@create');
+Route::get('sessions/{id}/show', 'SessionController@show');
 Route::post('sessions', 'SessionController@store');
+Route::get('sessions/{id}/edit', 'SessionController@edit');
+Route::put('sessions/{id}', 'SessionController@update');
 
-Route::get('fournisseurs', 'FournisseurController@index');
-Route::get('fournisseurs/create', 'FournisseurController@create');
-Route::post('fournisseurs', 'FournisseurController@store');
+Route::get('prestataires', 'FournisseurController@index');
+Route::get('prestataires/create', 'FournisseurController@create');
+Route::post('prestataires', 'FournisseurController@store');
+Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
+Route::put('prestataires/{id}', 'FournisseurController@update');
 
 Route::get('formateurs', 'FormateurController@index');
 Route::get('formateurs/create', 'FormateurController@create');
 Route::post('formateurs', 'FormateurController@store');
 
 Route::get('participants', 'ParticipantController@index');
-Route::get('participantsNames', 'ParticipantController@participantsNames');
 Route::get('participants/create', 'ParticipantController@create');
 Route::post('participants', 'ParticipantController@store');
 
@@ -45,3 +51,17 @@ Route::get('salles', 'SalleController@index');
 Route::get('salles/create', 'SalleController@create');
 Route::post('salles', 'SalleController@store');
 
+Route::get('evaluations', 'EvaluationController@index');
+Route::get('evaluations/create', 'EvaluationController@create');
+Route::post('evaluations', 'EvaluationController@store');
+
+Route::get('questions', 'QuestionController@index');
+Route::get('questions/create', 'QuestionController@create');
+Route::post('questions', 'QuestionController@store');
+
+Route::get('budgets', 'BudgetController@index');
+Route::get('budgets/create', 'BudgetController@create');
+Route::post('budgets', 'BudgetController@store');
+
+Route::get('budgetsFormation', 'RapportController@index');
+Route::get('formationUtilisateur', 'RapportController@index1');
