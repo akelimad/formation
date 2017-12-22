@@ -20,34 +20,18 @@ class BudgetController extends Controller
     }
 
     public function store(Request $request){
-        //dd($request->input('budgets["budget"]'));
-        if(empty($request->input('budget')[0]) && 
-            empty($request->input('prevu')[0]) && 
-            empty($request->input('realise')[0]) && 
-            empty($request->input('ajustement')[0]) ){
-            $budget = new Budget();
-            $budget->nom=$request->input('nom');
-            $budget->session_id=$request->input('session');
-            $budget->montant=$request->input('montant');
-            $budget->budget = null;
-            $budget->prevu  = null;
-            $budget->realise= null;
-            $budget->ajustement= null;
-            $budget->save();
-            return redirect('budgets');
-        }else{
-            foreach ($request->input('budgets') as $budget) {
-                dd($budget);
-                $budget = new Budget();
-                $budget->nom = $request->input('nom');
-                $budget->session_id = $request->input('session');
-                $budget->montant=$request->input('montant');
-                $budget->budget =$budget;
-                $budget->save();
-            }
-            return redirect('budgets');
-        }
 
+        foreach ($request->budgets as $b) {
+            $budget = new Budget();
+            $budget->session_id=$request->input('session');
+            $budget->budget = $b['budget'];
+            $budget->prevu  = $b['prevu'];
+            $budget->realise= $b['realise'];
+            $budget->ajustement= $b['ajustement'];
+
+            $budget->save();
+        }
+        return redirect('budgets');
 
     }
 

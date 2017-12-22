@@ -23,18 +23,22 @@
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
-                                    <th>Nom</th>
                                     <th>Session</th>
-                                    <th>Montant</th>
+                                    <th>libellé budget</th>
+                                    <th>Prévu</th>
+                                    <th>Réalisé</th>
+                                    <th>Ajustement</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($budgets as $budget)
                                 <tr>
-                                    <td> {{ $budget->nom }} </td>
                                     <td> {{ $budget->session->nom }} </td>
-                                    <td> {{ $budget->montant }} </td>
+                                    <td> {{ $budget->budget }} </td>
+                                    <td> {{ $budget->prevu }} </td>
+                                    <td> {{ $budget->realise }} </td>
+                                    <td> {{ $budget->ajustement }} </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
@@ -44,9 +48,11 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nom</th>
                                     <th>Session</th>
-                                    <th>Montant</th>
+                                    <th>libellé budget</th>
+                                    <th>Prévu</th>
+                                    <th>Réalisé</th>
+                                    <th>Ajustement</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

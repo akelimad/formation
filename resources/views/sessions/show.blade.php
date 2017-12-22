@@ -38,7 +38,7 @@
                             </div>
                             <div class="col-md-6 col-sm-6 col-xs-5 mb40">
                                 <div class="item">
-                                    <p> Satatut: <span class="label label-success">{{$s->statut}} </span> </p>
+                                    <p> Statut: <span class="label label-success">{{$s->statut}} </span> </p>
                                 </div>
                             </div>
                         </div>

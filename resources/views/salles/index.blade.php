@@ -36,7 +36,13 @@
                                     <td> {{ $salle->numero }} </td>
                                     <td> {{ $salle->capacite }} </td>
                                     <td> {{ $salle->equipements }} </td>
-                                    <td> {{ $salle->photo ? $salle->photo : 'Aucune photo' }} </td>
+                                    <td> 
+                                        @if($salle->photo)
+                                            <img src="{{url('sallePhotos/'.$salle->photo)}}" width="60" alt=""> 
+                                        @else
+                                            <img src="{{url('assets/img/missing-photo.png')}}" width="40" height="20" alt=""> 
+                                        @endif
+                                    </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>

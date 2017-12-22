@@ -36,7 +36,8 @@
                                     <td> {{ $evaluation->type }} </td>
                                     <td> {{ $evaluation->session }} </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-simple btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal"> <i class="fa fa-question fa-2x"></i> </a>
+                                        <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-simple btn-info btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye fa-2x"></i> </a>
+                                        <a href="#" class="btn btn-simple btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}"> <i class="fa fa-question fa-2x"></i> </a>
                                         <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
@@ -62,28 +63,40 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form id="surveyForm" class="form-horizontal" action="{{ url('evaluations') }}" method="post">
+                                        <form id="surveyForm" class="form-horizontal" action="{{ url('questions') }}" method="post">
                                             {{ csrf_field() }}
                                             <div class="form-group">
-                                                <label class="col-md-2 control-label">Question</label>
+                                                <label class="col-md-2 control-label">Evaluation</label>
                                                 <div class="col-md-8">
-                                                    <input type="text" class="form-control" name="option[]" />
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-default addButton"><i class="fa fa-plus"></i></button>
+                                                    <select class="selectpicker" name="evaluation" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                                        <option disabled selected>-- select --</option>
+                                                        @foreach ($evaluations as $e)
+                                                            <option value="{{ $e->id }}" > {{ $e->nom }} </option>
+                                                        @endforeach
+                                                    </select>
                                                 </div>
                                             </div>
-
+                                            <div id="questions-wrap">
+                                                <div class="form-group" >
+                                                    <label class="col-md-2 control-label">Question</label>
+                                                    <div class="col-md-8">
+                                                        <input type="text" class="form-control" name="questions[0]" />
+                                                    </div>
+                                                    <div class="col-md-2">
+                                                        <button type="button" class="btn btn-default addLine"><i class="fa fa-plus"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <!-- The option field template containing an option field and a Remove button -->
-                                            <div class="form-group hide" id="optionTemplate">
+                                            <!-- <div class="form-group hide" id="optionTemplate">
                                                 <label class="col-md-2 control-label">Question</label>
                                                 <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="option[]" />
+                                                    <input class="form-control" type="text" name="questions[]" />
                                                 </div>
                                                 <div class="col-md-2">
                                                     <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
                                                 </div>
-                                            </div>
+                                            </div> -->
 
                                             <div class="form-group">
                                                 <div class="text-center">

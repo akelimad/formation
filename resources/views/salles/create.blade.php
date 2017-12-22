@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('salles') }}" method="post">
+                <form id="LoginValidation" action="{{ url('salles') }}" method="post" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title">Ajouter une salle</h4>
@@ -19,7 +19,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Capacité<star>*</star></label>
-                                    <input class="form-control" name="cap" type="number" required="true" placeholder="Capacité" />
+                                    <input class="form-control" name="capacite" type="number" required="true" placeholder="Capacité" />
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Photo</label>
-                                    <input type="file" name="capacite" class="form-control" />
+                                    <input type="file" name="photo" class="form-control" accept="image/*" />
                                 </div>
                             </div>
                         </div>

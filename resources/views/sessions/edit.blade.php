@@ -9,6 +9,16 @@
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                    </button>
+                                    <span><strong>Erreur!</strong> {{ $error }}</span>
+                                </div>
+                            @endforeach
+                        @endif
                         <h4 class="title">Modifier une session</h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -48,13 +58,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="label-control">Date de début <star>*</star> </label>
-                                    <input type="text" name="start" data-date-format="DD/MM/YYYY" class="form-control datepicker" required="" value="{{$s->start}}" />
+                                    <input type="text" name="start" data-date-format="YYYY/MM/DD HH:mm" class="form-control datepicker" required="" value="{{$s->start}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="label-control">Date de fin <star>*</star> </label>
-                                    <input type="text" name="end" data-date-format="DD/MM/YYYY" class="form-control datepicker" required="" value="{{$s->end}}" />
+                                    <input type="text" name="end" data-date-format="YYYY/MM/DD HH:mm" class="form-control datepicker" required="" value="{{$s->end}}" />
                                 </div>
                             </div>
                         </div>
@@ -99,7 +109,9 @@
                                 <div class="form-group label-floating participants">
                                     <label class="control-label">Participants prévus</label>
                                     @foreach ($s->participants as $par)
+                                        @if(in_array($par->id, $prevus_ids))
                                         <span class="badge">{{$par->nom}}</span>
+                                        @endif
                                     @endforeach
                                 </div>
                                 <div class="form-group label-floating participants">
@@ -107,11 +119,7 @@
                                    
                                     <select class="js-example-basic-multiple form-control" name="participants[]" multiple="multiple">
                                         @foreach ($participants as $p)
-                                            <option value="{{$p->id}}" 
-                                                @if (in_array($p->id, $pids))
-                                                selected
-                                                @endif
-                                            >{{$p->nom}}</option>
+                                            <option value="{{$p->id}}" @if (in_array($p->id, $present_ids)) selected @endif > {{$p->nom}} </option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -1,5 +1,10 @@
 /*custom style css*/
-
+.alert-dismissable .close, .alert-dismissible .close{
+    right: 0;
+}
+.select2-container--default .select2-selection--multiple{
+    background-color: #f3f2ee;
+}
 select.input-sm{
     height: 34px;
     padding-right: 4px;

@@ -62,8 +62,8 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-12 col-md-12">
-            <div class="card" style="min-height: 485px">
+        <div class="col-sm-12 col-md-6">
+            <div class="card" style="min-height: 648px">
                 <div class="header card-header-text">
                     <h4 class="title">Les participants aux sessions</h4>
                     <!-- <p class="category">New employees on 15th December, 2016</p> -->
@@ -72,7 +72,6 @@
                     <table class="table table-hover">
                         <thead class="text-primary">
                             <tr>
-                                <th>ID</th>
                                 <th>Nom complet</th>
                                 <th>Email</th>
                                 <th>Formation</th>
@@ -81,10 +80,37 @@
                         <tbody>
                             @foreach($participants as $p)
                             <tr>
-                                <td> {{$p->id}} </td>
                                 <td> {{$p->nom}} </td>
                                 <td> {{$p->email}} </td>
                                 <td> {{$p->session}} </td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card" style="min-height: 648px">
+                <div class="header card-header-text">
+                    <h4 class="title">Les sessions prochaines</h4>
+                    <!-- <p class="category">New employees on 15th December, 2016</p> -->
+                </div>
+                <div class="content table-responsive">
+                    <table class="table table-hover">
+                        <thead class="text-primary">
+                            <tr>
+                                <th>Nom de session</th>
+                                <th>Date début</th>
+                                <th>Date fin</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($sessions as $s)
+                            <tr>
+                                <td> {{$s->nom}} </td>
+                                <td> {{$s->start}} </td>
+                                <td> {{$s->end}} </td>
                             </tr>
                             @endforeach
                         </tbody>

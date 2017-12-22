@@ -16,8 +16,8 @@ class CreateSessionsTable extends Migration
             $table->increments('id');
             $table->string('nom');
             $table->string('description');
-            $table->string('start');
-            $table->string('end');
+            $table->dateTime('start');
+            $table->dateTime('end');
             $table->string('lieu');
             $table->string('methode');
             $table->integer('cour_id')->unsigned();

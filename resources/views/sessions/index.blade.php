@@ -29,7 +29,6 @@
                                     <th>Salle</th>
                                     <th>Lieu</th>
                                     <th>Date de début</th>
-                                    <th>Budget</th>
                                     <th>Statut</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
@@ -43,7 +42,6 @@
                                     <td> {{ $session->salle->numero }} </td>
                                     <td> {{ $session->lieu }} </td>
                                     <td> {{ $session->start }} </td>
-                                    <td> {{ $session->budget->nom }} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
                                         <a href="{{ url('sessions/'.$session->id.'/show') }}" class="btn btn-simple btn-info btn-icon addBudget"><i class="fa fa-eye"></i></a>
@@ -62,7 +60,6 @@
                                     <th>Salle</th>
                                     <th>Lieu</th>
                                     <th>Date de début</th>
-                                    <th>Budget</th>
                                     <th>Statut</th>
                                     <th class="text-right">Actions</th>
                                 </tr>

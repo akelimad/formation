@@ -24,7 +24,6 @@ class EvaluationController extends Controller
 
     public function store(Request $request){
 
-        //dd($request->all());
         $cour = new Evaluation();
         $cour->nom=$request->input('nom');
         $cour->type=$request->input('type');

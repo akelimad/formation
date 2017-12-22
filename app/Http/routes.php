@@ -58,6 +58,7 @@ Route::post('evaluations', 'EvaluationController@store');
 Route::get('questions', 'QuestionController@index');
 Route::get('questions/create', 'QuestionController@create');
 Route::post('questions', 'QuestionController@store');
+Route::get('questionnaire/{id}', 'QuestionController@questionnaire');
 
 Route::get('budgets', 'BudgetController@index');
 Route::get('budgets/create', 'BudgetController@create');

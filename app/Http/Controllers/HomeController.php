@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Session;
-
+use Carbon\Carbon; 
 
 class HomeController extends Controller
 {
@@ -26,15 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $participants = \DB::table('session_participants')
-            ->join('sessions', 'sessions.id', '=', 'session_participants.session_id')
-            ->join('participants', 'participants.id', '=', 'session_participants.participant_id')
+        $participants = \DB::table('participant_session')
+            ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
+            ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
             ->select('participants.*', 'sessions.nom as session')
-            ->get();
+            ->take(10)->get();
+        $now = Carbon::now()->format('Y-m-d h:i');
+        $sessions = Session::where('start','>', $now)->take(10)->get();
         
         return view('welcome', [
             'participants'=> $participants,
-            'sessions'=> $participants,
+            'sessions'=> $sessions,
         ]);
     }
 }

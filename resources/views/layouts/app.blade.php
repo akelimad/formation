@@ -308,32 +308,46 @@
             // Add new Line
             $(".addLine").click(function(event){
                 event.preventDefault()
-
                 var copy = $('#budgets-wrap').find(".form-group:first").clone()
-                    copy.find('input').val('')
-                    copy.find('button').toggleClass('addLine deleteLine')
-                    copy.find('button>i').toggleClass('fa-plus fa-minus')
-
-                    var uid = uuidv4()
-
-                    $.each(copy.find('input'), function(){
-                        var name = $(this).attr('name')
-                        $(this).attr('name', name.replace('[0]', '['+uid+']'))
-                    })
-
-
+                copy.find('input').val('')
+                copy.find('button').toggleClass('addLine deleteLine')
+                copy.find('button>i').toggleClass('fa-plus fa-minus')
+                var uid = uuidv4()
+                $.each(copy.find('input'), function(){
+                    var name = $(this).attr('name')
+                    $(this).attr('name', name.replace('[0]', '['+uid+']'))
+                })
                 $('#budgets-wrap').append(copy)
             })
-
             $('#budgets-wrap').on('click', '.deleteLine', function(){
                 $(this).closest('.form-group').remove();
             });
 
+            // Add new Line
+            $(".addLine").click(function(event){
+                event.preventDefault()
+                var copy = $('#questions-wrap').find(".form-group:first").clone()
+                copy.find('input').val('')
+                copy.find('button').toggleClass('addLine deleteLine')
+                copy.find('button>i').toggleClass('fa-plus fa-minus')
+                var uid = uuidv4()
+                $.each(copy.find('input'), function(){
+                    var name = $(this).attr('name')
+                    $(this).attr('name', name.replace('[0]', '['+uid+']'))
+                })
+                $('#questions-wrap').append(copy)
+            })
+            $('#questions-wrap').on('click', '.deleteLine', function(){
+                $(this).closest('.form-group').remove();
+            });
+
+
+
             function uuidv4() {
-                  return ([1e7]+-1e3).replace(/[018]/g, c =>
+                return ([1e7]+-1e3).replace(/[018]/g, c =>
                     (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
-                  )
-                }
+                )
+            }
 
 
             $('.js-example-basic-multiple').select2({
@@ -469,6 +483,17 @@
                     if ($('#surveyForm').find(':visible[name="option[]"]').length < MAX_OPTIONS) {
                         $('#surveyForm').find('.addButton').removeAttr('disabled');
                     }
+                }
+            });
+
+
+            $('.realise').keyup(function(){
+                var prevu = parseInt($(".prevu").val());
+                var realise = parseInt($(".realise").val());
+                if($('.realise').val().length === 0){
+                    $('.ajustement').val(0);  
+                }else{
+                    $('.ajustement').val(prevu - realise);  
                 }
             });
 
