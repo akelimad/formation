@@ -23,7 +23,6 @@ select.input-sm{
 .login .main-panel{
     width: 100%;
     background: #fff;
-    margin-top: 3em;
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple{
     /*border: none;*/

@@ -106,13 +106,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($sessions as $s)
-                            <tr>
-                                <td> {{$s->nom}} </td>
-                                <td> {{$s->start}} </td>
-                                <td> {{$s->end}} </td>
-                            </tr>
-                            @endforeach
+                            
+                            @forelse($sessions as $s)
+                                <tr>
+                                    <td> {{$s->nom}} </td>
+                                    <td> {{$s->start}} </td>
+                                    <td> {{$s->end}} </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td>Aucune session prochaine.</td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>

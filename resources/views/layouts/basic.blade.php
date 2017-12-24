@@ -27,6 +27,14 @@
     <link href="{{ asset('assets/vendors/sweetalert/css/sweetalert2.min.css')}}" rel="Stylesheet" >
     <!--     custom style css     -->
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+    <style>
+        body{
+            overflow: hidden;
+        }
+        .main-panel > .content{
+            padding: 0
+        }
+    </style>
 </head>
 <body id="app-layout">
     <div class="wrapper login">
@@ -34,7 +42,7 @@
             <div class="content">
                 @yield('content')
             </div>
-            <footer class="footer">
+            <!-- <footer class="footer">
                 <div class="container-fluid">
                     <p class="copyright pull-right">
                         &copy;
@@ -44,7 +52,7 @@
                         <a href="#">Admin</a>
                     </p>
                 </div>
-            </footer>
+            </footer> -->
         </div>
 
     </div>
@@ -68,7 +76,7 @@
     <!-- DateTimePicker Plugin -->
     <script src="{{ asset('assets/vendors/bootstrap-datetimepicker.js')}}"></script>
     <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
-    <script src="../assets/js/bootstrap-checkbox-radio-switch-tags.js"></script>
+    <script src="{{ asset('assets/js/bootstrap-checkbox-radio-switch-tags.js')}}"></script>
     <!-- Vector Map plugin -->
     <script src="{{ asset('assets/vendors/jquery-jvectormap.js')}}"></script>
     <!-- Sliders Plugin -->
