@@ -51,6 +51,8 @@ Route::post('participants', 'ParticipantController@store');
 Route::get('salles', 'SalleController@index');
 Route::get('salles/create', 'SalleController@create');
 Route::post('salles', 'SalleController@store');
+Route::get('salles/{id}/edit', 'SalleController@edit');
+Route::put('salles/{id}', 'SalleController@update');
 
 Route::get('evaluations', 'EvaluationController@index');
 Route::get('evaluations/create', 'EvaluationController@create');

@@ -45,10 +45,10 @@
                                     <td> {{ $session->start }} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
-                                        <a href="{{ url('sessions/'.$session->id.'/show') }}" class="btn btn-simple btn-info btn-icon addBudget"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ url('budgets/create') }}" class="btn btn-simple btn-info btn-icon addBudget"><i class="fa fa-usd"></i></a>
-                                        <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{ url('sessions/'.$session->id.'/show') }}" class="btn btn-fill btn-info btn-icon addBudget"><i class="fa fa-eye"></i></a>
+                                        <a href="{{ url('budgets/create') }}" class="btn btn-fill btn-info btn-icon addBudget"><i class="fa fa-usd"></i></a>
+                                        <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

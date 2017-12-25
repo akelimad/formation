@@ -33,8 +33,8 @@
                                     <td> {{ $f->fax }} </td>
                                     <td> {{ $f->personne_contacter }} </td>
                                     <td class="text-right">
-                                        <a href="{{url('prestataires/'.$f->id.'/edit')}}" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{url('prestataires/'.$f->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

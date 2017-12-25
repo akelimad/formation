@@ -38,14 +38,14 @@
                                     <td> {{ $salle->equipements }} </td>
                                     <td> 
                                         @if($salle->photo)
-                                            <img src="{{url('sallePhotos/'.$salle->photo)}}" width="60" alt=""> 
+                                            <img src="{{url('sallePhotos/'.$salle->photo)}}" width="60" alt="" height="20"> 
                                         @else
-                                            <img src="{{url('assets/img/missing-photo.png')}}" width="40" height="20" alt=""> 
+                                            <img src="{{url('assets/img/missing-photo.png')}}" width="30" height="20" alt=""> 
                                         @endif
                                     </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{ url('salles/'.$salle->id.'/edit') }}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
