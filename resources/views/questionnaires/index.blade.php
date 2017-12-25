@@ -5,36 +5,46 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
-                    <h4 class="title">Le questionnaire</h4>
-                    <div class="toolbar">
-                        <!-- Here you can write extra buttons/actions for the toolbar   -->
-                    </div>
-                    <div class="row">
-                        @foreach($questions as $question)
-                            <div class="panel panel-default">
-                                <div class="">
-                                    <div class="panel-body">
-                                        <div class="col-md-8"><p>{{$question->titre}}</p></div>
-                                        <div class="col-md-4">
-                                            <select name="reponse" id="" class="form-control">
-                                                <option value="">Tout à fait satisfait</option>
-                                                <option value="">Satisfait</option>
-                                                <option value="">Ni insatisfait ni insatisfait</option>
-                                                <option value="">Pas satisfait</option>
-                                                <option value="">Pas du tout satisfait</option>
-                                            </select>
+                <form action="{{ url('reponses') }}" method="post">
+                    <input type="hidden" name="_method" value="PUT">
+                    {{ csrf_field() }}
+                    <div class="content">
+                        <h4 class="title">Le questionnaire</h4>
+                        <div class="toolbar">
+                            <!-- Here you can write extra buttons/actions for the toolbar   -->
+                        </div>
+                        <div class="row">
+                            @if(count($questions)>0)
+                                @foreach($questions as $question)
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <p>{{$question->titre}}</p>
+                                                <input type="hidden" name="ids[]" value="{{$question->id}}">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <select name="reponses[]" id="" class="form-control">
+                                                    <option value="Tout à fait satisfait">Tout à fait satisfait</option>
+                                                    <option value="Satisfait">Satisfait</option>
+                                                    <option value="Ni insatisfait ni insatisfait">Ni insatisfait ni insatisfait</option>
+                                                    <option value="Pas satisfait">Pas satisfait</option>
+                                                    <option value="Pas du tout satisfait">Pas du tout satisfait</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
+                                @endforeach
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
                                 </div>
-                            </div>
-                        @endforeach
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
+                            @else
+                                <div class="form-group">
+                                    <h4> Cette evaluation n'a pas encore de questionnaire !  <a href="{{ url('evaluations') }}" class="btn btn-primary"> <i class="fa fa-arrow-left"></i> Retour</a></h4>
+                                </div>
+                            @endif
                         </div>
                     </div>
-                </div>
-                <!-- end content-->
+                </form>
             </div>
             <!--  end card  -->
         </div>

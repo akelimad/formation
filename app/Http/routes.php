@@ -32,6 +32,7 @@ Route::get('sessions/{id}/show', 'SessionController@show');
 Route::post('sessions', 'SessionController@store');
 Route::get('sessions/{id}/edit', 'SessionController@edit');
 Route::put('sessions/{id}', 'SessionController@update');
+Route::get('evaluations/{id}/sendMail', 'EvaluationController@sendMailParticipants');
 
 Route::get('prestataires', 'FournisseurController@index');
 Route::get('prestataires/create', 'FournisseurController@create');
@@ -58,7 +59,8 @@ Route::post('evaluations', 'EvaluationController@store');
 Route::get('questions', 'QuestionController@index');
 Route::get('questions/create', 'QuestionController@create');
 Route::post('questions', 'QuestionController@store');
-Route::get('questionnaire/{id}', 'QuestionController@questionnaire');
+Route::get('questionnaire/{id}/token={token}', 'QuestionController@questionnaire');
+Route::put('reponses', 'ReponsesController@store');
 
 Route::get('budgets', 'BudgetController@index');
 Route::get('budgets/create', 'BudgetController@create');
@@ -66,3 +68,4 @@ Route::post('budgets', 'BudgetController@store');
 
 Route::get('budgetsFormation', 'RapportController@index');
 Route::get('formationUtilisateur', 'RapportController@index1');
+

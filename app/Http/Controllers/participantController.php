@@ -14,24 +14,6 @@ class ParticipantController extends Controller
         return view('participants.index', ['participants'=>$participants]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function participantsNames(Request $request){
-
-        $search = $request->participants;
-        $term = Input::get('participants');
-        $participants= array();
-        $queries = \DB::table('participants')->select('id', 'nom')->where('participants.nom','LIKE','%'.$term.'%')->get();
-        foreach ($queries as $query)
-            {
-                $results[] = [ 'id' => $query->id, 'nom' => $query->nom ];
-            }
-        //return Response::json($results);
-        return response()->json($results);
-    }
 
     public function create(){
         return view('participants.create');
@@ -57,4 +39,6 @@ class ParticipantController extends Controller
     public function destroy(){
         
     }
+
+    
 }

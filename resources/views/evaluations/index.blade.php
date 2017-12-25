@@ -6,6 +6,22 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
+                    @if(session()->has('no_participants'))
+                        <div class="alert alert-danger alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><strong>Attention !</strong> {{ session()->get('no_participants') }} </span>
+                        </div>
+                    @endif
+                    @if(session()->has('mails_sent'))
+                        <div class="alert alert-success alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><strong>Succès !</strong> {{ session()->get('mails_sent') }} </span>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="title">La liste des evaluations</h4>
@@ -36,10 +52,11 @@
                                     <td> {{ $evaluation->type }} </td>
                                     <td> {{ $evaluation->session }} </td>
                                     <td class="text-right">
-                                        <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-simple btn-info btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye fa-2x"></i> </a>
-                                        <a href="#" class="btn btn-simple btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}"> <i class="fa fa-question fa-2x"></i> </a>
-                                        <a href="#" class="btn btn-simple btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-simple btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{ url('evaluations/'.$evaluation->id.'/sendMail') }}" class="btn btn-fill btn-success btn-icon sendMail" title="Envoyer un email aux participants" data-toggle="tooltip"><i class="fa fa-envelope"></i></a>
+                                        <a href="{{url('questionnaire/'.$evaluation->id.'/token=jhfdh54254hdg')}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

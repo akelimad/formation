@@ -6,6 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
+                    
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="title">La liste des sessions </h4>

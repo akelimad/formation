@@ -13,6 +13,7 @@ use App\Cour;
 use App\Http\Requests;
 use Carbon\Carbon; 
 
+
 class SessionController extends Controller
 {
     public function index(){
@@ -213,4 +214,8 @@ class SessionController extends Controller
     public function destroy(){
         
     }
+
+    
+
+
 }

@@ -27,4 +27,8 @@ class Session extends Model
     {
         return $this->belongsToMany('App\Participant');
     }
+
+    public function evaluations(){
+        return $this->hasMany('App\Evaluation');
+    }
 }
