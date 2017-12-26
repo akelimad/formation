@@ -39,7 +39,7 @@
                                     <td> {{ $cour->duree }} </td>
                                     <td> {{ $cour->prix }} </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="{{url('cours/'.$cour->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>

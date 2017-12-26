@@ -132,7 +132,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Durée(Nombre de jour)</label>
-                                    <input class="form-control" name="duree" type="text" placeholder="Nomre de jour" />
+                                    <input class="form-control" name="duree" type="number" placeholder="Nomre de jour" />
                                 </div>
                             </div>
                         </div>

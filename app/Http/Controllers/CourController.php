@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
 use App\Cour;
 use App\User;
 use App\Http\Requests;
@@ -32,12 +32,22 @@ class CourController extends Controller
 
     }
 
-    public function edit(){
-        
+    public function edit($id){
+        $users = User::all();
+        $cour = Cour::find($id);
+        return view('cours.edit', ['c' => $cour, 'users' => $users]);
     }
 
-    public function update(){
-        
+    public function update(Request $request, $id){
+        $cour = Cour::find($id);
+        $cour->titre=$request->input('titre');
+        $cour->description=$request->input('description');
+        $cour->devise=$request->input('devise');
+        $cour->prix=$request->input('prix');
+        $cour->duree=$request->input('duree');
+        $cour->user_id=$request->input('coordinateur');
+        $cour->save();
+        return redirect('cours');
     }
 
     public function destroy(){
