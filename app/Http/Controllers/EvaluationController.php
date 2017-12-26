@@ -34,6 +34,20 @@ class EvaluationController extends Controller
 
     }
 
+    public function chaudEvaluation($id){
+        $reponses = \DB::table('questions')
+            ->join('evaluations', 'evaluations.id', '=', 'questions.evaluation_id')
+            ->join('reponses', 'reponses.question_id', '=', 'questions.id')
+            ->select(array('evaluations.id','questions.titre','reponses.reponse', 'reponses.question_id', \DB::raw("COUNT(reponses.question_id) as 'total de reponses'")))
+            ->where('evaluations.id','=',$id)
+            ->groupBy('reponses.question_id')
+            ->orderBy('reponses.question_id')
+            ->get();
+        //dd($reponses);
+
+        return view('evaluations.a_chaud', ['reponses' => $reponses]);
+    }
+
     public function edit(){
         
     }
@@ -52,8 +66,15 @@ class EvaluationController extends Controller
 
         if(count($session->participants)>0){
             foreach($session->participants as $p){
-                $sent = Mail::send('emails.send-to-participants', ['session' => $session->nom, 'participant'=>$p->nom, 'token'=> md5($p->nom.$p->email)], function ($m) use($p){
-                    $m->to($p->email, $p->nom)->subject('nouvaeau questionnaire');
+                $sent = Mail::send('emails.send-to-participants', 
+                    [
+                        'session' => $session->nom, 
+                        'participant'=>$p->nom, 
+                        'token'=> md5($p->nom.$p->email),
+                        'evaluation_id' => $evaluation->id
+                    ]
+                    , function ($m) use($p){
+                        $m->to($p->email, $p->nom)->subject('Evaluation à chaud');
                 });
             }
             return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.' a bien été envoyé aux participants de la session: '.$session->nom);

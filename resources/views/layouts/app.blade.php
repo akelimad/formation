@@ -56,7 +56,7 @@
                         </a>
                     </li>
 
-                    <li class="{{ Request::path() == 'prestataires' ? 'active' : '' }}">
+                    <li class="{{ Request::is('prestataires*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#prestataires" class="collapsed" aria-expanded="false">
                             <i class="fa fa-handshake-o"></i>
                             <p>Prestataires
@@ -78,7 +78,7 @@
                         </div>
                     </li>
 
-                    <li class="{{ Request::path() == 'cours' ? 'active' : '' }}">
+                    <li class="{{ Request::is('cours*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#formations" class="collapsed" aria-expanded="false">
                             <i class="fa fa-book"></i>
                             <p>Cours
@@ -97,7 +97,7 @@
                         </div>
                     </li>
 
-                    <li class="{{ Request::path() == 'salles' ? 'active' : '' }}">
+                    <li class="{{ Request::is('salles*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#salles" class="collapsed" aria-expanded="false">
                             <i class="fa fa-university"></i>
                             <p>Salles
@@ -116,7 +116,7 @@
                         </div>
                     </li>
 
-                    <li class="{{ Request::path() == 'sessions' ? 'active' : '' }}">
+                    <li class="{{ Request::is('sessions*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#cours" class="collapsed" aria-expanded="false">
                             <i class="fa fa-calendar"></i>
                             <p>Sessions
@@ -138,7 +138,7 @@
                         </div>
                     </li>
 
-                    <li class="{{ Request::path() == 'budgetsFormation' ? 'active' : '' }}">
+                    <li class="{{ Request::is('rapports*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#session" class="collapsed" aria-expanded="false">
                             <i class="fa fa-file-text-o"></i>
                             <p>Rapport
@@ -148,15 +148,15 @@
                         <div class="collapse" id="session" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('budgetsFormation') }}">Standard</a>
+                                    <a href="{{ url('rapports/budgetsFormation') }}">Standard</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('formationUtilisateur') }}">Personnalisé</a>
+                                    <a href="{{ url('rapports/formationUtilisateur') }}">Personnalisé</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    <li class="{{ Request::path() == 'evaluations' ? 'active' : '' }}">
+                    <li class="{{ Request::is('evaluations*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#evaluation" class="collapsed" aria-expanded="false">
                             <i class="fa fa-question-circle-o"></i>
                             <p>Evaluation
@@ -174,7 +174,7 @@
                             </ul>
                         </div>
                     </li>
-                    <li class="{{ Request::path() == 'utilisateurs' ? 'active' : '' }}">
+                    <li class="{{ Request::is('utilisateurs*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#users" class="collapsed" aria-expanded="false">
                             <i class="fa fa-users"></i>
                             <p>Administration

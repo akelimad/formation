@@ -19,8 +19,7 @@ Route::auth();
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/utilisateurs', 'UserController@users');
-Route::get('/t', 'UserController@test');
+Route::get('utilisateurs', 'UserController@users');
 
 Route::get('cours', 'CourController@index');
 Route::get('cours/create', 'CourController@create');
@@ -57,17 +56,19 @@ Route::put('salles/{id}', 'SalleController@update');
 Route::get('evaluations', 'EvaluationController@index');
 Route::get('evaluations/create', 'EvaluationController@create');
 Route::post('evaluations', 'EvaluationController@store');
+Route::get('evaluations/{id}/a-chaud', 'EvaluationController@chaudEvaluation');
 
 Route::get('questions', 'QuestionController@index');
 Route::get('questions/create', 'QuestionController@create');
 Route::post('questions', 'QuestionController@store');
-Route::get('questionnaire/{id}/token={token}', 'QuestionController@questionnaire');
-Route::put('reponses', 'ReponsesController@store');
+Route::get('questionnaire/{id}', 'QuestionController@show');
+Route::get('questionnaire/{id}/{token}/questions', 'QuestionController@questionnaire');
+Route::put('questionnaire/{id}/{token}', 'QuestionController@storeResponses');
 
 Route::get('budgets', 'BudgetController@index');
 Route::get('budgets/create', 'BudgetController@create');
 Route::post('budgets', 'BudgetController@store');
 
-Route::get('budgetsFormation', 'RapportController@index');
-Route::get('formationUtilisateur', 'RapportController@index1');
+Route::get('rapports/budgetsFormation', 'RapportController@index');
+Route::get('rapports/formationUtilisateur', 'RapportController@index1');
 

@@ -1,11 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.basic')
 
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-8 col-md-offset-2">
             <div class="card">
-                <form action="{{ url('reponses') }}" method="post">
+                <form action="@if(isset($token)) {{ url('questionnaire/'.$eval_id.'/'.$token) }} @endif" method="post">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
@@ -35,7 +35,11 @@
                                     </div>
                                 @endforeach
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
+                                    @if(isset($token))
+                                        <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
+                                    @else
+                                        <a href="{{url('evaluations')}}" class="btn btn-info btn-fill text-center"><i class="ti-arrow-left"></i> Retour</a>
+                                    @endif
                                 </div>
                             @else
                                 <div class="form-group">
