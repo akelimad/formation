@@ -22,6 +22,14 @@
                             <span><strong>Succès !</strong> {{ session()->get('mails_sent') }} </span>
                         </div>
                     @endif
+                    @if($errors->any())
+                        <div class="alert alert-info alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><strong><i class="fa fa-info-circle fa-2x"></i> </strong> {{$errors->first()}} </span>
+                        </div>
+                    @endif
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="title">La liste des evaluations</h4>

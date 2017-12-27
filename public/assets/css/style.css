@@ -90,6 +90,44 @@ label.star:before {
     margin-top: 1em;    
 }
 
-
 /*end rating*/
 
+/******  Start Rating with posibilite half selection *****/
+
+.rating-note { 
+  border: none;
+  float: left;
+}
+
+.rating-note > input { display: none; } 
+.rating-note > label:before { 
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+}
+
+.rating-note > .half:before { 
+  content: "\f089";
+  position: absolute;
+}
+
+.rating-note > label { 
+  color: #ddd; 
+ float: right; 
+}
+
+.rating-note > input:checked ~ label, /* show gold star when clicked */
+.rating-note:not(:checked) > label:hover, /* hover current star */
+.rating-note:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating-note > input:checked + label:hover, /* hover current star when changing rating */
+.rating-note > input:checked ~ label:hover,
+.rating-note > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating-note > input:checked ~ label:hover ~ label { color: #FFED85;  } 
+.rating-note > label:before{
+    font-size: 4.5em;
+}
+
+/******  end Rating with posibilite half selection *****/

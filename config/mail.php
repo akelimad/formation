@@ -57,7 +57,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'hamza.idrissi@careersinmorocco.com', 'name' => 'Hamza'],
+    'from' => ['address' => 'contact@lycom.ma', 'name' => 'Lycom'],
 
     /*
     |--------------------------------------------------------------------------

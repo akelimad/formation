@@ -24,11 +24,11 @@
                                             </div>
                                             <div class="col-md-4">
                                                 <select name="reponses[]" id="" class="form-control">
-                                                    <option value="Tout à fait satisfait">Tout à fait satisfait</option>
-                                                    <option value="Satisfait">Satisfait</option>
-                                                    <option value="Ni insatisfait ni insatisfait">Ni insatisfait ni insatisfait</option>
-                                                    <option value="Pas satisfait">Pas satisfait</option>
-                                                    <option value="Pas du tout satisfait">Pas du tout satisfait</option>
+                                                    <option value="5">Tout à fait satisfait</option>
+                                                    <option value="4">Satisfait</option>
+                                                    <option value="3">Ni insatisfait ni insatisfait</option>
+                                                    <option value="2">Pas satisfait</option>
+                                                    <option value="1">Pas du tout satisfait</option>
                                                 </select>
                                             </div>
                                         </div>

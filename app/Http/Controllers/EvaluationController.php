@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use App\Evaluation;
 use App\Session;
@@ -38,14 +39,22 @@ class EvaluationController extends Controller
         $reponses = \DB::table('questions')
             ->join('evaluations', 'evaluations.id', '=', 'questions.evaluation_id')
             ->join('reponses', 'reponses.question_id', '=', 'questions.id')
-            ->select(array('evaluations.id','questions.titre','reponses.reponse', 'reponses.question_id', \DB::raw("COUNT(reponses.question_id) as 'total de reponses'")))
+            ->select(array('evaluations.id','questions.titre', 'reponses.question_id', \DB::raw("TRUNCATE(sum(reponses.reponse)/count(reponses.reponse), 1) as 'total'")))
             ->where('evaluations.id','=',$id)
             ->groupBy('reponses.question_id')
             ->orderBy('reponses.question_id')
             ->get();
-        //dd($reponses);
-
-        return view('evaluations.a_chaud', ['reponses' => $reponses]);
+        if($reponses){
+            foreach ($reponses as $r) {
+                $note[]= $r->total;
+            }
+            $note = bcdiv(array_sum($note)/count($note) , 1, 1);// bcdiv(2.56789, 1, 2);  // 2.56
+            $floor_note = floor($note * 2) / 2; 
+            return view('evaluations.a_chaud', ['reponses' => $reponses,'note_floor'=>$floor_note, 'note' => $note]);
+        }else{
+            die('ya pas de reponses');
+            return Redirect::back()->withErrors(["Personne n'a repondu a cette evaluations !!!"]);
+        }
     }
 
     public function edit(){

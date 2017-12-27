@@ -20,6 +20,7 @@ Route::auth();
 Route::get('/', 'HomeController@index');
 
 Route::get('utilisateurs', 'UserController@users');
+Route::get('utilisateurs/droits-acces', 'UserController@userAccess');
 
 Route::get('cours', 'CourController@index');
 Route::get('cours/create', 'CourController@create');

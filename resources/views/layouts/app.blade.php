@@ -187,7 +187,7 @@
                                     <a href="{{ url('utilisateurs') }}"><i class="" aria-hidden="true"></i> Utilisateurs</a>
                                 </li>
                                 <li>
-                                    <a href="#"><i class="" aria-hidden="true"></i> Droits d'accès</a>
+                                    <a href="{{url('utilisateurs/droits-acces')}}"><i class="" aria-hidden="true"></i> Droits d'accès</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('register') }}"><i class="" aria-hidden="true"></i> Ajouter </a>

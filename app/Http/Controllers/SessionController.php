@@ -44,7 +44,7 @@ class SessionController extends Controller
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
-            'participants'          => 'required',
+            'participants'   => 'required',
         ]);
         $messages = $validator->errors();
 
@@ -57,10 +57,12 @@ class SessionController extends Controller
         ])->get();
         
         $now = Carbon::now()->format('Y-m-d h:i');
-        if($occupee) 
+        if($occupee) {
             $messages->add('salle', 'La salle est reservée pour ces horaires!');
-        if($request->statut == "Terminé" && $request->end > $now) 
+        }
+        if($request->statut == "Terminé" && $request->end > $now) {
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+        }
 
         if(count($messages)>0){
             return redirect('sessions/create')->withErrors($messages)->withInput();
@@ -155,9 +157,12 @@ class SessionController extends Controller
         ])->get();
         
         $now = Carbon::now()->format('Y-m-d h:i');
-        if($occupee) $messages->add('salle', 'La salle est reservée pour ces horaires!');
-        if($request->statut == "Terminé" && $request->end > $now) 
+        if($occupee) {
+            $messages->add('salle', 'La salle est reservée pour ces horaires!');
+        }
+        if($request->statut == "Terminé" && $request->end > $now){
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+        }
 
         $prevus = [];
         $presents = [];

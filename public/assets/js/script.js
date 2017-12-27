@@ -108,12 +108,14 @@ $().ready(function() {
 
     $('.card .material-datatables label').addClass('form-group');
 
-        demo.checkFullPageBackgroundImage();
-        setTimeout(function() {
-            // after 1000 ms we add the class animated to the login/register card
-            $('.card').removeClass('card-hidden');
-        }, 700)
+    $(".rating-note").each(function(index,elem){
+        var $this=$(".rating-note").eq(index);
+        var value=$this.data('value');
+        $this.find('input[value="'+value+'"]').attr('checked','checked');
     });
+
+
+});
     demo.initFormExtendedDatetimepickers();
 
     var MAX_OPTIONS = 30;
