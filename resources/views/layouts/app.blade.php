@@ -257,7 +257,11 @@
     </div>
 
     <!--   Core JS Files   -->
+    @if(Request::is('evaluations*'))
+    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    @else
     <script src="{{ asset('assets/vendors/jquery-3.1.1.min.js')}}" type="text/javascript"></script> 
+    @endif
     <script src="{{ asset('assets/vendors/jquery-ui.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/bootstrap.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/bootstrapValidator.min.js')}}" type="text/javascript"></script>

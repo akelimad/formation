@@ -25,7 +25,7 @@
                                 <tr>
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->email }} </td>
-                                    <td> {{ $user->created_at }} </td>
+                                    <td> {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i')}} </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>

@@ -97,6 +97,7 @@ label.star:before {
 .rating-note { 
   border: none;
   float: left;
+  min-height: 200px;
 }
 
 .rating-note > input { display: none; } 
@@ -131,3 +132,4 @@ label.star:before {
 }
 
 /******  end Rating with posibilite half selection *****/
+

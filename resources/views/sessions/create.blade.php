@@ -57,13 +57,13 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="label-control">Date de début <star>*</star></label>
-                                    <input type="text" name="start" data-date-format="YYYY/MM/DD HH:mm" class="form-control datetimepicker" required="" value="{{ old('start') }}"/>
+                                    <input type="text" name="start" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="" value="{{ old('start') }}"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="label-control">Date de fin <star>*</star> </label>
-                                    <input type="text" name="end" data-date-format="YYYY/MM/DD HH:mm" class="form-control datetimepicker" required="" value="{{ old('end') }}"/>
+                                    <input type="text" name="end" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="" value="{{ old('end') }}"/>
                                 </div>
                             </div>
                         </div>

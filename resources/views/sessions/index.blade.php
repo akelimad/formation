@@ -42,7 +42,7 @@
                                     <td> {{ $session->formateur->nom }} </td>
                                     <td> {{ $session->salle->numero }} </td>
                                     <td> {{ $session->lieu }} </td>
-                                    <td> {{ $session->start }} </td>
+                                    <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y H:i')}} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
                                         <a href="{{ url('sessions/'.$session->id.'/show') }}" class="btn btn-fill btn-info btn-icon addBudget"><i class="fa fa-eye"></i></a>

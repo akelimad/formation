@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Cour;
 use App\User;
 use App\Http\Requests;
+use Excel;
+use DateTime;
 
 class CourController extends Controller
 {
@@ -53,4 +55,26 @@ class CourController extends Controller
     public function destroy(){
         
     }
+
+    public function export(){
+
+        $cours = \DB::table('cours as c')
+        ->join('users as u', 'u.id', '=', 'c.user_id')
+        ->selectRaw('c.id, titre, description, devise, prix, duree, u.name as coordinateur, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i") as creation')
+        ->get();
+        $data = array();
+        foreach ($cours as $cour) {
+            $data[] = (array)$cour;
+        }
+
+
+        Excel::create('liste-des-cours', function($excel) use($data) {
+            $excel->sheet('cours', function($sheet) use($data) {
+                $sheet->fromArray($data);
+            });
+        })->export('xls');
+
+        return redirect('cours');
+    }
+
 }

@@ -13,7 +13,7 @@
                         
                         <div class="col-md-4">
                             <a href="{{ url('cours/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a>
-                            <a href="#" class="pull-right excelIcon"  data-toggle="tooltip" title="Exporter vers Excel"><i class="fa fa-file-excel-o fa-2x"></i></a>
+                            <a href="{{url('cours/export')}}" class="pull-right excelIcon"  data-toggle="tooltip" title="Exporter vers Excel"><i class="fa fa-file-excel-o fa-2x"></i></a>
                         </div>
                     </div>
                     

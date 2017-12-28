@@ -8,7 +8,8 @@ use App\Evaluation;
 use App\Session;
 use App\Http\Requests;
 use Mail;
-
+use Carbon\Carbon; 
+use DateTime;
 class EvaluationController extends Controller
 {
     public function index(){
@@ -49,11 +50,11 @@ class EvaluationController extends Controller
                 $note[]= $r->total;
             }
             $note = bcdiv(array_sum($note)/count($note) , 1, 1);// bcdiv(2.56789, 1, 2);  // 2.56
-            $floor_note = floor($note * 2) / 2; 
-            return view('evaluations.a_chaud', ['reponses' => $reponses,'note_floor'=>$floor_note, 'note' => $note]);
+            $floor_note = floor($note * 2) / 2;  // 4.2 => 4 ou 4.7=> 4.5
+            $taux = ($note*100)/5;
+            return view('evaluations.a_chaud', ['reponses' => $reponses,'note_floor'=>$floor_note, 'note' => $note, 'taux'=>$taux]);
         }else{
-            die('ya pas de reponses');
-            return Redirect::back()->withErrors(["Personne n'a repondu a cette evaluations !!!"]);
+            return redirect()->back()->with('no_response', "il n'ya aucune réponse sur cette evaluations !!!");
         }
     }
 
@@ -72,6 +73,10 @@ class EvaluationController extends Controller
     public function sendMailParticipants($id){
         $evaluation = Evaluation::find($id);
         $session = Session::find($evaluation->session_id);
+        $now = new DateTime();
+        $date = new DateTime($session->end);
+        dd($date->diff($now)->format('%d'));
+            
 
         if(count($session->participants)>0){
             foreach($session->participants as $p){

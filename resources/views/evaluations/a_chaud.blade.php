@@ -22,7 +22,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">la note globale: {{$note}}</h4>
@@ -64,6 +64,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Taux de reponse: {{$taux}}%</h4>
+                                </div>
+                                <div class="content card-padding">
+                                    <div id="circularGaugeContainer"></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- end content-->
@@ -76,6 +87,9 @@
 @endsection
 
 @section('javascript')
+
+<script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/globalize/0.1.1/globalize.min.js"></script>
+<script src='https://cdn3.devexpress.com/jslib/13.2.9/js/dx.chartjs.js'></script>
 <script>
     $(function(){
         var densityCanvas = document.getElementById("densityChart");
@@ -133,8 +147,44 @@
             },
             options: chartOptions
         });
+
+        //taux de reponse **************************************************************
+
+        $("#circularGaugeContainer").dxCircularGauge({
+          rangeContainer: { 
+            offset: 10,
+            ranges: [
+              { startValue: 0.75, endValue: 1, color: '#41A128' },
+              { startValue: 0.5, endValue: 0.75, color: '#FF4500' },
+              { startValue: 0, endValue: 0.5, color: '#FF0000' }
+            ] // Dans ce tableau tu peux faire des couleurs par tranches
+          },
+          scale: {
+            startValue: 0,  endValue: 1,
+            majorTick: { tickInterval: 0.25 },
+            label: {
+              format: 'percent'
+            }
+          },
+          size: {
+            height: 200,
+            width: 600
+        },
+          title: {
+            subtitle: 'test',
+            position: 'top-center'
+          },
+          tooltip: {
+                enabled: true,
+                format: 'percent',
+                customizeText: function (arg) {
+                    return 'Taux de réponse: ' + arg.valueText;
+                }
+            },
+          value: {{$taux/100}} // Taux des réponses ici
+        });
+
     });
-        
 </script>
 
 @endsection

@@ -27,6 +27,7 @@ Route::get('cours/create', 'CourController@create');
 Route::post('cours', 'CourController@store');
 Route::get('cours/{id}/edit', 'CourController@edit');
 Route::put('cours/{id}', 'CourController@update');
+Route::get('cours/export', 'CourController@export');
 
 Route::get('sessions', 'SessionController@index');
 Route::get('sessions/create', 'SessionController@create');

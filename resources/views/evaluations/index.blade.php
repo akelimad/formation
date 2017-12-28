@@ -11,7 +11,7 @@
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><strong>Attention !</strong> {{ session()->get('no_participants') }} </span>
+                            <span><i class="fa fa-exclamation-circle"></i>{{ session()->get('no_participants') }} </span>
                         </div>
                     @endif
                     @if(session()->has('mails_sent'))
@@ -19,15 +19,15 @@
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><strong>Succès !</strong> {{ session()->get('mails_sent') }} </span>
+                            <span><i class="fa fa-check-circle-o"></i> {{ session()->get('mails_sent') }} </span>
                         </div>
                     @endif
-                    @if($errors->any())
+                    @if(session()->has('no_response'))
                         <div class="alert alert-info alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><strong><i class="fa fa-info-circle fa-2x"></i> </strong> {{$errors->first()}} </span>
+                            <span><i class="fa fa-info-circle"></i>{{ session()->get('no_response') }} </span>
                         </div>
                     @endif
                     <div class="row">

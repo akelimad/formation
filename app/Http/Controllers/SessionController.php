@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use App\Http\Requests\SessionRequest;
 use App\Session;
 use App\Participant_sessions;
 use App\Formateur;
@@ -34,13 +35,14 @@ class SessionController extends Controller
         ]);
     }
 
-    public function store(Request $request){
+    public function store(SessionRequest $request){
+        //dd(Carbon::createFromFormat('d/m/Y H:i', $request->start));
         $validator = Validator::make($request->all(), [
             'nom'            => 'required',
             'cour'           => 'required',
             'formateur'      => 'required',
-            'start'          => 'required|date',
-            'end'            => 'required|date|after:start',
+            // 'start'          => 'required',
+            // 'end'            => 'required|date|after:start',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
@@ -64,14 +66,14 @@ class SessionController extends Controller
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
         }
 
-        if(count($messages)>0){
+        if(count($messages)>0){ 
             return redirect('sessions/create')->withErrors($messages)->withInput();
         }else{
             $session = new Session();
             $session->nom=$request->input('nom');
             $session->description=$request->input('description');
-            $session->start=Carbon::parse($request->start)->format('Y-m-d h:i');
-            $session->end=Carbon::parse($request->end)->format('Y-m-d h:i');
+            $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
+            $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
             $session->lieu=$request->input('lieu');
             $session->methode=$request->input('methode');
             $session->cour_id=$request->input('cour');
@@ -135,13 +137,13 @@ class SessionController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id){
+    public function update(SessionRequest $request, $id){
         $validator = Validator::make($request->all(), [
             'nom'            => 'required',
             'cour'           => 'required',
             'formateur'      => 'required',
-            'start'          => 'required|date',
-            'end'            => 'required|date|after:start',
+            // 'start'          => 'required|date',
+            // 'end'            => 'required|date|after:start',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
@@ -181,8 +183,8 @@ class SessionController extends Controller
             $session = Session::find($id);
             $session->nom=$request->input('nom');
             $session->description=$request->input('description');
-            $session->start=$request->input('start');
-            $session->end=$request->input('end');
+            $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
+            $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
             $session->lieu=$request->input('lieu');
             $session->methode=$request->input('methode');
             $session->cour_id=$request->input('cour');
