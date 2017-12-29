@@ -1,6 +1,16 @@
 
 $().ready(function() {
 
+    //to get evaluation that you clicked on to attach question selected by default
+    $("#questionnaire_modal" ).on('shown.bs.modal', function(event){
+        $('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+    });
+
+    //to get session that you clicked on to attach budget selected by default
+    $("#budget_modal" ).on('shown.bs.modal', function(event){
+        $('#sessionsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+    });
+
     // Add new Line
     $(".addLine").click(function(event){
         event.preventDefault()
@@ -56,9 +66,11 @@ $().ready(function() {
     $('#formateur_modal').appendTo("body");
     $('#participant_modal').appendTo("body");
     $('#questionnaire_modal').appendTo("body");
+    $('#budget_modal').appendTo("body");
     $('[data-toggle="tooltip"]').tooltip();
 
     $('#datatables').DataTable({
+        "order": [],
         "pagingType": "full_numbers",
         "lengthMenu": [
             [10, 25, 50, -1],

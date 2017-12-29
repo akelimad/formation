@@ -25,8 +25,8 @@
                                     <label class="control-label">Type</label>
                                     <select class="selectpicker" required="" name="type" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
                                         <option disabled selected value="">-- select --</option>
-                                        <option value="a chaud"> A chaud </option>
-                                        <option value="a froid"> A froid </option>
+                                        <option value="a-chaud"> A chaud </option>
+                                        <option value="a-froid"> A froid </option>
                                     </select>
                                 </div>
                             </div>

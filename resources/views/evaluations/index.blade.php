@@ -11,7 +11,7 @@
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><i class="fa fa-exclamation-circle"></i>{{ session()->get('no_participants') }} </span>
+                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_participants') }} </span>
                         </div>
                     @endif
                     @if(session()->has('mails_sent'))
@@ -22,12 +22,36 @@
                             <span><i class="fa fa-check-circle-o"></i> {{ session()->get('mails_sent') }} </span>
                         </div>
                     @endif
+                    @if(session()->has('survey_add'))
+                        <div class="alert alert-success alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><i class="fa fa-check-circle-o"></i> {!! session()->get('survey_add') !!} </span>
+                        </div>
+                    @endif
                     @if(session()->has('no_response'))
                         <div class="alert alert-info alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><i class="fa fa-info-circle"></i>{{ session()->get('no_response') }} </span>
+                            <span><i class="fa fa-info-circle"></i> {{ session()->get('no_response') }} </span>
+                        </div>
+                    @endif
+                    @if(session()->has('under_3month'))
+                        <div class="alert alert-info alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><i class="fa fa-info-circle"></i> {{ session()->get('under_3month') }} </span>
+                        </div>
+                    @endif
+                    @if(session()->has('no_survey'))
+                        <div class="alert alert-info alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><i class="fa fa-info-circle"></i> {{ session()->get('no_survey') }} </span>
                         </div>
                     @endif
                     <div class="row">
@@ -57,10 +81,10 @@
                                 @foreach ($evaluations as $evaluation)
                                 <tr>
                                     <td> {{ $evaluation->nom }} </td>
-                                    <td> {{ $evaluation->type }} </td>
+                                    <td> {{ $evaluation->type =='a-chaud' ? 'A chaud' : 'A froid' }} </td>
                                     <td> {{ $evaluation->session }} </td>
                                     <td class="text-right">
-                                        <a href="{{ url('evaluations/'.$evaluation->id.'/a-chaud') }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
+                                        <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/sendMail') }}" class="btn btn-fill btn-success btn-icon sendMail" title="Envoyer un email aux participants" data-toggle="tooltip"><i class="fa fa-envelope"></i></a>
                                         <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
                                         <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
@@ -94,8 +118,8 @@
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label">Evaluation</label>
                                                 <div class="col-md-8">
-                                                    <select class="selectpicker" name="evaluation" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
-                                                        <option disabled selected>-- select --</option>
+                                                    <select class="form-control" id="evaluationsList" name="evaluation"  required>
+                                                        <option>-- select --</option>
                                                         @foreach ($evaluations as $e)
                                                             <option value="{{ $e->id }}" > {{ $e->nom }} </option>
                                                         @endforeach

@@ -7,6 +7,26 @@
             <div class="card">
                 <div class="content">
                     <div class="row">
+                        <form action="" method="get">
+                            <div class="{{url('evaluations/'.$eval_id.'/'.$eval_type)}}">
+                                <div class="col-md-5">
+                                    <h4 class="title">choisissez un participant pour voir ses resultats</h4>
+                                </div>
+                                <div class="col-md-3">
+                                    <select class="selectpicker" name="participant" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                        <option disabled selected value="">-- select --</option>
+                                        @foreach ($participants as $p)
+                                            <option value="{{ $p->id }}"> {{ $p->nom }} </option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> consulter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="header">

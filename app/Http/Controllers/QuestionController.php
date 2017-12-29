@@ -37,7 +37,10 @@ class QuestionController extends Controller
             $question->titre=$q;
             $question->save();
         }
-        return redirect('evaluations');
+        $url=url('questionnaire/'.$request->evaluation);
+        return redirect('evaluations')
+        ->with('survey_add', 
+            "Le questionnaire a bien été ajouté. vous pouvez le <a href='$url'>consulter</a> ");
     }
 
     public function edit(){
@@ -56,19 +59,19 @@ class QuestionController extends Controller
         $participants = Participant::all();
 
         foreach ($participants as $participant) {
-            if(md5($participant->nom.$participant->email) == $token){
+            if(md5($participant->id.$participant->email) == $token){
                 $participant_email = $participant->email;
                 $participant_nom = $participant->nom;
+                $participant_id = $participant->id;
             }
         }
 
-
-        $reponses = array_combine($request->ids, $request->reponses);
-        // $token_participant = 
+        $reponses = array_combine($request->questionsIds, $request->reponses);
         foreach ($reponses as $key => $value) {
             $reponse = new Reponse();
             $reponse->reponse = $value;
             $reponse->question_id = $key;
+            $reponse->participant_id = $participant_id;
             $reponse->save();
         }
 

@@ -60,7 +60,8 @@ Route::put('salles/{id}', 'SalleController@update');
 Route::get('evaluations', 'EvaluationController@index');
 Route::get('evaluations/create', 'EvaluationController@create');
 Route::post('evaluations', 'EvaluationController@store');
-Route::get('evaluations/{id}/a-chaud', 'EvaluationController@chaudEvaluation');
+Route::get('evaluations/{id}/{type}', 'EvaluationController@globalEvaluation');
+Route::get('evaluations/{id}/{type}/{nom}', 'EvaluationController@participantEvaluation');
 
 Route::get('questions', 'QuestionController@index');
 Route::get('questions/create', 'QuestionController@create');

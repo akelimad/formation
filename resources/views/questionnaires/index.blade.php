@@ -20,10 +20,11 @@
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <p>{{$question->titre}}</p>
-                                                <input type="hidden" name="ids[]" value="{{$question->id}}">
+                                                <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                                             </div>
                                             <div class="col-md-4">
-                                                <select name="reponses[]" id="" class="form-control">
+                                                <select name="reponses[]" class="selectpicker" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                                    <option selected value="0">=== Selectionnez ===</option>
                                                     <option value="5">Tout à fait satisfait</option>
                                                     <option value="4">Satisfait</option>
                                                     <option value="3">Ni insatisfait ni insatisfait</option>

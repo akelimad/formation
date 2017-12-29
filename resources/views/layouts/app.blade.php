@@ -306,7 +306,7 @@
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ asset('assets/js/demo.js')}}"></script>
     <script src="{{ asset('assets/js/charts/chartjs-charts.js')}}"></script>
-    <script src="{{ asset('assets/js/script.js')}}"></script>
+    <script src="{{ asset('assets/js/script.js')}}?v={{ time() }}"></script>
 
     @yield('javascript')
 
