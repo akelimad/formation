@@ -46,6 +46,8 @@ Route::put('prestataires/{id}', 'FournisseurController@update');
 Route::get('formateurs', 'FormateurController@index');
 Route::get('formateurs/create', 'FormateurController@create');
 Route::post('formateurs', 'FormateurController@store');
+Route::get('formateurs/{id}/edit', 'FormateurController@edit');
+Route::put('formateurs/{id}', 'FormateurController@update');
 
 Route::get('participants', 'ParticipantController@index');
 Route::get('participants/create', 'ParticipantController@create');

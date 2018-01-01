@@ -31,7 +31,7 @@
                                     <td> {{ $formateur->tel }} </td>
                                     <td> {{ $formateur->rating ? $formateur->rating .'%' : '0%' }} </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="{{url('formateurs/'.$formateur->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>

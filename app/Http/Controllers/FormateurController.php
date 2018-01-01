@@ -44,12 +44,33 @@ class FormateurController extends Controller
 
     }
 
-    public function edit(){
-        
+    public function edit($id){
+        $f = Formateur::find($id);
+        return view('formateurs.edit', ['f' => $f]);
     }
 
-    public function update(){
-        
+    public function update(Request $request ,$id){
+        $Formateurs = Formateur::find($id);
+        $Formateurs->nom=$request->input('nom');
+        $Formateurs->type=$request->input('type');
+        $Formateurs->email=$request->input('email');
+        $Formateurs->tel=$request->input('tel');
+        $Formateurs->qualification=$request->input('qualification');
+        if($file = $request->hasFile('cv')) {
+            
+            $file = $request->file('cv') ;
+            
+            $fileName = $file->getClientOriginalName() ;
+            $destinationPath = public_path('/cvs') ;
+
+            $file->move($destinationPath,$fileName);
+            $Formateurs->cv = $fileName ;
+        }
+        $Formateurs->expertise=$request->input('expertise');
+        $Formateurs->autres=$request->input('autres');
+        $Formateurs->rating=$request->input('rating')*20;
+        $Formateurs->save();
+        return redirect('formateurs');
     }
 
     public function destroy(){
