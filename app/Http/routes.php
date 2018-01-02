@@ -62,8 +62,11 @@ Route::put('salles/{id}', 'SalleController@update');
 Route::get('evaluations', 'EvaluationController@index');
 Route::get('evaluations/create', 'EvaluationController@create');
 Route::post('evaluations', 'EvaluationController@store');
+Route::get('evaluations/{id}/edit', 'EvaluationController@edit');
+Route::put('evaluations/{id}', 'EvaluationController@update');
 Route::get('evaluations/{id}/{type}', 'EvaluationController@globalEvaluation');
 Route::get('evaluations/{id}/{type}/{nom}', 'EvaluationController@participantEvaluation');
+Route::delete('evaluations/{id}/delete', 'EvaluationController@destroy');
 
 Route::get('questions', 'QuestionController@index');
 Route::get('questions/create', 'QuestionController@create');

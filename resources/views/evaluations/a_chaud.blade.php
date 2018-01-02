@@ -7,16 +7,51 @@
             <div class="card">
                 <div class="content">
                     <div class="row">
-                        <form action="" method="get">
-                            <div class="{{url('evaluations/'.$eval_id.'/'.$eval_type)}}">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Les participants repondus: {{ count($participants_repondus) }}</h4>
+                                </div>
+
+                                <div class="content card-padding">
+                                    <div class="chart chart-js-container">
+                                        <ul class="list-unstyled">
+                                            @foreach($participants_repondus as $p)
+                                                <badge class="badge">{{$p->nom}}</badge>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="header">
+                                    <h4 class="title">Les participants nom repondus: {{ count($participants_nn_repondus) }}</h4>
+                                </div>
+                                <div class="content card-padding">
+                                    <div class="chart chart-js-container">
+                                        <ul class="list-unstyled">
+                                            @foreach($participants_nn_repondus as $p)
+                                                <badge class=" badge">{{$p}}</badge>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form action="{{url('evaluations/'.$eval_id.'/'.$eval_type)}}" method="get">
+                            <div class="content">
                                 <div class="col-md-5">
                                     <h4 class="title">choisissez un participant pour voir ses resultats</h4>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="selectpicker" name="participant" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
                                         <option disabled selected value="">-- select --</option>
-                                        @foreach ($participants as $p)
-                                            <option value="{{ $p->id }}"> {{ $p->nom }} </option>
+                                        @foreach ($participants_repondus as $p)
+                                            <option value="{{ $p->id }}" @if ($selected == $p->id) selected='selected' @endif > {{ $p->nom }} </option>
                                         @endforeach
                                     </select>
                                 </div>

@@ -126,6 +126,43 @@ $().ready(function() {
         $this.find('input[value="'+value+'"]').attr('checked','checked');
     });
 
+    $("#datatables").on('click', '.delete-evaluation',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'evaluations/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Deleted!', 'evaluation has been deleted.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', 'Something went wrong with ajax !', 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
 
 });
     demo.initFormExtendedDatetimepickers();

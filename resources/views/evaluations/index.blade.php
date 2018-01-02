@@ -84,12 +84,13 @@
                                     <td> {{ $evaluation->type =='a-chaud' ? 'A chaud' : 'A froid' }} </td>
                                     <td> {{ $evaluation->session }} </td>
                                     <td class="text-right">
+                                        {{ csrf_field() }}
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/sendMail') }}" class="btn btn-fill btn-success btn-icon sendMail" title="Envoyer un email aux participants" data-toggle="tooltip"><i class="fa fa-envelope"></i></a>
                                         <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
                                         <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" ><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

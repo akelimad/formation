@@ -196,10 +196,14 @@ class SessionController extends Controller
             $session_id = $session->id;
             $participants=array();
             $participants= $request->participants;
-
+            $sess_par= $session->participants;
+            foreach ($sess_par as $s_p) {
+                $sp_ids[] = $s_p->id;
+            }
+            //dd($sp_ids);
             if($participants){
                 foreach ($participants as $par) {
-                    if(!in_array($par, $prevus)){
+                    if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
                         $sess_participants= new Participant_sessions();
                         $sess_participants->session_id = $session_id;
                         $sess_participants->participant_id = $par;
@@ -211,7 +215,7 @@ class SessionController extends Controller
             if(!empty($presents) && !empty($request->participants)){
                 $nouveau_presents=array_diff($presents, $request->participants); 
                 foreach ($nouveau_presents as $nv) {
-                    \DB::table('Participant_session')->where(['session_id' => $session_id,'participant_id' =>$nv])->delete();
+                    \DB::table('participant_session')->where(['session_id' => $session_id,'participant_id' =>$nv])->delete();
                 }
             }
             return redirect('sessions');
