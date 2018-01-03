@@ -15,7 +15,7 @@
                         <div class="col-xs-7">
                             <div class="numbers">
                                 <p>Nombre de sessions</p>
-                                10
+                                {{$countSessions}}
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div class="col-xs-7">
                             <div class="numbers">
                                 <p>Nombres de cours</p>
-                                8
+                                {{$countCours}}
                             </div>
                         </div>
                     </div>

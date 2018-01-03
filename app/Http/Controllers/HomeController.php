@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Session;
+use App\Cour;
 use Carbon\Carbon; 
 
 class HomeController extends Controller
@@ -33,10 +34,15 @@ class HomeController extends Controller
             ->take(10)->get();
         $now = Carbon::now()->format('Y-m-d h:i');
         $sessions = Session::where('start','>', $now)->take(10)->get();
+
+        $countSessions= Session::count();
+        $countCours= Cour::count();
         
         return view('welcome', [
             'participants'=> $participants,
             'sessions'=> $sessions,
+            'countSessions'=> $countSessions,
+            'countCours'=> $countCours,
         ]);
     }
 }

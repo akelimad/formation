@@ -157,9 +157,10 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         /*
-         * excel export service provider
+         * excel export, entrust service provider 
         */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
     ],
 
@@ -207,6 +208,7 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 
