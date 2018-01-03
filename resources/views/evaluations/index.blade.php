@@ -31,27 +31,27 @@
                         </div>
                     @endif
                     @if(session()->has('no_response'))
-                        <div class="alert alert-info alert-dismissable" role="alert">
+                        <div class="alert alert-warning alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><i class="fa fa-info-circle"></i> {{ session()->get('no_response') }} </span>
-                        </div>
+                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_response') }} </span>
+                        </div> 
                     @endif
                     @if(session()->has('under_3month'))
-                        <div class="alert alert-info alert-dismissable" role="alert">
+                        <div class="alert alert-warning alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><i class="fa fa-info-circle"></i> {{ session()->get('under_3month') }} </span>
+                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('under_3month') }} </span>
                         </div>
                     @endif
                     @if(session()->has('no_survey'))
-                        <div class="alert alert-info alert-dismissable" role="alert">
+                        <div class="alert alert-warning alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>
-                            <span><i class="fa fa-info-circle"></i> {{ session()->get('no_survey') }} </span>
+                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_survey') }} </span>
                         </div>
                     @endif
                     <div class="row">

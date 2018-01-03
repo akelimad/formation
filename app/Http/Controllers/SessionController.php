@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\SessionRequest;
 use App\Session;
+use App\Reponse;
 use App\Participant_sessions;
 use App\Formateur;
 use App\Salle;
@@ -222,11 +223,35 @@ class SessionController extends Controller
         }
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $session = Session::find($id);
+        if($session->budgets){
+            foreach($session->budgets as $budget){
+                $budget->delete();
+            }  
+        }
+        if($session->evaluations){
+            foreach($session->evaluations as $evaluation){
+                foreach ($evaluation->questions as $question) {
+                    $reponses = Reponse::where(['question_id' => $question->id])->get();
+                    foreach ($reponses as $reponse) {
+                        $reponse->delete();          
+                    }
+                    $question->delete();
+                }
+                $evaluation->delete();
+            }  
+        }
+        //$parts_sess = Participant_sessions::where(['session_id'=> $session->id])->get();
+        // if($session->participants){
+        //     foreach($session->participants as $part_sess){
+        //         $part_sess->detach();
+        //     }  
+        // }
+        $session->participants()->detach();
+        $session->delete();
+        return redirect('sessions');
     }
-
-    
 
 
 }

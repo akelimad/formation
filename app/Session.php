@@ -16,8 +16,8 @@ class Session extends Model
     public function salle(){
         return $this->belongsTo('App\Salle');
     }
-    public function budget(){
-        return $this->hasOne('App\Budget');
+    public function budgets(){
+        return $this->hasMany('App\Budget');
     }
 
     /**

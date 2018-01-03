@@ -52,8 +52,10 @@ class CourController extends Controller
         return redirect('cours');
     }
 
-    public function destroy(){
-        
+    public function destroy(Request $request, $id){
+        $cour = Cour::find($id);
+        $cour->delete();
+        return redirect('cours');
     }
 
     public function export(){

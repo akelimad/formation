@@ -67,6 +67,7 @@ $().ready(function() {
     $('#participant_modal').appendTo("body");
     $('#questionnaire_modal').appendTo("body");
     $('#budget_modal').appendTo("body");
+    
     $('[data-toggle="tooltip"]').tooltip();
 
     $('#datatables').DataTable({
@@ -126,19 +127,21 @@ $().ready(function() {
         $this.find('input[value="'+value+'"]').attr('checked','checked');
     });
 
+    //delete evaluation
     $("#datatables").on('click', '.delete-evaluation',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'evaluations/'+id+'/delete';
         var $tr = $(this).closest('tr');
         swal({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci! toutes les questions et ses reponses associés seront aussi supprimés",
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
             showLoaderOnConfirm: true,
             preConfirm: function() {
             return new Promise(function(resolve) {
@@ -151,11 +154,206 @@ $().ready(function() {
                         "_token": token,
                     },
                 }).done(function(response){
-                    swal('Deleted!', 'evaluation has been deleted.', 'success');
+                    swal('Supprimée !', "L'evaluation a été supprimée avec succès.", 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    location.reload(); 
+                    //location.reload(); 
                 }).fail(function(){
-                    swal('Oops...', 'Something went wrong with ajax !', 'error');
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    //delete cours
+    $("#datatables").on('click', '.delete-cours',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'cours/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', 'Le cours a été supprimé avec succès.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    //delete cours
+    $("#datatables").on('click', '.delete-salle',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'salles/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimée!', 'La salle a été supprimée avec succès.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    //delete prestatire
+    $("#datatables").on('click', '.delete-prestataire',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'prestataires/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', 'Le prestatire a été supprimé ave succès.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    //delete formateur
+    $("#datatables").on('click', '.delete-formateur',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'formateurs/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', 'Le formateur a été supprimé ave succès.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    //delete session
+    $("#datatables").on('click', '.delete-session',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'sessions/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci! En supprimant une session tous les budgets, participants, evaluations, questions et ses reponses qui lui sont associés seront aussi supprimés",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimée!', 'La session a été supprimée ave succès.', 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
             });
             },
@@ -245,12 +443,13 @@ $().ready(function() {
     });
 
 
-    $('.realise').keyup(function(){
-        var prevu = parseInt($(".prevu").val());
-        var realise = parseInt($(".realise").val());
-        if($('.realise').val().length === 0){
-            $('.ajustement').val(0);  
+    $('body').on('keyup', '.realise', function(){
+        var $container = $(this).closest('.form-group');
+        var prevu = parseInt($($container).find(".prevu").val());
+        var realise = parseInt($($container).find(".realise").val());
+        if($($container).find('.realise').length === 0){
+            $($container).find('.ajustement').val(0);  
         }else{
-            $('.ajustement').val(prevu - realise);  
+            $($container).find('.ajustement').val(prevu - realise);  
         }
     });

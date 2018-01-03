@@ -48,7 +48,7 @@
                                         <a href="{{url('sessions/'.$session->id.'/show')}}" class="btn btn-fill btn-default btn-icon "><i class="fa fa-eye"></i></a>
                                         <a href="#" class="btn btn-fill btn-info btn-icon addBudget" data-toggle="modal" data-target="#budget_modal" data-id="{{$session->id}}" title="Ajouter une session"><i class="fa fa-usd"></i></a>
                                         <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -223,14 +223,13 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter les questions</h3>
+                                    <h3 class="modal-title text-center">Ajouter les budgets de la session</h3>
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form id="surveyForm" action="{{ url('budgets') }}" method="post">
+                                        <form id="" action="{{ url('budgets') }}" method="post" class="col-md-10 col-md-offset-1">
                                             {{ csrf_field() }}
                                             <div class="">
-                                                <h4 class="title">Ajouter un budget</h4>
                                                 <div class="row">
                                                     <!-- <div class="col-md-4">
                                                         <div class="form-group label-floating">
@@ -271,13 +270,13 @@
                                                             </div>
                                                             <div class="col-md-3">
                                                                 <label class="control-label">Montant prévu </label>
-                                                                <input type="number" class="form-control prevu" name="budgets[0][prevu]" placeholder="Prévu" required="" />
-                                                            </div>
-                                                            <div class="col-md-2">
-                                                                <label class="control-label">Montant réalisé </label>
-                                                                <input type="number" class="form-control realise" name="budgets[0][realise]" placeholder="Réalisé" required="" />
+                                                                <input type="number" class="form-control prevu" name="budgets[0][prevu]" placeholder="Prévu" min="0" required="" />
                                                             </div>
                                                             <div class="col-md-3">
+                                                                <label class="control-label">Montant réalisé </label>
+                                                                <input type="number" class="form-control realise" name="budgets[0][realise]" placeholder="Réalisé" min="0" required="" />
+                                                            </div>
+                                                            <div class="col-md-2">
                                                                 <label class="control-label">Ajustement </label>
                                                                 <input type="number" class="form-control ajustement"  name="budgets[0][ajustement]" placeholder="Ajustement" />
                                                             </div>

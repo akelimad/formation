@@ -27,6 +27,7 @@ Route::get('cours/create', 'CourController@create');
 Route::post('cours', 'CourController@store');
 Route::get('cours/{id}/edit', 'CourController@edit');
 Route::put('cours/{id}', 'CourController@update');
+Route::delete('cours/{id}/delete', 'CourController@destroy');
 Route::get('cours/export', 'CourController@export');
 
 Route::get('sessions', 'SessionController@index');
@@ -35,6 +36,7 @@ Route::get('sessions/{id}/show', 'SessionController@show');
 Route::post('sessions', 'SessionController@store');
 Route::get('sessions/{id}/edit', 'SessionController@edit');
 Route::put('sessions/{id}', 'SessionController@update');
+Route::delete('sessions/{id}/delete', 'SessionController@destroy');
 Route::get('evaluations/{id}/sendMail', 'EvaluationController@sendMailParticipants');
 
 Route::get('prestataires', 'FournisseurController@index');
@@ -42,12 +44,14 @@ Route::get('prestataires/create', 'FournisseurController@create');
 Route::post('prestataires', 'FournisseurController@store');
 Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
 Route::put('prestataires/{id}', 'FournisseurController@update');
+Route::delete('prestataires/{id}/delete', 'FournisseurController@destroy');
 
 Route::get('formateurs', 'FormateurController@index');
 Route::get('formateurs/create', 'FormateurController@create');
 Route::post('formateurs', 'FormateurController@store');
 Route::get('formateurs/{id}/edit', 'FormateurController@edit');
 Route::put('formateurs/{id}', 'FormateurController@update');
+Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
 
 Route::get('participants', 'ParticipantController@index');
 Route::get('participants/create', 'ParticipantController@create');
@@ -58,6 +62,7 @@ Route::get('salles/create', 'SalleController@create');
 Route::post('salles', 'SalleController@store');
 Route::get('salles/{id}/edit', 'SalleController@edit');
 Route::put('salles/{id}', 'SalleController@update');
+Route::delete('salles/{id}/delete', 'SalleController@destroy');
 
 Route::get('evaluations', 'EvaluationController@index');
 Route::get('evaluations/create', 'EvaluationController@create');

@@ -44,8 +44,9 @@
                                         @endif
                                     </td>
                                     <td class="text-right">
+                                        {{ csrf_field() }}
                                         <a href="{{ url('salles/'.$salle->id.'/edit') }}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

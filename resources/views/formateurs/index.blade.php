@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
+                <div class="content"> 
                     <h4 class="title">La liste des formateurs <a href="{{ url('formateurs/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
@@ -31,8 +31,9 @@
                                     <td> {{ $formateur->tel }} </td>
                                     <td> {{ $formateur->rating ? $formateur->rating .'%' : '0%' }} </td>
                                     <td class="text-right">
+                                        {{ csrf_field() }}
                                         <a href="{{url('formateurs/'.$formateur->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

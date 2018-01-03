@@ -25,7 +25,7 @@ class SalleController extends Controller
         if($file = $request->hasFile('photo')) {
             $file = $request->file('photo') ;
             
-            $fileName = $file->getClientOriginalName() ;
+            $fileName = time()."_".$file->getClientOriginalName();
             $destinationPath = public_path('/sallePhotos') ;
 
             $file->move($destinationPath,$fileName);
@@ -49,7 +49,7 @@ class SalleController extends Controller
         if($file = $request->hasFile('photo')) {
             $file = $request->file('photo') ;
             
-            $fileName = $file->getClientOriginalName() ;
+            $fileName = time()."_".$file->getClientOriginalName() ;
             $destinationPath = public_path('/sallePhotos') ;
 
             $file->move($destinationPath,$fileName);
@@ -59,7 +59,12 @@ class SalleController extends Controller
         return redirect('salles');
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $salle = Salle::find($id);
+        $photo = $salle->photo;
+        $filename = public_path().'/sallePhotos/'.$photo;
+        \File::delete($filename);
+        $salle->delete();
+        return redirect('salles');
     }
 }

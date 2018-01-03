@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en"> 
 <head>
-    <meta charset="utf-8" >
     <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.html" >
     <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+    <meta charset="UTF-8">
 
     <title>Accueil | Plateforme de gestion de formation</title>
 
@@ -305,7 +305,7 @@
     <script src="{{ asset('assets/js/amaze.js')}}"></script>
     <!-- Material Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ asset('assets/js/demo.js')}}"></script>
-    <script src="{{ asset('assets/js/charts/chartjs-charts.js')}}"></script>
+    <!-- <script src="{{ asset('assets/js/charts/chartjs-charts.js')}}"></script> -->
     <script src="{{ asset('assets/js/script.js')}}?v={{ time() }}"></script>
 
     @yield('javascript')

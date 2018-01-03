@@ -39,8 +39,9 @@
                                     <td> {{ $cour->duree }} </td>
                                     <td> {{ $cour->prix }} </td>
                                     <td class="text-right">
+                                        {{ csrf_field() }}
                                         <a href="{{url('cours/'.$cour->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-cours" data-id="{{$cour->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

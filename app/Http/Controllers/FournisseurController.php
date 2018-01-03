@@ -57,7 +57,9 @@ class FournisseurController extends Controller
         return redirect('prestataires');
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $prestataire =  Fournisseur::find($id);
+        $prestataire->delete();
+        return redirect('prestataires');
     }
 }

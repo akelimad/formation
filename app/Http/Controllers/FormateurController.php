@@ -10,7 +10,7 @@ use Illuminate\Http\UploadedFile;
 class FormateurController extends Controller
 {
     public function index(){
-        $Formateurs = Formateur::all();
+        $Formateurs = Formateur::orderBy('id','DESC')->get();
         return view('formateurs.index', ['formateurs'=>$Formateurs]);
     }
 
@@ -30,7 +30,7 @@ class FormateurController extends Controller
             
             $file = $request->file('cv') ;
             
-            $fileName = $file->getClientOriginalName() ;
+            $fileName = time()."_".$file->getClientOriginalName() ;
             $destinationPath = public_path('/cvs') ;
 
             $file->move($destinationPath,$fileName);
@@ -60,7 +60,7 @@ class FormateurController extends Controller
             
             $file = $request->file('cv') ;
             
-            $fileName = $file->getClientOriginalName() ;
+            $fileName = time()."_".$file->getClientOriginalName() ;
             $destinationPath = public_path('/cvs') ;
 
             $file->move($destinationPath,$fileName);
@@ -73,7 +73,9 @@ class FormateurController extends Controller
         return redirect('formateurs');
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $formateur = Formateur::find($id);
+        $formateur->delete();
+        return redirect('formateurs');
     }
 }

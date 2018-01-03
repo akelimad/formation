@@ -133,3 +133,6 @@ label.star:before {
 
 /******  end Rating with posibilite half selection *****/
 
+#budgets-wrap .has-feedback .form-control{
+  padding-right: 0 !important;
+}
