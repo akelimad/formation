@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Role;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
@@ -56,6 +57,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function showRegistrationForm() {
+        $roles = Role::all();
+        return view('auth.register', ['roles'=> $roles]);
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *
@@ -64,11 +70,17 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+
+        // Give each new user the role selected
+        $role = $data['role'];
+        $user->attachRole( $role );
+
+        return $user;
     }
 
 }

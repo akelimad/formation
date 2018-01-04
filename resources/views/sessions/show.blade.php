@@ -12,7 +12,7 @@
                             <div class="col-md-12 col-sm-12 col-xs-12 mb40">
                                 <div class="item">
                                     <p> Participants: </p>
-                                    @foreach($s->participants as $par)
+                                    @foreach($p_presents as $par)
                                         <span class="btn btn-primary">{{ $par->nom }}</span>
                                     @endforeach
                                 </div>

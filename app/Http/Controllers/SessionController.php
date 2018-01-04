@@ -103,7 +103,14 @@ class SessionController extends Controller
 
     public function show($id){
         $session = Session::find($id);
-        return view('sessions.show', ['s' => $session]);
+        $p_presents = \DB::table('participant_session')
+            ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
+            ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
+            ->select('participants.*')
+            ->where('participant_session.session_id','=',$session->id)
+            ->where('participant_session.present','=',1)
+            ->get();
+        return view('sessions.show', ['s' => $session, 'p_presents' => $p_presents]);
     }
 
     public function edit($id){
@@ -216,7 +223,9 @@ class SessionController extends Controller
             if(!empty($presents) && !empty($request->participants)){
                 $nouveau_presents=array_diff($presents, $request->participants); 
                 foreach ($nouveau_presents as $nv) {
-                    \DB::table('participant_session')->where(['session_id' => $session_id,'participant_id' =>$nv])->delete();
+                    \DB::table('participant_session')
+                    ->where(['session_id' => $session_id,'participant_id' =>$nv])
+                    ->update(['present'=>0]);
                 }
             }
             return redirect('sessions');

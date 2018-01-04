@@ -57,13 +57,18 @@ class QuestionController extends Controller
 
     public function storeResponses(Request $request,$id, $token){
         $participants = Participant::all();
-
+        $evaluation = Evaluation::find($id);
+        if($evaluation->type == "a-froid"){
+            $eval_type= "à froid";
+        }else if($evaluation->type == "a-chaud"){
+            $eval_type= "à chaud";
+        }
         foreach ($participants as $participant) {
             if(md5($participant->id.$participant->email) == $token){
                 $participant_email = $participant->email;
                 $participant_nom = $participant->nom;
                 $participant_id = $participant->id;
-            }
+            } 
         }
 
         $reponses = array_combine($request->questionsIds, $request->reponses);
@@ -78,6 +83,7 @@ class QuestionController extends Controller
         $sent = Mail::send('emails.confirm_participant', 
             [
                 'participant'=>$participant_nom, 
+                'eval_type'=>$eval_type 
             ]
             , function ($m) use($participant_email, $participant_nom){
                 $m->to($participant_email, $participant_nom)->subject('Confirmation');

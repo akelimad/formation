@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des utilisateurs <a href="{{ url('register') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
+                    <h4 class="title">La liste des rôles <a href="{{ url('utilisateurs/roles/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -15,23 +15,17 @@
                             <thead>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Date d'ajout</th>
-                                    <th>Rôle</th>
+                                    <th>Le nom affiché</th>
+                                    <th>Description</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($users as $user)
+                                @foreach ($roles as $role)
                                 <tr>
-                                    <td> {{ $user->name }} </td>
-                                    <td> {{ $user->email }} </td>
-                                    <td> {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i')}} </td>
-                                    <td> 
-                                        @foreach($user->roles as $role)
-                                            {{$role->name}}
-                                        @endforeach
-                                    </td>
+                                    <td> {{ $role->name }} </td>
+                                    <td> {{ $role->display_name ? $role->display_name : '---' }} </td>
+                                    <td> {{ $role->description ? $role->description : '---' }} </td>
                                     <td class="text-right">
                                         <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
@@ -43,9 +37,8 @@
                             <tfoot>
                                 <tr>
                                     <th>Nom</th>
-                                    <th>Email</th>
-                                    <th>Date d'ajout</th>
-                                    <th>Rôle</th>
+                                    <th>Le nom affiché</th>
+                                    <th>Description</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

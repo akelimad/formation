@@ -174,6 +174,7 @@
                             </ul>
                         </div>
                     </li>
+                    @role('Admin')
                     <li class="{{ Request::is('utilisateurs*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#users" class="collapsed" aria-expanded="false">
                             <i class="fa fa-users"></i>
@@ -187,15 +188,18 @@
                                     <a href="{{ url('utilisateurs') }}"><i class="" aria-hidden="true"></i> Utilisateurs</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('utilisateurs/droits-acces')}}"><i class="" aria-hidden="true"></i> Droits d'accès</a>
+                                    <a href="{{url('utilisateurs/roles')}}"><i class="" aria-hidden="true"></i> Rôles</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('register') }}"><i class="" aria-hidden="true"></i> Ajouter </a>
+                                    <a href="{{url('utilisateurs/permissions')}}"><i class="" aria-hidden="true"></i> Permissions</a>
                                 </li>
+                                <!-- <li>
+                                    <a href="{{ url('register') }}"><i class="" aria-hidden="true"></i> Ajouter </a>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
-
+                    @endrole
 
                 </ul>
             </div>
@@ -226,7 +230,11 @@
                             @else
                                 <li class="dropdown">
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                                        {{ Auth::user()->name }} <span class="caret"></span>
+                                        {{ Auth::user()->name }} :
+                                        @foreach(Auth::user()->roles as $role)
+                                            {{$role->name}}
+                                        @endforeach
+                                        <span class="caret"></span>
                                     </a>
 
                                     <ul class="dropdown-menu" role="menu">
