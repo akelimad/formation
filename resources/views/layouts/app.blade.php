@@ -55,7 +55,7 @@
                             <p>Tableau de board</p>
                         </a>
                     </li>
-
+                    @permission('prestataires')
                     <li class="{{ Request::is('prestataires*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#prestataires" class="collapsed" aria-expanded="false">
                             <i class="fa fa-handshake-o"></i>
@@ -77,7 +77,8 @@
                             </ul>
                         </div>
                     </li>
-
+                    @endpermission
+                    @permission('cours')
                     <li class="{{ Request::is('cours*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#formations" class="collapsed" aria-expanded="false">
                             <i class="fa fa-book"></i>
@@ -96,7 +97,8 @@
                             </ul>
                         </div>
                     </li>
-
+                    @endpermission
+                    @permission('salles')
                     <li class="{{ Request::is('salles*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#salles" class="collapsed" aria-expanded="false">
                             <i class="fa fa-university"></i>
@@ -115,7 +117,8 @@
                             </ul>
                         </div>
                     </li>
-
+                    @endpermission
+                    @permission('sessions')
                     <li class="{{ Request::is('sessions*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#cours" class="collapsed" aria-expanded="false">
                             <i class="fa fa-calendar"></i>
@@ -126,55 +129,59 @@
                         <div class="collapse" id="cours" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('sessions') }}">Sessions</a>
+                                    <a href="{{ url('sessions') }}"><i class="fa fa-list"></i> Sessions</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('sessions/create') }}">Ajouter</a>
+                                    <a href="{{ url('sessions/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('budgets') }}">Budgets</a>
+                                    <a href="{{ url('budgets') }}"><i class="fa fa-usd"></i> Budgets</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-
+                    @endpermission
+                    @permission('rapports')
                     <li class="{{ Request::is('rapports*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#session" class="collapsed" aria-expanded="false">
                             <i class="fa fa-file-text-o"></i>
-                            <p>Rapport
+                            <p>Rapports
                                 <b class="caret"></b>
                             </p>
                         </a>
                         <div class="collapse" id="session" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('rapports/budgetsFormation') }}">Standard</a>
+                                    <a href="{{ url('rapports/budgetsFormation') }}"><i class="fa fa-file-o"></i> Standard</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('rapports/formationUtilisateur') }}">Personnalisé</a>
+                                    <a href="{{ url('rapports/formationUtilisateur') }}"><i class="fa fa-file-text-o"></i> Personnalisé</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
+                    @endpermission
+                    @permission('evaluations')
                     <li class="{{ Request::is('evaluations*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#evaluation" class="collapsed" aria-expanded="false">
                             <i class="fa fa-question-circle-o"></i>
-                            <p>Evaluation
+                            <p>Evaluations
                                 <b class="caret"></b>
                             </p>
                         </a>
                         <div class="collapse" id="evaluation" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('evaluations') }}"><i class="" aria-hidden="true"></i> Evaluations</a>
+                                    <a href="{{ url('evaluations') }}"><i class="fa fa-list" aria-hidden="true"></i> Evaluations</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('evaluations/create') }}"><i class="" aria-hidden="true"></i> Ajouter</a>
+                                    <a href="{{ url('evaluations/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                    @role('Admin')
+                    @endpermission
+                    @permission('utilisateurs')
                     <li class="{{ Request::is('utilisateurs*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#users" class="collapsed" aria-expanded="false">
                             <i class="fa fa-users"></i>
@@ -185,22 +192,21 @@
                         <div class="collapse" id="users" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('utilisateurs') }}"><i class="" aria-hidden="true"></i> Utilisateurs</a>
+                                    <a href="{{ url('utilisateurs') }}"><i class="fa fa-list" aria-hidden="true"></i> Utilisateurs</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('utilisateurs/roles')}}"><i class="" aria-hidden="true"></i> Rôles</a>
+                                    <a href="{{url('utilisateurs/roles')}}"><i class="fa fa-list" aria-hidden="true"></i> Rôles</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('utilisateurs/permissions')}}"><i class="" aria-hidden="true"></i> Permissions</a>
+                                    <a href="{{url('utilisateurs/permissions')}}"><i class="fa fa-list" aria-hidden="true"></i> Permissions</a>
                                 </li>
                                 <!-- <li>
-                                    <a href="{{ url('register') }}"><i class="" aria-hidden="true"></i> Ajouter </a>
+                                    <a href="{{ url('utilisateurs/droits-acces') }}"><i class="" aria-hidden="true"></i> Droits d'accès </a>
                                 </li> -->
                             </ul>
                         </div>
                     </li>
-                    @endrole
-
+                    @endpermission
                 </ul>
             </div>
         </div>

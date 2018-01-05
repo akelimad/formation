@@ -74,7 +74,7 @@
                             <tr>
                                 <th>Nom complet</th>
                                 <th>Email</th>
-                                <th>Formation</th>
+                                <th>Session</th>
                             </tr>
                         </thead>
                         <tbody>

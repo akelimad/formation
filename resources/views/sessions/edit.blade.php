@@ -140,7 +140,7 @@
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Description</label>
-                                    <textarea class="form-control" name="description" placeholder="Description" rows="3">{{$s->commentaire}}</textarea>
+                                    <textarea class="form-control" name="description" placeholder="Description" rows="3">{{$s->description}}</textarea>
                                 </div>
                             </div>
                         </div>

@@ -27,8 +27,8 @@
                                     <td> {{ $permission->display_name ? $permission->display_name : '----' }} </td>
                                     <td> {{ $permission->description ? $permission->description  : '----'}} </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="{{url('utilisateurs/permissions/'.$permission->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon remove disabled" disabled><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

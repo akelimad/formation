@@ -9,6 +9,7 @@ use Illuminate\Http\UploadedFile;
 
 class FormateurController extends Controller
 {
+
     public function index(){
         $Formateurs = Formateur::orderBy('id','DESC')->get();
         return view('formateurs.index', ['formateurs'=>$Formateurs]);

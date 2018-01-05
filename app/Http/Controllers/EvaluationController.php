@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use DateTime;
 class EvaluationController extends Controller
 {
+
     public function index(){
         $evaluations = \DB::table('evaluations')
             ->join('sessions', 'sessions.id', '=', 'evaluations.session_id')

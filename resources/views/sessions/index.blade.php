@@ -24,12 +24,13 @@
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
-                                    <th>Nom de la sessions</th>
+                                    <th>Nom de la session</th>
                                     <th>Cours</th>
                                     <th>Formateur</th>
                                     <th>Salle</th>
                                     <th>Lieu</th>
                                     <th>Date de début</th>
+                                    <th>Date de fin</th>
                                     <th>Statut</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
@@ -42,25 +43,27 @@
                                     <td> {{ $session->formateur->nom }} </td>
                                     <td> {{ $session->salle->numero }} </td>
                                     <td> {{ $session->lieu }} </td>
-                                    <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y H:i')}} </td>
+                                    <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y')}} </td>
+                                    <td> {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
-                                        <a href="{{url('sessions/'.$session->id.'/show')}}" class="btn btn-fill btn-default btn-icon "><i class="fa fa-eye"></i></a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon addBudget" data-toggle="modal" data-target="#budget_modal" data-id="{{$session->id}}" title="Ajouter une session"><i class="fa fa-usd"></i></a>
-                                        <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}"><i class="ti-close"></i></a>
+                                        <a href="{{url('sessions/'.$session->id)}}" class="btn btn-fill btn-default btn-icon " title="Afficher les détails"><i class="fa fa-eye"></i></a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon addBudget" data-toggle="modal" data-target="#budget_modal" data-id="{{$session->id}}" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
+                                        <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit" title="Modifier"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nom de la sessions</th>
+                                    <th>Nom de la session</th>
                                     <th>Cour</th>
                                     <th>Formateur</th>
                                     <th>Salle</th>
                                     <th>Lieu</th>
                                     <th>Date de début</th>
+                                    <th>Date de fin</th>
                                     <th>Statut</th>
                                     <th class="text-right">Actions</th>
                                 </tr>

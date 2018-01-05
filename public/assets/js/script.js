@@ -361,6 +361,45 @@ $().ready(function() {
         }); 
     });
 
+    //delete session
+    $("#datatables").on('click', '.delete-user',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'utilisateurs/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci! En supprimant un utilisateur, les cours qui lui sont associés seront aussi supprimés",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', "L'utilisateur a été supprimé ave succès.", 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    //location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
 
 });
     demo.initFormExtendedDatetimepickers();

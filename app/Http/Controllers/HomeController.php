@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Session;
 use App\Cour;
 use Carbon\Carbon; 
-use Illuminate\Support\Facades\Route;
 
 class HomeController extends Controller
 {
@@ -16,10 +15,10 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     /**
      * Show the application dashboard.
@@ -28,15 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        foreach (Route::getRoutes() as $Route) {
-            $Routes[] = [
-                'methods' => $Route->getMethods(),
-                'path' => $Route->getPath(),
-                'action' => $Route->getActionName(),
-            ];
-        }
-
-        //dd($Routes);
 
         $participants = \DB::table('participant_session')
             ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')

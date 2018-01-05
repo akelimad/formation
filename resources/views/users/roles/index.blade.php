@@ -27,7 +27,7 @@
                                     <td> {{ $role->display_name ? $role->display_name : '---' }} </td>
                                     <td> {{ $role->description ? $role->description : '---' }} </td>
                                     <td class="text-right">
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="{{url('utilisateurs/roles/'.$role->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>

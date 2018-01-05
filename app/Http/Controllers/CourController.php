@@ -11,6 +11,7 @@ use DateTime;
 
 class CourController extends Controller
 {
+
     public function index(){
         $cours = Cour::all();
         return view('cours.index', ['cours'=>$cours]);

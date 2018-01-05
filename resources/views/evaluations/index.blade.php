@@ -74,6 +74,7 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
+                                    <th>Envoyé le</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -83,6 +84,7 @@
                                     <td> {{ $evaluation->nom }} </td>
                                     <td> {{ $evaluation->type =='a-chaud' ? 'A chaud' : 'A froid' }} </td>
                                     <td> {{ $evaluation->session }} </td>
+                                    <td> {{ Carbon\Carbon::parse($evaluation->updated_at)->format('d/m/Y')}} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
@@ -100,6 +102,7 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
+                                    <th>Envoyé le</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

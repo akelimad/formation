@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Question;
 use App\Reponse;
 use App\Participant;
+use App\Evaluation;
 use App\Http\Requests;
 use Mail;
 
@@ -17,6 +18,7 @@ class QuestionController extends Controller
 
     public function questionnaire($id, $token){
         $q = Question::where('evaluation_id', $id)->get();
+        $check = Reponse::where(['participant_id' =>])
         return view('questionnaires.index',['questions' => $q, 'eval_id' => $id, 'token' => $token ]);
     }
 

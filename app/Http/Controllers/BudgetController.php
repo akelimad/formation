@@ -9,6 +9,7 @@ use App\Http\Requests;
 
 class BudgetController extends Controller
 {
+    
     public function index(){
         $budgets = Budget::all();
         return view('budgets.index', ['budgets'=>$budgets]);

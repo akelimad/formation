@@ -6,7 +6,9 @@
     <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
 
-    <title>Authentification | Plateforme de gestion de formation</title>
+    <title>
+        {{ Request::is('questionnaire*') ? 'Questionnaire' : 'Authentification' }} | Plateforme de gestion de formation
+    </title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' >
     <meta name="viewport" content="width=device-width" >

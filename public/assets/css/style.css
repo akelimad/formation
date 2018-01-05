@@ -136,3 +136,7 @@ label.star:before {
 #budgets-wrap .has-feedback .form-control{
   padding-right: 0 !important;
 }
+
+.nav > li > a:hover, .nav > li > a:focus{
+  background-color: #f55e244a;
+}
