@@ -27,7 +27,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $participants = \DB::table('participant_session')
             ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
             ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
@@ -38,12 +37,21 @@ class HomeController extends Controller
 
         $countSessions= Session::count();
         $countCours= Cour::count();
+
+        $sommeBudgets = \DB::table('budgets as b')
+            ->select(array(
+                    \DB::raw("sum(b.prevu) as 'totalPrevu'"), 
+                    \DB::raw("sum(b.realise) as 'totalRealise'")
+                ))
+            ->get();
+        //dd($sommeBudgets[0]->totalPrevu);
         
         return view('welcome', [
             'participants'=> $participants,
             'sessions'=> $sessions,
             'countSessions'=> $countSessions,
             'countCours'=> $countCours,
+            'sommeBudgets'=> $sommeBudgets,
         ]);
     }
 }

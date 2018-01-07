@@ -31,6 +31,7 @@ class SalleController extends Controller
             $file->move($destinationPath,$fileName);
             $salle->photo = $fileName ;
         }
+        $salle->disposition= $request->input('disposition');
         $salle->save();
         return redirect('salles');
 
@@ -55,6 +56,7 @@ class SalleController extends Controller
             $file->move($destinationPath,$fileName);
             $salle->photo = $fileName ;
         }
+        $salle->disposition= $request->input('disposition');
         $salle->save();
         return redirect('salles');
     }
@@ -66,5 +68,13 @@ class SalleController extends Controller
         \File::delete($filename);
         $salle->delete();
         return redirect('salles');
+    }
+
+    public function gestion(Request $request){
+        $salle = Salle::find($request->salle);
+        $selected= $request->salle;
+        $salles = Salle::all();
+        if($request->salle) $sessions_salle = $salle->sessions;
+        return view('salles.gestion', compact('salles', 'selected','sessions_salle'));
     }
 }

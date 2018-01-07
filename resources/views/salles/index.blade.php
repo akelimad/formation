@@ -27,6 +27,7 @@
                                     <th>Capacité</th>
                                     <th>Equipements</th>
                                     <th>Photo</th>
+                                    <th>Disposition</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -43,6 +44,7 @@
                                             <img src="{{url('assets/img/missing-photo.png')}}" width="30" height="20" alt=""> 
                                         @endif
                                     </td>
+                                    <td> {{ $salle->disposition }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="{{ url('salles/'.$salle->id.'/edit') }}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
@@ -57,6 +59,7 @@
                                     <th>Capacité</th>
                                     <th>Equipements</th>
                                     <th>Photo</th>
+                                    <th>Disposition</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

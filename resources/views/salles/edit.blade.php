@@ -39,7 +39,14 @@
                                 </div>
                             </div>
                         </div>
-
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group label-floating">
+                                    <label class="control-label">Disposition</label>
+                                    <input class="form-control" name="disposition" type="text" placeholder="Disposition" value="{{$s->disposition}}" />
+                                </div>
+                            </div>
+                        </div>
                         <div class="category form-category">
                             <star>*</star> Champ obligatoire</div>
                         <div class="text-center">

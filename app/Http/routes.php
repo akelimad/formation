@@ -79,34 +79,38 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires']], function() {
     Route::resource('prestataires', 'FournisseurController');
 });
-// Route::get('formateurs', 'FormateurController@index');
-// Route::get('formateurs/create', 'FormateurController@create');
-// Route::post('formateurs', 'FormateurController@store');
-// Route::get('formateurs/{id}/edit', 'FormateurController@edit');
-// Route::put('formateurs/{id}', 'FormateurController@update');
-// Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
+
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {
-    Route::resource('formateurs', 'FormateurController');
+    Route::get('formateurs', 'FormateurController@index');
+    Route::get('formateurs/create', 'FormateurController@create');
+    Route::post('formateurs', 'FormateurController@store');
+    Route::get('formateurs/{id}/edit', 'FormateurController@edit');
+    Route::put('formateurs/{id}', 'FormateurController@update');
+    Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
+    //Route::resource('formateurs', 'FormateurController');
+    Route::get('formateurs/gestion', 'FormateurController@gestion');
 });
 
-// Route::get('salles', 'SalleController@index');
-// Route::get('salles/create', 'SalleController@create');
-// Route::post('salles', 'SalleController@store');
-// Route::get('salles/{id}/edit', 'SalleController@edit');
-// Route::put('salles/{id}', 'SalleController@update');
-// Route::delete('salles/{id}/delete', 'SalleController@destroy');
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], function() {
-    Route::resource('salles', 'SalleController');
+    Route::get('salles', 'SalleController@index');
+    Route::get('salles/create', 'SalleController@create');
+    Route::post('salles', 'SalleController@store');
+    Route::get('salles/{id}/edit', 'SalleController@edit');
+    Route::put('salles/{id}', 'SalleController@update');
+    Route::delete('salles/{id}/delete', 'SalleController@destroy');
+    //Route::resource('salles', 'SalleController');
+    Route::get('salles/gestion', 'SalleController@gestion');
 });
 
-// Route::get('evaluations', 'EvaluationController@index');
-// Route::get('evaluations/create', 'EvaluationController@create');
-// Route::post('evaluations', 'EvaluationController@store');
-// Route::get('evaluations/{id}/edit', 'EvaluationController@edit');
-// Route::put('evaluations/{id}', 'EvaluationController@update');
-// Route::delete('evaluations/{id}/delete', 'EvaluationController@destroy');
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations']], function() {
-    Route::resource('evaluations', 'EvaluationController');
+    Route::get('evaluations', 'EvaluationController@index');
+    Route::get('evaluations/create', 'EvaluationController@create');
+    Route::post('evaluations', 'EvaluationController@store');
+    Route::get('evaluations/{id}/edit', 'EvaluationController@edit');
+    Route::put('evaluations/{id}', 'EvaluationController@update');
+    Route::delete('evaluations/{id}/delete', 'EvaluationController@destroy');
+    //Route::resource('evaluations', 'EvaluationController');
+    
     Route::get('evaluations/{id}/sendMail', 'EvaluationController@sendMailParticipants');
     Route::get('evaluations/{id}/{type}', 'EvaluationController@globalEvaluation');
     Route::get('evaluations/{id}/{type}/{nom}', 'EvaluationController@participantEvaluation');

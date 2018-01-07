@@ -33,7 +33,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Email</label>
-                                    <input class="form-control" name="email" type="text" placeholder="example@gmail.com" value="{{$f->email}}"/>
+                                    <input class="form-control" name="email" type="email" placeholder="example@gmail.com" value="{{$f->email}}"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -70,7 +70,9 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Télécharger votre C.V en pièce jointe</label>
                                     <input type="file" name="cv" class="form-control" accept=".docx,.pdf" > 
-                                    <a href="{{url('/cvs/'.$f->cv)}}"><i class="fa fa-download"></i> Télécharger C.V </a>   
+                                    @if(!empty($f->cv))
+                                        <a href="{{url('/cvs/'.$f->cv)}}"><i class="fa fa-download"></i> Télécharger C.V </a>
+                                    @endif   
                                 </div>
                             </div>
                         </div>

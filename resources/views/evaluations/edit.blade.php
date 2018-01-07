@@ -24,7 +24,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Type</label>
-                                    <select class="selectpicker" required="" name="type" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                    <select class="form-control" required="" name="type">
                                         <option disabled selected value="">-- select --</option>
                                         <option value="a-chaud" {{$e->type = 'a-chaud' ? 'selected':''}}> A chaud </option>
                                         <option value="a-froid" {{$e->type = 'a-froid' ? 'selected':''}}> A froid </option>
@@ -34,7 +34,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Session <star>*</star></label>
-                                    <select class="selectpicker" required="" name="session" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                    <select class="form-control" required="" name="session" disabled="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($sessions as $session)
                                             <option value="{{ $session->id }}" {{$e->session = $session->id ? 'selected':''}} > {{ $session->nom }} </option>

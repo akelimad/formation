@@ -8,12 +8,13 @@
                 <div class="content">
                     
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <h4 class="title">La liste des sessions </h4>
                         </div>
-                        <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#formateur_modal"> <i class="fa fa-plus"></i> Formateur </a>
+                        <div class="col-md-6">
+                            <a href="{{url('sessions/create')}}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Session </a>
                             <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#participant_modal"> <i class="fa fa-plus"></i> Participant </a>
+                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#formateur_modal"> <i class="fa fa-plus"></i> Formateur </a>
                         </div>
                     </div>
                     

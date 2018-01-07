@@ -32,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Email</label>
-                                    <input class="form-control" name="email" type="text" placeholder="example@gmail.com" />
+                                    <input class="form-control" name="email" type="email" placeholder="example@gmail.com" />
                                 </div>
                             </div>
                             <div class="col-md-6">

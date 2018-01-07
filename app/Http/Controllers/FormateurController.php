@@ -79,4 +79,12 @@ class FormateurController extends Controller
         $formateur->delete();
         return redirect('formateurs');
     }
+
+    public function gestion(Request $request){
+        $formateur = Formateur::find($request->formateur);
+        $selected= $request->formateur;
+        $formateurs = Formateur::all();
+        if($request->formateur) $sessions_formateur = $formateur->sessions;
+        return view('formateurs.gestion', compact('formateurs', 'selected','sessions_formateur'));
+    }
 }

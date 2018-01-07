@@ -25,7 +25,7 @@ class EvaluationController extends Controller
     }
 
     public function create(){
-        $sessions = Session::all();
+        $sessions = Session::where('statut', '=', 'Terminé')->get();
         return view('evaluations.create', ['sessions'=> $sessions]);
     }
 
@@ -110,7 +110,7 @@ class EvaluationController extends Controller
 
     public function edit($id){
         $evaluation = Evaluation::find($id);
-        $sessions = Session::all();
+        $sessions = Session::where('statut', '=', 'Terminé')->get();
         return view('evaluations.edit', ['e'=> $evaluation, 'sessions' => $sessions]);
     }
 

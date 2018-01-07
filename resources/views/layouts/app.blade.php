@@ -74,6 +74,9 @@
                                 <li>
                                     <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-list"></i> Gestion de formateurs</a>
+                                </li>
                             </ul>
                         </div>
                     </li>
@@ -113,6 +116,9 @@
                                 </li>
                                 <li>
                                     <a href="{{url('salles/create')}}"><i class="fa fa-plus"></i> Ajouter</a>
+                                </li>
+                                <li>
+                                    <a href="{{url('salles/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
                             </ul>
                         </div>
@@ -272,7 +278,7 @@
 
     <!--   Core JS Files   -->
     @if(Request::is('evaluations*'))
-    <script src='//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+    <script src="{{ asset('assets/vendors/jquery-2.1.3.min.js')}}" type="text/javascript"></script> 
     @else
     <script src="{{ asset('assets/vendors/jquery-3.1.1.min.js')}}" type="text/javascript"></script> 
     @endif

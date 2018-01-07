@@ -45,16 +45,17 @@
             <div class="card">
                 <div class="content">
                     <div class="row">
-                        <div class="col-xs-5">
+                        <div class="col-xs-4">
                             <div class="icon-big icon-success text-center">
                                 DHS
                             </div>
                         </div>
-                        <div class="col-xs-7">
+                        <div class="col-xs-8">
                             <div class="numbers">
                                 <p>Budget</p>
-                                1200 DH
                             </div>
+                                <span class="badge">Prevu: {{$sommeBudgets[0]->totalPrevu}}</span>
+                                <span class="badge">Realisé: {{$sommeBudgets[0]->totalRealise}}</span>
                         </div>
                     </div>
                 </div>
