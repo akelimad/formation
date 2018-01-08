@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des utilisateurs <a href="{{ url('register') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
+                    <h4 class="title">La liste des utilisateurs <a href="{{ url('utilisateurs/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -34,7 +34,7 @@
                                     </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="{{url('utilisateurs/'.$user->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>

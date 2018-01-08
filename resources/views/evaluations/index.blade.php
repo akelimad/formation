@@ -22,6 +22,14 @@
                             <span><i class="fa fa-check-circle-o"></i> {{ session()->get('mails_sent') }} </span>
                         </div>
                     @endif
+                    @if(session()->has('remembre_mails_sent'))
+                        <div class="alert alert-success alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert">
+                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                            </button>
+                            <span><i class="fa fa-check-circle-o"></i> {{ session()->get('remembre_mails_sent') }} </span>
+                        </div>
+                    @endif
                     @if(session()->has('survey_add'))
                         <div class="alert alert-success alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
@@ -74,7 +82,9 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
-                                    <th>Envoyé le</th>
+                                    <th>Créée le</th>
+                                    <th>Envoyée le</th>
+                                    <th>Rappelée le</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -84,11 +94,14 @@
                                     <td> {{ $evaluation->nom }} </td>
                                     <td> {{ $evaluation->type =='a-chaud' ? 'A chaud' : 'A froid' }} </td>
                                     <td> {{ $evaluation->session }} </td>
-                                    <td> {{ Carbon\Carbon::parse($evaluation->updated_at)->format('d/m/Y')}} </td>
+                                    <td> {{ $evaluation->created_at ? Carbon\Carbon::parse($evaluation->created_at)->format('d/m/Y') : '---' }} </td>
+                                    <td> {{ $evaluation->envoye_le ? Carbon\Carbon::parse($evaluation->envoye_le)->format('d/m/Y') : '---' }} </td>
+                                    <td> {{ $evaluation->rappele_le ? Carbon\Carbon::parse($evaluation->rappele_le)->format('d/m/Y') : '---' }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/sendMail') }}" class="btn btn-fill btn-success btn-icon sendMail" title="Envoyer un email aux participants" data-toggle="tooltip"><i class="fa fa-envelope"></i></a>
+                                        <a href="{{ url('evaluations/'.$evaluation->id.'/remembreMail') }}" class="btn btn-fill btn-warning btn-icon sendMail" title="Rappeler les participants qui n'ont pas repondu" data-toggle="tooltip"><i class="fa fa-refresh"></i></a>
                                         <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
                                         <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
                                         <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
@@ -102,7 +115,9 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
+                                    <th>Créée le</th>
                                     <th>Envoyé le</th>
+                                    <th>Rappelé le</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

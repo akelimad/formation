@@ -14,7 +14,7 @@
                                     <button type="button" class="close" data-dismiss="alert">
                                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                                     </button>
-                                    <span><strong>Erreur!</strong> {{ $error }}</span>
+                                    <span><strong>Attention !</strong> {{ $error }}</span>
                                 </div>
                             @endforeach
                         @endif

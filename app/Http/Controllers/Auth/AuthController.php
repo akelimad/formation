@@ -29,7 +29,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/utilisateurs';
     protected $redirectAfterLogout = '/login';
 
     /**
@@ -68,7 +68,7 @@ class AuthController extends Controller
      * @param  array  $data
      * @return User
      */
-    protected function create(array $data)
+    public function store(array $data)
     {
         $user = User::create([
             'name' => $data['name'],

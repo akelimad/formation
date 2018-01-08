@@ -37,7 +37,8 @@ class SessionController extends Controller
     }
 
     public function store(SessionRequest $request){
-        //dd(Carbon::createFromFormat('d/m/Y H:i', $request->start));
+        $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
+        $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
         $validator = Validator::make($request->all(), [
             'nom'            => 'required',
             'cour'           => 'required',
@@ -51,21 +52,35 @@ class SessionController extends Controller
         ]);
         $messages = $validator->errors();
 
-        $occupee = \DB::table('sessions')
+        $salle_occupee = \DB::table('sessions')
         ->select('start')
         ->where([
             'salle_id'=>$request->salle,
-            'start'=>$request->start,
-            'end'=>$request->end,
+            'start'=>$start,
+            'end'=>$end,
         ])->get();
+
+        $formateur_occupe = \DB::table('sessions')
+        ->select('formateur_id')
+        ->where([
+            'formateur_id'=>$request->formateur,
+            'start'=>$start,
+            'end'=>$end,
+        ])->get();
+
         
         $now = Carbon::now()->format('Y-m-d h:i');
-        if($occupee) {
+        if($salle_occupee) {
             $messages->add('salle', 'La salle est reservée pour ces horaires!');
+        }
+        if($formateur_occupe) {
+            $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
         }
         if($request->statut == "Terminé" && $request->end > $now) {
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
         }
+
+        //dd($formateur_occupe);
 
         if(count($messages)>0){ 
             return redirect('sessions/create')->withErrors($messages)->withInput();
@@ -146,6 +161,8 @@ class SessionController extends Controller
     }
 
     public function update(SessionRequest $request, $id){
+        $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
+        $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
         $validator = Validator::make($request->all(), [
             'nom'            => 'required',
             'cour'           => 'required',
@@ -158,18 +175,26 @@ class SessionController extends Controller
         ]);
         $messages = $validator->errors();
 
-        $occupee = \DB::table('sessions')
-        ->select('start')
-        ->where([
-            'salle_id'=>$request->salle,
-            'start'=>$request->start,
-            'end'=>$request->end,
-        ])->get();
+        // $salle_occupee = \DB::table('sessions')
+        // ->select('start')
+        // ->where([
+        //     'salle_id'=>$request->salle,
+        //     'start'=>$start,
+        //     'end'=>$end,
+        // ])->get();
+
+        // $formateur_occupe = \DB::table('sessions')
+        // ->select('formateur_id')
+        // ->where([
+        //     'formateur_id'=>$request->formateur,
+        //     'start'=>$start,
+        //     'end'=>$end,
+        // ])->get();
         
         $now = Carbon::now()->format('Y-m-d h:i');
-        if($occupee) {
-            $messages->add('salle', 'La salle est reservée pour ces horaires!');
-        }
+        // if($salle_occupee) {
+        //     $messages->add('salle', 'La salle est reservée pour ces horaires!');
+        // }
         if($request->statut == "Terminé" && $request->end > $now){
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
         }
@@ -260,6 +285,30 @@ class SessionController extends Controller
         $session->participants()->detach();
         $session->delete();
         return redirect('sessions');
+    }
+
+    public function filterSessions(Request $request){
+        $criteres = [];
+        if ( !empty($request->start and empty($request->end)) ) {
+            $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
+            $criteres= ['start' => $start];
+        }else if( !empty($request->end and empty($request->start)) ){
+            $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
+            $criteres= ['end' => $end];
+        }else if( !empty($request->start and !empty($request->end)) ){
+            $start = Carbon::createFromFormat('d/m/Y H:i', $request->start)->toDateTimeString();
+            $end = Carbon::createFromFormat('d/m/Y H:i', $request->end)->toDateTimeString();
+            $criteres= ['start' => $start, 'end'=> $end]; //empty($request->start && empty($request->end))
+        }else if( !empty($request->statut) ){
+            $criteres= ['statut' => $request->statut];
+        }
+        
+        $selected= $request->statut;
+        $selected_start = $request->start;
+        $selected_end = $request->end;
+        $sessions = Session::where($criteres)->get();
+        //dd($sessions);
+        return view('sessions.index', compact('selected','sessions','selected_start', 'selected_end'));
     }
 
 

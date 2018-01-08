@@ -34,7 +34,10 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
     Route::get('utilisateurs/permissions/{id}/edit', 'UserController@editPermission');
     Route::put('utilisateurs/permissions/{id}', 'UserController@updatePermission');
     Route::get('utilisateurs/droits-acces', 'UserController@rolePermissions');
-    Route::get('/register');
+    Route::get('utilisateurs/create', 'UserController@createUser');
+    Route::post('utilisateurs', 'UserController@storeUser');
+    Route::get('utilisateurs/{id}/edit', 'UserController@editUser');
+    Route::put('utilisateurs/{id}', 'UserController@updateUser');
 
 });
 
@@ -59,6 +62,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::get('sessions/{id}/edit', 'SessionController@edit');
     Route::put('sessions/{id}', 'SessionController@update');
     Route::delete('sessions/{id}/delete', 'SessionController@destroy');
+    Route::get('sessions/filter/search', 'SessionController@filterSessions');
     // Route::resource('sessions', 'SessionController');
     Route::get('participants', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
@@ -112,6 +116,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     //Route::resource('evaluations', 'EvaluationController');
     
     Route::get('evaluations/{id}/sendMail', 'EvaluationController@sendMailParticipants');
+    Route::get('evaluations/{id}/remembreMail', 'EvaluationController@remembreMailParticipants');
     Route::get('evaluations/{id}/{type}', 'EvaluationController@globalEvaluation');
     Route::get('evaluations/{id}/{type}/{nom}', 'EvaluationController@participantEvaluation');
 
@@ -119,9 +124,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     Route::get('questions/create', 'QuestionController@create');
     Route::post('questions', 'QuestionController@store');
     Route::get('questionnaire/{id}', 'QuestionController@show');
-    Route::get('questionnaire/{id}/{token}/questions', 'QuestionController@questionnaire');
-    Route::put('questionnaire/{id}/{token}', 'QuestionController@storeResponses');
 });
+Route::get('questionnaire/{id}/{token}/questions', 'QuestionController@questionnaire');
+Route::put('questionnaire/{id}/{token}', 'QuestionController@storeResponses');
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:rapports']], function() {
     Route::get('rapports/budgetsFormation', 'RapportController@index');

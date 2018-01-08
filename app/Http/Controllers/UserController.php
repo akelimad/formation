@@ -8,19 +8,74 @@ use App\Role;
 use App\Permission;
 use App\Http\Requests;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Controller;
 
 class UserController extends Controller
 {
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+    }
 
     public function users(){
         $users = User::with('roles')->get();
         return view('users.index', ['users' => $users]);
     }
+
+    public function createUser(){
+        $roles = Role::all();
+        return view('users.create', ['roles'=> $roles]);
+    }
+
+    public function storeUser(Request $request){
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'email' => 'required|email|max:255|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+        $user = new User();
+        $user->name= $request->name;
+        $user->email= $request->email;
+        $user->password= bcrypt($request->password);
+        $user->save();
+        // Give each new user the role selected
+        $role = $request->role;
+        $user->attachRole( $role );
+        return redirect("utilisateurs");
+    }
+
+    public function editUser($id){
+        $user = User::find($id);
+        $roles_ids = [];
+        if($user->roles){
+            foreach($user->roles as $role){
+                $roles_ids []= $role->id;
+            }
+        }
+        $roles = Role::all();
+        return view('users.edit', compact('user', 'roles','roles_ids'));
+    }
+    public function updateUser(Request $request, $id){
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        if(!empty($request->password) && !empty($request->password_confirmation)){
+            $user->password = bcrypt($request->password);
+        }
+        $user->detachRoles( $user->roles );
+        $user->attachRole( $request->role );
+        $user->save();
+        return redirect('utilisateurs');
+    }
+
     public function destroyUser(Request $request, $id){
-        $user_loged = Auth::user()->id;
         $user = User::find($id);
         $user->delete();
-        return redirect('users.index');
+        return redirect('utilisateurs');
     }
 
     public function roles(){

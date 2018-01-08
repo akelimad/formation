@@ -140,3 +140,7 @@ label.star:before {
 .nav > li > a:hover, .nav > li > a:focus{
   background-color: #f55e244a;
 }
+
+.sessionsFilter{
+  margin-bottom: 1em;
+}

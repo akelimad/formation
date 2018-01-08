@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Evaluation;
 use App\Session;
 use App\Reponse;
-use App\Particicpant;
+use App\Participant;
 use App\Http\Requests;
 use Mail;
 use Carbon\Carbon; 
@@ -165,6 +165,8 @@ class EvaluationController extends Controller
                                 $m->to($p->email, $p->nom)->subject('Evaluation à chaud');
                         });
                     }
+                    $evaluation->envoye_le= $now;
+                    $evaluation->save();
                     return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }
                 if($evaluation->type == "a-froid" and $diff->m >=3){ // 3mois
@@ -181,6 +183,8 @@ class EvaluationController extends Controller
                                 $m->to($p->email, $p->nom)->subject('Evaluation à froid');
                         });
                     }
+                    $evaluation->envoye_le= $now;
+                    $evaluation->save();
                     return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }else{
                     return redirect()->back()->with('under_3month', "Attendez, les 3 mois pas encore depassés. ca fait maintenant juste ".$diff->m." mois et ".$diff->d." jours !!!");
@@ -192,6 +196,56 @@ class EvaluationController extends Controller
             return redirect()->back()->with('no_survey', "Aucun questionnaire n'a été crée pour cette evaluation. vous ne pouvez pas envoyer un email aux participants !!!");
         }
 
+    }
+
+    //rappeler par mail les participants qui n'ont pas repondus
+    public function remembreMailParticipants($id){
+        $evaluation = Evaluation::find($id);
+        if($evaluation->type == "a-froid"){
+            $eval_type= "à froid";
+        }else if($evaluation->type == "a-chaud"){
+            $eval_type= "à chaud";
+        }
+        $session = Session::find($evaluation->session_id);
+        $sess_participants=$evaluation->session->participants;
+        $p_session = [];
+        foreach ($sess_participants as $p) {
+            $p_session[] = $p->id;
+        }
+
+        $s_id=$evaluation->session->id;
+        $participants_repondus = \DB::table('participant_session')
+            ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
+            ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
+            ->join('reponses', 'reponses.participant_id', '=', 'participants.id')
+            ->select('participants.*')
+            ->where('sessions.id' ,'=', $s_id)
+            ->groupBy('participants.id')
+            ->get();
+        $p_repondus=[];
+        foreach ($participants_repondus as $p_repondu) {
+            $p_repondus[] = $p_repondu->id;
+        }
+
+        $participants_nn_repondus =array_diff($p_session, $p_repondus);
+        foreach ($participants_nn_repondus as $participant) {
+            $p = Participant::find($participant);
+            $sent = Mail::send('emails.send-to-participants', 
+                [
+                    'session' => $session->nom, 
+                    'participant'=>$p->nom, 
+                    'token'=> md5($p->id.$p->email),
+                    'evaluation_id' => $evaluation->id,
+                    'evaluation_type' => $eval_type
+                ]
+                , function ($m) use($p){
+                    $m->to($p->email, $p->nom)->subject('Rappel evaluation à chaud');
+            });
+        }
+        $now = new DateTime();
+        $evaluation->rappele_le= $now;
+        $evaluation->save();
+        return redirect()->back()->with('remembre_mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom.' sur laquelle ils n\'ont pas repondu');
     }
 
 
