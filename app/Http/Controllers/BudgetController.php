@@ -11,14 +11,10 @@ class BudgetController extends Controller
 {
     
     public function index(){
-        $budgets = \DB::table('sessions as s')
-            ->join('budgets as b', 'b.session_id', '=', 's.id')
-            ->select('s.nom','b.*')
-            //->groupBy('s.id')
-            ->get();
+        $sessions = Session::with('budgets')->get();
 
-        dd($budgets);
-        return view('budgets.index', ['budgets'=>$budgets]);
+        //dd($budgets);
+        return view('budgets.index', ['sessions'=>$sessions]);
     }
 
     public function create(){

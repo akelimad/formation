@@ -25,24 +25,27 @@
                                 <tr>
                                     <th>Session</th>
                                     <th>libellé budget</th>
-                                    <th>Prévu</th>
-                                    <th>Réalisé</th>
-                                    <th>Ajustement</th>
+
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($budgets as $budget)
+                                @foreach ($sessions as $session)
                                 <tr>
-                                    <td> {{ $budget->session->nom }} </td>
-                                    <td> {{ $budget->budget }} </td>
-                                    <td> {{ $budget->prevu }} </td>
-                                    <td> {{ $budget->realise }} </td>
-                                    <td> {{ $budget->ajustement }} </td>
+                                    <td> {{ $session->nom }} </td>
+                                    <td> {{ $session->start }} </td>
+
                                     <td class="text-right">
                                         <a href="#" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
                                     </td>
+                                    @foreach($session->budgets as $budget)
+                                    <tr>
+                                        <td>{{ $budget->budget }}</td>
+                                        <td>{{ $budget->prevu }}</td>
+                                        <td>{{ $budget->realise }}</td>
+                                    </tr>
+                                    @endforeach
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -50,9 +53,7 @@
                                 <tr>
                                     <th>Session</th>
                                     <th>libellé budget</th>
-                                    <th>Prévu</th>
-                                    <th>Réalisé</th>
-                                    <th>Ajustement</th>
+
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

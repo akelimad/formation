@@ -22,7 +22,7 @@
                         <form action="{{url('sessions/filter/search')}}" method="get">
                             <div class="row">
                                 <div class="col-md-1">
-                                    <p>Filtes: </p>
+                                    <p>Filtres: </p>
                                 </div>
                                 <div class="col-md-2">
                                     <input type="search" name="start" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date début" value="{{isset($selected_start) ? $selected_start: ''}}">
