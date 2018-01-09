@@ -1,6 +1,17 @@
 
 $().ready(function() {
 
+    $('body').on('keyup', '.prevu, .realise', function(){
+        var $container = $(this).closest('.form-group');
+        var prevu = parseInt($($container).find(".prevu").val());
+        var realise = parseInt($($container).find(".realise").val());
+        if($($container).find('.realise').length === 0){
+            $($container).find('.ajustement').val(0);  
+        }else{
+            $($container).find('.ajustement').val(prevu - realise);  
+        }
+    });
+
     //to get evaluation that you clicked on to attach question selected by default
     $("#questionnaire_modal" ).on('shown.bs.modal', function(event){
         $('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
@@ -11,7 +22,7 @@ $().ready(function() {
         $('#sessionsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
     });
 
-    // Add new Line
+    // Add new Line for budget
     $(".addLine").click(function(event){
         event.preventDefault()
         var copy = $('#budgets-wrap').find(".form-group:first").clone()
@@ -28,6 +39,7 @@ $().ready(function() {
     $('#budgets-wrap').on('click', '.deleteLine', function(){
         $(this).closest('.form-group').remove();
     });
+
 
     // Add new Line
     $(".addLine").click(function(event){
@@ -361,7 +373,7 @@ $().ready(function() {
         }); 
     });
 
-    //delete session
+    //delete user
     $("#datatables").on('click', '.delete-user',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
@@ -392,7 +404,46 @@ $().ready(function() {
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
                     //location.reload(); 
                 }).fail(function(){
-                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut que cet utilisateur fait la coordiantion des cours il faut supprimer tout d'abord ses cours!", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+        //delete budgets of session
+    $("#datatables").on('click', '.delete-budget',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'budgetsSession/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', "Les budgets de cette ont été supprimés ave succès.", 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas !", 'error');
                 });
             });
             },
@@ -478,17 +529,5 @@ $().ready(function() {
             if ($('#surveyForm').find(':visible[name="option[]"]').length < MAX_OPTIONS) {
                 $('#surveyForm').find('.addButton').removeAttr('disabled');
             }
-        }
-    });
-
-
-    $('body').on('keyup', '.realise', function(){
-        var $container = $(this).closest('.form-group');
-        var prevu = parseInt($($container).find(".prevu").val());
-        var realise = parseInt($($container).find(".realise").val());
-        if($($container).find('.realise').length === 0){
-            $($container).find('.ajustement').val(0);  
-        }else{
-            $($container).find('.ajustement').val(prevu - realise);  
         }
     });

@@ -23,7 +23,7 @@
                                                 <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                                             </div>
                                             <div class="col-md-4">
-                                                <select name="reponses[]" class="selectpicker" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                                <select name="reponses[]" class="form-control">
                                                     <option selected value="0">=== Selectionnez ===</option>
                                                     <option value="5">Tout à fait satisfait</option>
                                                     <option value="4">Satisfait</option>
@@ -39,12 +39,12 @@
                                     @if(isset($token))
                                         <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
                                     @else
-                                        <a href="{{url('evaluations')}}" class="btn btn-info btn-fill text-center"><i class="ti-arrow-left"></i> Retour</a>
+                                        <a href="{{url('evaluations')}}" class="btn btn-info btn-fill text-center"><i class="fa fa-long-arrow-left"></i> Retour</a>
                                     @endif
                                 </div>
                             @else
                                 <div class="form-group">
-                                    <h4> Cette evaluation n'a pas encore de questionnaire !  <a href="{{ url('evaluations') }}" class="btn btn-primary"> <i class="fa fa-arrow-left"></i> Retour</a></h4>
+                                    <h4> Cette evaluation n'a pas encore de questionnaire !  <a href="{{ url('evaluations') }}" class="btn btn-primary"> <i class="fa fa-long-arrow-left"></i> Retour</a></h4>
                                 </div>
                             @endif
                         </div>

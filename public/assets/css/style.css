@@ -144,3 +144,11 @@ label.star:before {
 .sessionsFilter{
   margin-bottom: 1em;
 }
+.budgetsTable > tbody > tr > td, .budgetsTable > tfoot > tr > td{
+  padding: 2px 11px;
+}
+
+.dropdown-menu > li > a:hover, .dropdown-menu > li > a:focus{
+  background-color: #f4f3ef;
+  color: #286090;
+}

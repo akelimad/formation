@@ -81,6 +81,7 @@ class FormateurController extends Controller
     }
 
     public function gestion(Request $request){
+        dd($request->all());
         $formateur = Formateur::find($request->formateur);
         $selected= $request->formateur;
         $formateurs = Formateur::all();

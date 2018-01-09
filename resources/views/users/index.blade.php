@@ -27,10 +27,14 @@
                                     <td> {{ $user->name }} </td>
                                     <td> {{ $user->email }} </td>
                                     <td> {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i')}} </td>
-                                    <td> 
-                                        @foreach($user->roles as $role)
-                                            {{$role->name}}
-                                        @endforeach
+                                    <td>
+                                        @if(count($user->roles)>0) 
+                                            @foreach($user->roles as $role)
+                                                {{$role->name}}
+                                            @endforeach
+                                        @else
+                                            ---
+                                        @endif
                                     </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}

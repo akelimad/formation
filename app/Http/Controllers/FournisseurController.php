@@ -14,7 +14,8 @@ class FournisseurController extends Controller
     }
 
     public function create(){
-        return view('prestataires.create');
+        $code= substr(str_shuffle(md5(rand(0,100000))), 0, 8);
+        return view('prestataires.create', compact('code'));
     }
 
     public function store(Request $request){

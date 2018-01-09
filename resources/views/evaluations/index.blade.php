@@ -82,9 +82,9 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
-                                    <th>Créée le</th>
-                                    <th>Envoyée le</th>
-                                    <th>Rappelée le</th>
+                                    <th>Créé le</th>
+                                    <th>Envoyé le</th>
+                                    <th>Rappelé le</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -104,8 +104,9 @@
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/remembreMail') }}" class="btn btn-fill btn-warning btn-icon sendMail" title="Rappeler les participants qui n'ont pas repondu" data-toggle="tooltip"><i class="fa fa-refresh"></i></a>
                                         <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
                                         <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
-                                        <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" ><i class="ti-close"></i></a>
+                                        <a href="{{url('questionnaire/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-info btn-icon add" data-toggle="tooltip" title="Editer le questionnaire"> <i class="ti-pencil-alt"></i> </a>
+                                        <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit" title="Editer l'evaluation" data-toggle="tooltip"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" title="Supprimer l'evaluation" data-toggle="tooltip"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -115,7 +116,7 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Sessions</th>
-                                    <th>Créée le</th>
+                                    <th>Créé le</th>
                                     <th>Envoyé le</th>
                                     <th>Rappelé le</th>
                                     <th class="text-right">Actions</th>
@@ -149,7 +150,7 @@
                                                 <div class="form-group" >
                                                     <label class="col-md-2 control-label">Question</label>
                                                     <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="questions[0]" />
+                                                        <input type="text" class="form-control" name="questions[0]" required="required" />
                                                     </div>
                                                     <div class="col-md-2">
                                                         <button type="button" class="btn btn-default addLine"><i class="fa fa-plus"></i></button>

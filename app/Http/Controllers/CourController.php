@@ -80,4 +80,12 @@ class CourController extends Controller
         return redirect('cours');
     }
 
+    public function gestion(Request $request){
+        $user = User::find($request->user);
+        $selected= $request->user;
+        $users = User::all();
+        if($request->user) $user_cours = $user->cours;
+        return view('cours.gestion', compact('users', 'selected','user_cours'));
+    }
+
 }

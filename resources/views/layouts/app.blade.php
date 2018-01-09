@@ -97,6 +97,9 @@
                                 <li>
                                     <a href="{{ url('cours/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
                                 </li>
+                                <li>
+                                    <a href="{{ url('cours/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
+                                </li>
                             </ul>
                         </div>
                     </li>

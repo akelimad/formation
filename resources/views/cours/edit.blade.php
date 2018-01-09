@@ -23,7 +23,6 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Coordinateur<star>*</star> </label>
                                     <select class="selectpicker" name="coordinateur" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
-                                        <option disabled selected value="">-- select --</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" {{$c->user_id == $user->id ? 'selected' : '' }} > {{ $user->name }} </option>
                                         @endforeach
@@ -125,7 +124,7 @@
                                     <div class="col-md-8">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Budget</label>
-                                            <input class="form-control" name="prix" type="text" placeholder="Budget" value="{{$c->prix}}" />
+                                            <input class="form-control" name="prix" type="number" placeholder="Budget" value="{{$c->prix}}" />
                                         </div>
                                     </div>
                                 </div>

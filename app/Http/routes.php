@@ -41,16 +41,16 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
 
 });
 
-// Route::get('cours', 'CourController@index');
-// Route::get('cours/create', 'CourController@create');
-// Route::post('cours', 'CourController@store');
-// Route::get('cours/{id}/edit', 'CourController@edit');
-// Route::put('cours/{id}', 'CourController@update');
-// Route::delete('cours/{id}/delete', 'CourController@destroy');
-
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], function() {
-    Route::resource('cours', 'CourController');
+    Route::get('cours', 'CourController@index');
+    Route::get('cours/create', 'CourController@create');
+    Route::post('cours', 'CourController@store');
+    Route::get('cours/{id}/edit', 'CourController@edit');
+    Route::put('cours/{id}', 'CourController@update');
+    Route::delete('cours/{id}/delete', 'CourController@destroy');
+    //Route::resource('cours', 'CourController');
     Route::get('cours/export', 'CourController@export');
+    Route::get('cours/gestion', 'CourController@gestion');
 });
 
 
@@ -71,6 +71,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::get('budgets', 'BudgetController@index');
     Route::get('budgets/create', 'BudgetController@create');
     Route::post('budgets', 'BudgetController@store');
+    Route::get('budgetsSession/{id}/edit', 'BudgetController@edit');
+    Route::put('budgetsSession/{id}', 'BudgetController@update');
+    Route::delete('budgetsSession/{id}/delete', 'BudgetController@destroy');
 
 });
 
@@ -124,7 +127,11 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     Route::get('questions/create', 'QuestionController@create');
     Route::post('questions', 'QuestionController@store');
     Route::get('questionnaire/{id}', 'QuestionController@show');
+    Route::get('questionnaire/{id}/edit', 'QuestionController@edit');
+    Route::put('questionnaire/{id}', 'QuestionController@update');
+    Route::delete('questionnaire/{id}/delete', 'QuestionController@destroy');
 });
+
 Route::get('questionnaire/{id}/{token}/questions', 'QuestionController@questionnaire');
 Route::put('questionnaire/{id}/{token}', 'QuestionController@storeResponses');
 

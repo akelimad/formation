@@ -19,7 +19,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="label-control">Code </label>
-                                    <input type="text" name="code" class="form-control"  placeholder="Code" />
+                                    <input type="text" name="code" class="form-control"  placeholder="Code" value="{{$code}}" readonly="" />
                                 </div>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Adresse electronique</label>
-                                    <input class="form-control" name="email" type="text" placeholder="Adresse electronique" />
+                                    <input class="form-control" name="email" type="email" placeholder="Adresse electronique" />
                                 </div>
                             </div>
                         </div>

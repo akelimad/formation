@@ -41,20 +41,39 @@ class QuestionController extends Controller
         }
         $url=url('questionnaire/'.$request->evaluation);
         return redirect('evaluations')
-        ->with('survey_add', 
-            "Le questionnaire a bien été ajouté. vous pouvez le <a href='$url'>consulter</a> ");
+        ->with('survey_add',"Le questionnaire a bien été ajouté. vous pouvez le <a href='$url'>consulter</a> ");
     }
 
-    public function edit(){
-        
+    public function edit($id){
+        $evaluation = Evaluation::find($id);
+        $first_question = $evaluation->questions->first();
+        $eval_questions = $evaluation->questions;
+        return view('questionnaires.edit', compact('eval_questions','evaluation','first_question'));
     }
 
-    public function update(){
-        
+    public function update(Request $request, $id){
+        $e = Evaluation::find($id);
+        foreach ($e->questions as $q) {
+            $q->delete();
+        }
+
+        foreach ($request->questions as $qst) {
+            $question = new Question();
+            $question->evaluation_id=$request->evaluation;
+            $question->titre=$qst;
+            $question->save();
+        }
+        $url=url('questionnaire/'.$request->evaluation);
+        return redirect('evaluations')
+        ->with('survey_add',"Le questionnaire a bien été modifié. vous pouvez le <a href='$url'>consulter</a> ");
     }
 
-    public function destroy(){
-        
+    public function destroy($id){
+        $e = Evaluation::find($id);
+        foreach ($e->questions as $q) {
+            $q->delete();
+        }
+        return redirect('evaluations');
     }
 
     public function storeResponses(Request $request,$id, $token){
