@@ -8,17 +8,22 @@ use App\Evaluation;
 use App\Session;
 use App\Reponse;
 use App\Participant;
+use App\Participant_sessions;
 use App\Http\Requests;
 use Mail;
 use Carbon\Carbon; 
 use DateTime;
+use Illuminate\Support\Facades\Validator;
+
 class EvaluationController extends Controller
 {
 
     public function index(){
         $evaluations = \DB::table('evaluations')
             ->join('sessions', 'sessions.id', '=', 'evaluations.session_id')
-            ->select('evaluations.*', 'sessions.nom as session')
+            ->leftJoin('questions', 'questions.evaluation_id', '=', 'evaluations.id')
+            ->select(array('evaluations.*', 'sessions.nom as session',\DB::raw("count(questions.id) as 'questions'")))
+            ->groupBy('questions.evaluation_id')
             ->orderBy('evaluations.id', 'DESC')
             ->get();
         return view('evaluations.index', ['evaluations'=>$evaluations]);
@@ -30,21 +35,37 @@ class EvaluationController extends Controller
     }
 
     public function store(Request $request){
-        $evaluation = new Evaluation();
-        $evaluation->nom=$request->input('nom');
-        $evaluation->type=$request->input('type');
-        $evaluation->session_id=$request->input('session');
-        $evaluation->save();
-        return redirect('evaluations');
+        $validator = Validator::make($request->all(), [
+            'nom'            => 'required',
+            'type'           => 'required',
+            'session'        => 'required',
+        ]);
+        $messages = $validator->errors();
+        $evaluations = Evaluation::where(['session_id' =>$request->session, 'type'=> $request->type])->get();
+        if(count($evaluations) > 0){
+            $messages->add('eval_exist', 'Il ya déjà une evaluation créée avec ces critères !');
+        }
+        if(count($messages)>0){ 
+            return redirect('evaluations/create')->withErrors($messages)->withInput();
+        }else{
+            $evaluation = new Evaluation();
+            $evaluation->nom=$request->input('nom');
+            $evaluation->type=$request->input('type');
+            $evaluation->session_id=$request->input('session');
+            $evaluation->save();
+            return redirect('evaluations');
+        }
 
     }
 
     public function globalEvaluation(Request $request, $id, $type){
         $selected= $request->participant;
         $evaluation = Evaluation::find($id);
-        $sess_participants=$evaluation->session->participants;
+        $session = $evaluation->session;
+        $part_presents = Participant_sessions::where(['session_id'=> $session->id, 'present'=>1])->get();
         $p_session = [];
-        foreach ($sess_participants as $p) {
+        foreach ($part_presents as $part) {
+            $p = Participant::find($part->participant_id);
             $p_session[] = $p->nom;
         }
 
@@ -100,7 +121,7 @@ class EvaluationController extends Controller
                 'eval_type' => $evaluation->type,
                 'participants_repondus' => $participants_repondus,
                 'participants_nn_repondus' => $participants_nn_repondus,
-                'sess_participants' => $sess_participants,
+                // 'sess_participants' => $part_presents,
                 'selected' => $selected
             ]);
         }else{
@@ -110,6 +131,7 @@ class EvaluationController extends Controller
 
     public function edit($id){
         $evaluation = Evaluation::find($id);
+        //dd($evaluation->questions);
         $sessions = Session::where('statut', '=', 'Terminé')->get();
         return view('evaluations.edit', ['e'=> $evaluation, 'sessions' => $sessions]);
     }
@@ -133,7 +155,6 @@ class EvaluationController extends Controller
             $question->delete();
         }
         $evaluation->delete();
-        session()->flash("success", "The product has been deleted successfully !");
         return redirect('evaluations');
     }
 
@@ -147,17 +168,19 @@ class EvaluationController extends Controller
         //dd($evaluation->questions);
         if(count($evaluation->questions)>0){
             $session = Session::find($evaluation->session_id);
-            if(count($session->participants)>0){
+            $part_presents = Participant_sessions::where(['session_id'=> $session->id, 'present'=>1])->get();
+            if(count($part_presents)>0){
                 $now = new DateTime();
                 $end = new DateTime($session->end);
                 $diff= $now->diff($end);
                 if($evaluation->type == "a-chaud"){
-                    foreach($session->participants as $p){
+                    foreach($part_presents as $part){
+                        $p = Participant::find($part->participant_id);
                         $sent = Mail::send('emails.send-to-participants', 
                             [
                                 'session' => $session->nom, 
                                 'participant'=>$p->nom, 
-                                'token'=> md5($p->id.$p->email),
+                                'token'=> md5($p->id.$p->email.$evaluation->id),
                                 'evaluation_id' => $evaluation->id,
                                 'evaluation_type' => $eval_type
                             ]
@@ -170,12 +193,12 @@ class EvaluationController extends Controller
                     return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }
                 if($evaluation->type == "a-froid" and $diff->m >=3){ // 3mois
-                    foreach($session->participants as $p){
+                    foreach($part_presents as $p){
                         $sent = Mail::send('emails.send-to-participants', 
                             [
                                 'session' => $session->nom, 
                                 'participant'=>$p->nom, 
-                                'token'=> md5($p->id.$p->email),
+                                'token'=> md5($p->id.$p->email.$evaluation->id),
                                 'evaluation_id' => $evaluation->id,
                                 'evaluation_type' => $eval_type
                             ]
@@ -207,10 +230,10 @@ class EvaluationController extends Controller
             $eval_type= "à chaud";
         }
         $session = Session::find($evaluation->session_id);
-        $sess_participants=$evaluation->session->participants;
+        $part_presents = Participant_sessions::where(['session_id'=> $session->id, 'present'=>1])->get();
         $p_session = [];
-        foreach ($sess_participants as $p) {
-            $p_session[] = $p->id;
+        foreach ($part_presents as $p) {
+            $p_session[] = $p->participant_id;
         }
 
         $s_id=$evaluation->session->id;
@@ -234,7 +257,7 @@ class EvaluationController extends Controller
                 [
                     'session' => $session->nom, 
                     'participant'=>$p->nom, 
-                    'token'=> md5($p->id.$p->email),
+                    'token'=> md5($p->id.$p->email.$evaluation->id),
                     'evaluation_id' => $evaluation->id,
                     'evaluation_type' => $eval_type
                 ]

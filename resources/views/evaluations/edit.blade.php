@@ -9,7 +9,7 @@
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
-                        <h4 class="title">Modifier l'evaluation</h4>
+                        <h4 class="title">Modifier l'évaluation</h4>
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group label-floating">

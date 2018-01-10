@@ -231,9 +231,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group label-floating">
-                                                            <label class="control-label">Nom
-                                                                <star>*</star>
-                                                            </label>
+                                                            <label class="control-label">Nom <star>*</star></label>
                                                             <input class="form-control" name="nom" type="text" required="" placeholder="Nom" />
                                                         </div>
                                                     </div>
@@ -241,7 +239,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12">
                                                         <div class="form-group label-floating">
-                                                            <label class="control-label">Email</label>
+                                                            <label class="control-label">Email <star>*</star></label>
                                                             <input class="form-control" name="email" type="email" required="" placeholder="example@gmail.com" />
                                                         </div>
                                                     </div>

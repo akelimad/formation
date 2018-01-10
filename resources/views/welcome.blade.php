@@ -15,7 +15,7 @@
                         <div class="col-xs-7">
                             <div class="numbers">
                                 <p>Nombre de sessions</p>
-                                {{$countSessions}}
+                                {{$countSessions ? $countSessions : 0}}
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                         <div class="col-xs-7">
                             <div class="numbers">
                                 <p>Nombres de cours</p>
-                                {{$countCours}}
+                                {{$countCours ? $countCours : 0}}
                             </div>
                         </div>
                     </div>
@@ -54,8 +54,8 @@
                             <div class="numbers">
                                 <p>Budget</p>
                             </div>
-                                <span class="badge">Prevu: {{$sommeBudgets[0]->totalPrevu}}</span>
-                                <span class="badge">Realisé: {{$sommeBudgets[0]->totalRealise}}</span>
+                                <span class="badge">Prevu: {{$sommeBudgets[0]->totalPrevu ? $sommeBudgets[0]->totalPrevu : 0 }}</span>
+                                <span class="badge">Realisé: {{$sommeBudgets[0]->totalRealise ? $sommeBudgets[0]->totalRealise : 0}}</span>
                         </div>
                     </div>
                 </div>
@@ -111,8 +111,8 @@
                             @forelse($sessions as $s)
                                 <tr>
                                     <td> {{$s->nom}} </td>
-                                    <td> {{$s->start}} </td>
-                                    <td> {{$s->end}} </td>
+                                    <td> {{ Carbon\Carbon::parse($s->start)->format('d/m/Y')}} </td>
+                                    <td> {{ Carbon\Carbon::parse($s->end)->format('d/m/Y')}} </td>
                                 </tr>
                             @empty
                                 <tr>

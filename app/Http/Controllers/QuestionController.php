@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Reponse;
+use App\Token;
 use App\Participant;
 use App\Evaluation;
 use App\Http\Requests;
@@ -18,8 +19,12 @@ class QuestionController extends Controller
 
     public function questionnaire($id, $token){
         $q = Question::where('evaluation_id', $id)->get();
-        //$check = Reponse::where(['participant_id' =>]);
-        return view('questionnaires.index',['questions' => $q, 'eval_id' => $id, 'token' => $token ]);
+        $tokens = Token::where(['token' => $token])->get();
+        if(count($tokens) > 0){
+            return view('questionnaires.already_answred');
+        }else{
+            return view('questionnaires.index',['questions' => $q, 'eval_id' => $id, 'token' => $token ]);
+        }
     }
 
     public function show($id){
@@ -85,7 +90,7 @@ class QuestionController extends Controller
             $eval_type= "à chaud";
         }
         foreach ($participants as $participant) {
-            if(md5($participant->id.$participant->email) == $token){
+            if(md5($participant->id.$participant->email.$evaluation->id) == $token){
                 $participant_email = $participant->email;
                 $participant_nom = $participant->nom;
                 $participant_id = $participant->id;
@@ -100,6 +105,10 @@ class QuestionController extends Controller
             $reponse->participant_id = $participant_id;
             $reponse->save();
         }
+        $t = new Token();
+        $t->token= $token;
+        $t->status = 1;
+        $t->save();
 
         $sent = Mail::send('emails.confirm_participant', 
             [

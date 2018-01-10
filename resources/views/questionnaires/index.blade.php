@@ -23,13 +23,13 @@
                                                 <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                                             </div>
                                             <div class="col-md-4">
-                                                <select name="reponses[]" class="form-control">
-                                                    <option selected value="0">=== Selectionnez ===</option>
-                                                    <option value="5">Tout à fait satisfait</option>
+                                                <select name="reponses[]" class="form-control" required="">
+                                                    <option selected value="">=== Selectionnez ===</option>
+                                                    <option value="5">Fortement satisfait</option>
                                                     <option value="4">Satisfait</option>
-                                                    <option value="3">Ni insatisfait ni insatisfait</option>
+                                                    <option value="3">Neutre</option>
                                                     <option value="2">Pas satisfait</option>
-                                                    <option value="1">Pas du tout satisfait</option>
+                                                    <option value="1">Fortement insatisfait</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -37,7 +37,7 @@
                                 @endforeach
                                 <div class="text-center">
                                     @if(isset($token))
-                                        <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="ti-arrow-right"></i></button>
+                                        <button type="submit" class="btn btn-info btn-fill text-center">Envoyer  <i class="fa fa-long-arrow-right"></i></button>
                                     @else
                                         <a href="{{url('evaluations')}}" class="btn btn-info btn-fill text-center"><i class="fa fa-long-arrow-left"></i> Retour</a>
                                     @endif

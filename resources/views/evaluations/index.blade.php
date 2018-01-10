@@ -64,7 +64,7 @@
                     @endif
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="title">La liste des evaluations</h4>
+                            <h4 class="title">La liste des évaluations</h4>
                         </div>
                         
                         <div class="col-md-4">
@@ -100,11 +100,11 @@
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
-                                        <a href="{{ url('evaluations/'.$evaluation->id.'/sendMail') }}" class="btn btn-fill btn-success btn-icon sendMail" title="Envoyer un email aux participants" data-toggle="tooltip"><i class="fa fa-envelope"></i></a>
-                                        <a href="{{ url('evaluations/'.$evaluation->id.'/remembreMail') }}" class="btn btn-fill btn-warning btn-icon sendMail" title="Rappeler les participants qui n'ont pas repondu" data-toggle="tooltip"><i class="fa fa-refresh"></i></a>
+                                        <a href="@if(!$evaluation->envoye_le) {{ url('evaluations/'.$evaluation->id.'/sendMail') }}@else#@endif" class="btn btn-fill btn-success btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Le mail est déjà envoyé':'Envoyer un email aux participants'}}" data-toggle="tooltip" {{$evaluation->envoye_le ? 'disabled':''}}><i class="fa fa-envelope"></i></a>
+                                        <a href="@if($evaluation->envoye_le){{ url('evaluations/'.$evaluation->id.'/remembreMail') }}@else#@endif" class="btn btn-fill btn-warning btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Rappeler les participants qui n\'ont pas repondu':'Le questionnaire pas encore envoyé' }}" data-toggle="tooltip" {{$evaluation->envoye_le ? '':'disabled'}}><i class="fa fa-bell-o"></i></a>
                                         <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="modal" data-target="#questionnaire_modal" data-id="{{$evaluation->id}}" title="Ajouter un questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
-                                        <a href="{{url('questionnaire/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-info btn-icon add" data-toggle="tooltip" title="Editer le questionnaire"> <i class="ti-pencil-alt"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="{{$evaluation->questions ? 'tooltip':'modal'}}" data-target="{{$evaluation->questions ? '#':'#questionnaire_modal'}}" data-id="{{$evaluation->id}}" title="{{$evaluation->questions ? 'Le questionnaire est déjà ajouté':'Ajouter un questionnaire'}}" {{$evaluation->questions ? 'disabled':''}}> <i class="fa fa-question-circle-o"></i> </a>
+                                        <a href="@if(!$evaluation->envoye_le){{url('questionnaire/'.$evaluation->id.'/edit')}} @else#@endif" class="btn btn-fill btn-info btn-icon add" data-toggle="tooltip" title="{{$evaluation->envoye_le ? 'Le questionnaire est déjà envoyé':'Editer le questionnaire'}}" {{$evaluation->envoye_le ? 'disabled':''}} > <i class="ti-pencil-alt"></i> </a>
                                         <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit" title="Editer l'evaluation" data-toggle="tooltip"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" title="Supprimer l'evaluation" data-toggle="tooltip"><i class="ti-close"></i></a>
                                     </td>
