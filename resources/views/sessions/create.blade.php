@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('sessions') }}" method="post">
+                <form id="allInputsFormValidation" action="{{ url('sessions') }}" method="post" novalidate="novalidate">
                     {{ csrf_field() }}
                     <div class="content">
                         @if ($errors->any())

@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <form action="{{url('sessions/filter/search')}}" method="get">
+                    <form action="{{url('sessions/filter/search')}}" method="get" novalidate="novalidate">
                         <div class="filter">
                             <div class="col-md-1">
                                 <p>Filtres: </p>
@@ -118,7 +118,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form id="LoginValidation" action="{{ url('formateurs') }}" method="post" class="col-md-10 col-md-offset-1" enctype="multipart/form-data">
+                                        <form id="allInputsFormValidation" action="{{ url('formateurs') }}" method="post" class="col-md-10 col-md-offset-1" enctype="multipart/form-data">
                                             {{ csrf_field() }}
                                             <div class="">
                                                 <div class="row">
@@ -225,7 +225,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form id="LoginValidation" action="{{ url('participants') }}" method="post" class="col-md-10 col-md-offset-1">
+                                        <form id="allInputsFormValidation" action="{{ url('participants') }}" method="post" class="col-md-10 col-md-offset-1">
                                             {{ csrf_field() }}
                                             <div class="">
                                                 <div class="row">

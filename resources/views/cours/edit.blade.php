@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('cours/'.$c->id) }}" method="post">
+                <form id="allInputsFormValidation" action="{{ url('cours/'.$c->id) }}" method="post" novalidate="novalidate">
                 	<input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
@@ -13,9 +13,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Titre
-                                        <star>*</star>
-                                    </label>
+                                    <label class="control-label">Titre<star>*</star></label>
                                     <input class="form-control" name="titre" type="text" required="true" placeholder="Titre" value="{{$c->titre}}" />
                                 </div>
                             </div>
@@ -35,9 +33,8 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Devise</label>
-                                            <select class="selectpicker" name="devise" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                                <option disabled selected>-- select --</option>
+                                            <label class="control-label">Devise <star>*</star></label>
+                                            <select class="selectpicker" name="devise" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="required">
                                                 <option value="USD" selected="selected">United States Dollars</option>
                                                 <option value="EUR">Euro</option>
                                                 <option value="MAD">Maghreb Dirham</option>
@@ -123,16 +120,16 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="form-group label-floating">
-                                            <label class="control-label">Budget</label>
-                                            <input class="form-control" name="prix" type="number" placeholder="Budget" value="{{$c->prix}}" />
+                                            <label class="control-label">Budget <star>*</star></label>
+                                            <input class="form-control" name="prix" type="number" placeholder="Budget" value="{{$c->prix}}" required="required" />
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Durée(Nombre de jour)</label>
-                                    <input class="form-control" name="duree" type="number" placeholder="Nomre de jour" value="{{$c->duree}}" />
+                                    <label class="control-label">Durée(Nombre de jour) <star>*</star></label>
+                                    <input class="form-control" name="duree" type="number" placeholder="Nomre de jour" value="{{$c->duree}}" required="required" />
                                 </div>
                             </div>
                         </div>

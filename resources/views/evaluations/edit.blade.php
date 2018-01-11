@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('evaluations/'.$e->id) }}" method="post">
+                <form id="allInputsFormValidation" action="{{ url('evaluations/'.$e->id) }}" method="post" novalidate="novalidate">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">

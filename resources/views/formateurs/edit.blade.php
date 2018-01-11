@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-				<form id="LoginValidation" action="{{ url('formateurs/'.$f->id) }}" method="post" enctype="multipart/form-data">
+				<form id="allInputsFormValidation" action="{{ url('formateurs/'.$f->id) }}" method="post" enctype="multipart/form-data" novalidate="novalidate">
 					<input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
@@ -16,13 +16,13 @@
                                     <label class="control-label">Nom complet
                                         <star>*</star>
                                     </label>
-                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}"/>
+                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}" required="required"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Type</label>
-                                    <select name="type" id="type" class="form-control">
+                                    <select name="type" id="type" class="form-control" required="required">
                                         <option value="Interne" {{$f->type == 'Interne' ? 'selected':''}}>Interne</option>
                                         <option value="Externe" {{$f->type == 'Externe' ? 'selected':''}}>Externe</option>
                                     </select>
@@ -33,13 +33,13 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Email</label>
-                                    <input class="form-control" name="email" type="email" placeholder="example@gmail.com" value="{{$f->email}}"/>
+                                    <input class="form-control" name="email" type="email" placeholder="example@gmail.com" value="{{$f->email}}" required="required"/>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Tel</label>
-                                    <input class="form-control" name="tel" type="text" placeholder="06 00 00 00 00" value="{{$f->tel}}"/>
+                                    <input class="form-control" name="tel" type="text" placeholder="06 00 00 00 00" value="{{$f->tel}}" required="required"/>
                                 </div>
                             </div>
                         </div>
@@ -66,15 +66,20 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Télécharger votre C.V en pièce jointe</label>
-                                    <input type="file" name="cv" class="form-control" accept=".docx,.pdf" > 
-                                    @if(!empty($f->cv))
-                                        <a href="{{url('/cvs/'.$f->cv)}}"><i class="fa fa-download"></i> Télécharger C.V </a>
-                                    @endif   
+                                    <label class="control-label">Importer le C.V en pièce jointe</label>
+                                    <input type="file" name="cv" class="form-control" accept=".docx,.pdf" >   
                                 </div>
                             </div>
+                            @if(!empty($f->cv))
+                                <div class="col-md-6">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> &nbsp; </label>
+                                        <a href="{{url('/cvs/'.$f->cv)}}" class="form-control" style="color: blue"><i class="fa fa-download"></i> Télécharger le C.V </a>
+                                    </div>
+                                </div>
+                            @endif   
                         </div>
                         <div class="row">
                             <div class="col-md-2 ">

@@ -71,12 +71,6 @@
                                 <li>
                                     <a href="{{ url('prestataires/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-list"></i> Gestion de formateurs</a>
-                                </li>
                             </ul>
                         </div>
                     </li>
@@ -145,6 +139,12 @@
                                 </li>
                                 <li>
                                     <a href="{{ url('budgets') }}"><i class="fa fa-usd"></i> Budgets</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
+                                </li>
+                                <li>
+                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-list"></i> Gestion de formateurs</a>
                                 </li>
                             </ul>
                         </div>

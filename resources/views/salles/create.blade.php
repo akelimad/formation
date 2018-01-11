@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="LoginValidation" action="{{ url('salles') }}" method="post" enctype="multipart/form-data">
+                <form id="allInputsFormValidation" action="{{ url('salles') }}" method="post" enctype="multipart/form-data" novalidate="novalidate">
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title">Ajouter une salle</h4>

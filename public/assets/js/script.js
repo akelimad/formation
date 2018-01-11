@@ -1,6 +1,8 @@
 
 $().ready(function() {
 
+    $('#allInputsFormValidation').validate();
+
     $('body').on('keyup', '.prevu, .realise', function(){
         var $container = $(this).closest('.form-group');
         var prevu = parseInt($($container).find(".prevu").val());
@@ -283,7 +285,7 @@ $().ready(function() {
                         "_token": token,
                     },
                 }).done(function(response){
-                    swal('Supprimé!', 'Le prestatire a été supprimé ave succès.', 'success');
+                    swal('Supprimé!', 'Le prestataire a été supprimé ave succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
                     //location.reload(); 
                 }).fail(function(){

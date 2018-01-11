@@ -77,14 +77,14 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
 
 });
 
-// Route::get('prestataires', 'FournisseurController@index');
-// Route::get('prestataires/create', 'FournisseurController@create');
-// Route::post('prestataires', 'FournisseurController@store');
-// Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
-// Route::put('prestataires/{id}', 'FournisseurController@update');
-// Route::delete('prestataires/{id}/delete', 'FournisseurController@destroy');
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires']], function() {
-    Route::resource('prestataires', 'FournisseurController');
+    Route::get('prestataires', 'FournisseurController@index');
+    Route::get('prestataires/create', 'FournisseurController@create');
+    Route::post('prestataires', 'FournisseurController@store');
+    Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
+    Route::put('prestataires/{id}', 'FournisseurController@update');
+    Route::delete('prestataires/{id}/delete', 'FournisseurController@destroy');
+    //Route::resource('prestataires', 'FournisseurController');
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {

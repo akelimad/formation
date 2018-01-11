@@ -76,6 +76,7 @@
                                 <th>Nom complet</th>
                                 <th>Email</th>
                                 <th>Session</th>
+                                <!-- <th>Date début</th> -->
                             </tr>
                         </thead>
                         <tbody>

@@ -17,8 +17,8 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Tel</th>
-                                    <th>Email</th>
                                     <th>Fax</th>
+                                    <th>Email</th>
                                     <th>Personne 1er contact</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
@@ -29,8 +29,8 @@
                                     <td> {{ $f->nom }} </td>
                                     <td> {{ $f->type }} </td>
                                     <td> {{ $f->tel }} </td>
-                                    <td> {{ $f->email }} </td>
                                     <td> {{ $f->fax }} </td>
+                                    <td> {{ $f->email }} </td>
                                     <td> {{ $f->personne_contacter }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
@@ -45,8 +45,8 @@
                                     <th>Nom</th>
                                     <th>Type</th>
                                     <th>Tel</th>
-                                    <th>Email</th>
                                     <th>Fax</th>
+                                    <th>Email</th>
                                     <th>Personne 1er contact</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
