@@ -47,14 +47,14 @@ class HomeController extends Controller
             ->get();
 
 
-        $sessionsPerMonthResult = Session::select('created_at')
-        ->whereRaw('YEAR(created_at) = ?', [date('Y')])
+        $sessionsPerMonthResult = Session::select('start')
+        ->whereRaw('YEAR(start) = ?', [date('Y')])
         ->get()
         ->groupBy(function($date) {
-            //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
-            return Carbon::parse($date->created_at)->format('F'); // grouping by months
+            //return Carbon::parse($date->start)->format('Y'); // grouping by years
+            return Carbon::parse($date->start)->format('F'); // grouping by months
         });
-
+        //sdd($sessionsPerMonthResult);;
         $sessionCount = [];
         $sessionsPerMonth = [];
 
@@ -73,6 +73,7 @@ class HomeController extends Controller
                 $sessionsPerMonth[$month] = 0;    
             }
         }
+        //dd($sessionsPerMonth);
         
         return view('welcome', [
             'participants'=> $participants,
