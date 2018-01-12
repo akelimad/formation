@@ -156,3 +156,9 @@ label.star:before {
 .error{
   color: #e85a1b;
 }
+
+.hommeBarchart .chart-js-container{
+  max-width: 100%;
+  padding: 1em;
+
+}

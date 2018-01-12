@@ -5,8 +5,6 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                    <input type="hidden" name="_method" value="PUT">
-                    {{ csrf_field() }}
                     <div class="content">
                         <a href="{{url('sessions')}}" title="Retour"> <i class="fa fa-reply fa-3x"></i></a>
                         <h4 class="title">Details de la session</h4>

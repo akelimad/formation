@@ -44,7 +44,6 @@
                                         <th>Date de début</th>
                                         <th>Date de fin</th>
                                         <th>Statut</th>
-                                        <th class="disabled-sorting text-right">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -58,12 +57,6 @@
                                         <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y')}} </td>
                                         <td> {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </td>
                                         <td> {{ $session->statut }} </td>
-                                        <td class="text-right">
-                                            <a href="{{url('sessions/'.$session->id)}}" class="btn btn-fill btn-default btn-icon " title="Afficher les détails"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-fill btn-info btn-icon addBudget" data-toggle="modal" data-target="#budget_modal" data-id="{{$session->id}}" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
-                                            <a href="{{url('sessions/'.$session->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit" title="Modifier"><i class="ti-pencil-alt"></i></a>
-                                            <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
-                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -77,7 +70,6 @@
                                         <th>Date de début</th>
                                         <th>Date de fin</th>
                                         <th>Statut</th>
-                                        <th class="text-right">Actions</th>
                                     </tr>
                                 </tfoot>
                             </table>

@@ -44,6 +44,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], function() {
     Route::get('cours', 'CourController@index');
     Route::get('cours/create', 'CourController@create');
+    Route::get('cours/{id}', 'CourController@show');
     Route::post('cours', 'CourController@store');
     Route::get('cours/{id}/edit', 'CourController@edit');
     Route::put('cours/{id}', 'CourController@update');
@@ -81,6 +82,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires
     Route::get('prestataires', 'FournisseurController@index');
     Route::get('prestataires/create', 'FournisseurController@create');
     Route::post('prestataires', 'FournisseurController@store');
+    Route::get('prestataires/{id}', 'FournisseurController@show');
     Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
     Route::put('prestataires/{id}', 'FournisseurController@update');
     Route::delete('prestataires/{id}/delete', 'FournisseurController@destroy');
@@ -91,6 +93,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']
     Route::get('formateurs', 'FormateurController@index');
     Route::get('formateurs/create', 'FormateurController@create');
     Route::post('formateurs', 'FormateurController@store');
+    Route::get('formateurs/{id}', 'FormateurController@show');
     Route::get('formateurs/{id}/edit', 'FormateurController@edit');
     Route::put('formateurs/{id}', 'FormateurController@update');
     Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
@@ -102,6 +105,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], f
     Route::get('salles', 'SalleController@index');
     Route::get('salles/create', 'SalleController@create');
     Route::post('salles', 'SalleController@store');
+    Route::get('salles/{id}', 'SalleController@show');
     Route::get('salles/{id}/edit', 'SalleController@edit');
     Route::put('salles/{id}', 'SalleController@update');
     Route::delete('salles/{id}/delete', 'SalleController@destroy');

@@ -5,65 +5,47 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-				<form id="allInputsFormValidation" action="{{ url('formateurs/'.$f->id) }}" method="post" enctype="multipart/form-data" novalidate="novalidate">
-					<input type="hidden" name="_method" value="PUT">
-                    {{ csrf_field() }}
                     <div class="content">
-                        @if ($errors->any())
-                            @foreach ($errors->all() as $error)
-                                <div class="alert alert-danger alert-dismissable" role="alert">
-                                    <button type="button" class="close" data-dismiss="alert">
-                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                                    </button>
-                                    <span><strong>Attention !</strong> {{ $error }}</span>
-                                </div>
-                            @endforeach
-                        @endif
-                    	<h4 class="title">Modifier les infos du formateur</h4>
+                        <h4 class="title">Modifier les infos du formateur <a href="{{url('formateurs/'.$f->id.'/edit')}}" > {{ $f->nom }} </a> </h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Nom complet
-                                        <star>*</star>
-                                    </label>
-                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}" required="required"/>
+                                    <label class="control-label">Nom complet</label>
+                                    <p class="form-control"> {{ $f->nom }} </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Type <star>*</star></label>
-                                    <select name="type" id="type" class="form-control" required="required">
-                                        <option value="Interne" {{$f->type == 'Interne' ? 'selected':''}}>Interne</option>
-                                        <option value="Externe" {{$f->type == 'Externe' ? 'selected':''}}>Externe</option>
-                                    </select>
+                                    <label class="control-label">Type </label>
+                                    <p class="form-control"> {{ $f->type }} </p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Email <star>*</star></label>
-                                    <input class="form-control" name="email" type="email" placeholder="example@gmail.com" value="{{$f->email}}" required="required"/>
+                                    <label class="control-label">Email </label>
+                                    <p class="form-control"> {{ $f->email }} </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Tel <star>*</star></label>
-                                    <input class="form-control" name="tel" type="tel" placeholder="0600000000" value="{{$f->tel}}" required="required"/>
+                                    <label class="control-label">Tel </label>
+                                    <p class="form-control"> {{ $f->tel }} </p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Qualification <star>*</star></label>
-                                    <input class="form-control" name="qualification" type="text" placeholder="Qualification" value="{{$f->qualification}}" required="required" />
+                                    <label class="control-label">Qualification </label>
+                                    <p class="form-control"> {{ $f->qualification }} </p>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Expertise <star>*</star></label>
-                                    <input class="form-control" name="expertise" type="text" placeholder="Expertise" value="{{$f->expertise}}" required="required" />
+                                    <label class="control-label">Expertise </label>
+                                    <p class="form-control"> {{ $f->expertise }} </p>
                                 </div>
                             </div>
                         </div>
@@ -71,19 +53,13 @@
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Autres</label>
-                                    <textarea name="autres" id="" class="form-control" rows="3">{{$f->autres}}</textarea>
+                                    <p class="form-control"> {{ $f->autres }} </p>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group label-floating">
-                                    <label class="control-label">Importer le C.V en pièce jointe</label>
-                                    <input type="file" name="cv" class="form-control" accept=".docx,.pdf" >   
-                                </div>
-                            </div>
                             @if(!empty($f->cv))
-                                <div class="col-md-6">
+                                <div class="col-md-12">
                                     <div class="form-group label-floating">
                                         <label class="control-label"> &nbsp; </label>
                                         <a href="{{url('/cvs/'.$f->cv)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le C.V </a>
@@ -109,12 +85,6 @@
                                     <label class="star star-1-q" for="star-1-q" title=" Qualité 1/5"></label>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="category form-category">
-                            <star>*</star> Champ obligatoire</div>
-                        <div class="text-center">
-                            <input type="submit" class="btn btn-rose btn-fill btn-wd" value="Sauvegarder">
                         </div>
                     </div>
                 </form>

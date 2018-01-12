@@ -34,6 +34,7 @@
                                     <td> {{ $f->personne_contacter }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
+                                        <a href="{{url('prestataires/'.$f->id)}}" class="btn btn-fill btn-default btn-icon "><i class="fa fa-eye"></i></a>
                                         <a href="{{url('prestataires/'.$f->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-prestataire" data-id="{{$f->id}}"><i class="ti-close"></i></a>
                                     </td>

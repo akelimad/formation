@@ -9,18 +9,28 @@
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                    </button>
+                                    <span><strong>Attention !</strong> {{ $error }}</span>
+                                </div>
+                            @endforeach
+                        @endif
                         <h4 class="title">Modifier un prestataire</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Nom complet<star>*</star> </label>
-                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$p->nom}}"/>
+                                    <label class="control-label">Nom complet <star>*</star> </label>
+                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$p->nom}}" required="required" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="label-control">Code </label>
-                                    <input type="text" name="code" class="form-control"  placeholder="Code" value="{{$p->code}}" readonly="" />
+                                    <label class="label-control">Code <star>*</star></label>
+                                    <input type="text" name="code" class="form-control"  placeholder="Code" value="{{$p->code}}" readonly="" required="" />
                                 </div>
                             </div>
                         </div>
@@ -28,9 +38,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="label-control">Type</label>
-                                    <select class="selectpicker" name="type" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                        <option disabled selected>-- select --</option>
+                                    <label class="label-control">Type <star>*</star></label>
+                                    <select class="selectpicker" name="type" data-style="btn btn-primary btn-round" title=" Select" data-size="7" required="">
                                         <option value="Cabinet" {{$p->type == 'Cabinet' ? 'selected' : ''}}>Cabinet</option>
                                         <option value="Institution Etatique" {{$p->type == 'Institution Etatique' ? 'selected' : ''}}>Institution Etatique</option>
                                         <option value="Ecole" {{$p->type == 'Ecole' ? 'selected' : ''}}>Ecole</option>
@@ -40,9 +49,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label class="label-control">Spécialité</label>
-                                    <select class="selectpicker" name="specialite" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
-                                        <option disabled selected>-- select --</option>
+                                    <label class="label-control">Spécialité <star>*</star></label>
+                                    <select class="selectpicker" name="specialite" data-style="btn btn-primary btn-round" title=" Select" data-size="7" required="">
                                         <option value="RH" {{$p->specialite == 'RH' ? 'selected' : ''}}>RH</option>
                                         <option value="Informatique" {{$p->specialite == 'Informatique' ? 'selected' : ''}}>Informatique</option>
                                         <option value="Bureautique" {{$p->specialite == 'Bureautique' ? 'selected' : ''}}>Bureautique</option>
@@ -55,14 +63,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">N° de téléphone</label>
-                                    <input class="form-control" name="tel" type="text" placeholder="N° de téléphone" value="{{$p->tel}}"/>
+                                    <label class="control-label">N° de téléphone <star>*</star></label>
+                                    <input class="form-control" name="tel" type="text" placeholder="N° de téléphone" value="{{$p->tel}}" required="required" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Adresse electronique</label>
-                                    <input class="form-control" name="email" type="email" placeholder="Adresse electronique"  value="{{$p->email}}" />
+                                    <label class="control-label">Adresse electronique <star>*</star></label>
+                                    <input class="form-control" name="email" type="email" placeholder="Adresse electronique"  value="{{$p->email}}" required="required" />
                                 </div>
                             </div>
                         </div>
@@ -70,14 +78,14 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">N° de Fax</label>
-                                    <input class="form-control" name="fax" type="text" placeholder="N° de Fax" value="{{$p->fax}}"/>
+                                    <label class="control-label">N° de Fax <star>*</star></label>
+                                    <input class="form-control" name="fax" type="text" placeholder="N° de Fax" value="{{$p->fax}}" required="required" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Personne de premier contact</label>
-                                    <input class="form-control" name="personne_contacter" type="text" placeholder="Personne de premier contact" value="{{$p->personne_contacter}} " />
+                                    <label class="control-label">Personne de premier contact <star>*</star></label>
+                                    <input class="form-control" name="personne_contacter" type="text" placeholder="Personne de premier contact" value="{{$p->personne_contacter}}" required="required" />
                                 </div>
                             </div>
                         </div>

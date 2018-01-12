@@ -19,14 +19,25 @@ class FournisseurController extends Controller
     }
 
     public function store(Request $request){
+        $this->validate($request, [
+            'nom'            => 'required|unique:fournisseurs',
+            'code'           => 'required',
+            'type'          => 'required',
+            'specialite'      => 'required',
+            'tel'            => 'required',
+            'fax'               => 'required',
+            'email'              => 'required',
+            'personne_contacter' => 'required',
+        ]);
+
         $prestataire = new Fournisseur();
         $prestataire->nom=$request->input('nom');
         $prestataire->code=$request->input('code');
         $prestataire->type=$request->input('type');
         $prestataire->specialite=$request->input('specialite');
         $prestataire->tel=$request->input('tel');
-        $prestataire->email=$request->input('email');
         $prestataire->fax=$request->input('fax');
+        $prestataire->email=$request->input('email');
         $prestataire->personne_contacter=$request->input('personne_contacter');
         $prestataire->type_entreprise=$request->input('type_entreprise');
         $prestataire->qualification=$request->input('qualification');
@@ -41,15 +52,31 @@ class FournisseurController extends Controller
         return view('prestataires.edit', ['p' => $p]);
     }
 
+    public function show($id){
+        $prestataire =  Fournisseur::find($id);
+        return view('prestataires.show', ['p' => $prestataire]);
+    }
+
     public function update(Request $request, $id){
+        $this->validate($request, [
+            'nom'            => 'required',
+            'code'           => 'required',
+            'type'          => 'required',
+            'specialite'      => 'required',
+            'tel'            => 'required',
+            'fax'               => 'required',
+            'email'              => 'required',
+            'personne_contacter' => 'required',
+        ]);
+        
         $prestataire = Fournisseur::find($id);
         $prestataire->nom=$request->input('nom');
         $prestataire->code=$request->input('code');
         $prestataire->type=$request->input('type');
         $prestataire->specialite=$request->input('specialite');
         $prestataire->tel=$request->input('tel');
-        $prestataire->email=$request->input('email');
         $prestataire->fax=$request->input('fax');
+        $prestataire->email=$request->input('email');
         $prestataire->personne_contacter=$request->input('personne_contacter');
         $prestataire->type_entreprise=$request->input('type_entreprise');
         $prestataire->qualification=$request->input('qualification');

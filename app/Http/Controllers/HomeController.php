@@ -27,6 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
+
         $participants = \DB::table('participant_session')
             ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
             ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
@@ -44,7 +45,34 @@ class HomeController extends Controller
                     \DB::raw("sum(b.realise) as 'totalRealise'")
                 ))
             ->get();
-        //dd($sommeBudgets[0]->totalPrevu);
+
+
+        $sessionsPerMonthResult = Session::select('created_at')
+        ->whereRaw('YEAR(created_at) = ?', [date('Y')])
+        ->get()
+        ->groupBy(function($date) {
+            //return Carbon::parse($date->created_at)->format('Y'); // grouping by years
+            return Carbon::parse($date->created_at)->format('F'); // grouping by months
+        });
+
+        $sessionCount = [];
+        $sessionsPerMonth = [];
+
+        foreach ($sessionsPerMonthResult as $key => $value) {
+            $sessionCount[$key] = count($value);
+        }
+
+        for ($m=1; $m<=12; $m++) {
+            $months[]= date('F', mktime(0,0,0,$m, 1, date('Y')));
+        }
+
+        foreach($months as $month){
+            if(!empty($sessionCount[$month])){
+                $sessionsPerMonth[$month] = $sessionCount[$month];    
+            }else{
+                $sessionsPerMonth[$month] = 0;    
+            }
+        }
         
         return view('welcome', [
             'participants'=> $participants,
@@ -52,6 +80,7 @@ class HomeController extends Controller
             'countSessions'=> $countSessions,
             'countCours'=> $countCours,
             'sommeBudgets'=> $sommeBudgets,
+            'sessionsPerMonth'=> $sessionsPerMonth,
         ]);
     }
 }

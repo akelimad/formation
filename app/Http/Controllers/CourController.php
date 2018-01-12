@@ -23,6 +23,14 @@ class CourController extends Controller
     }
 
     public function store(Request $request){
+        $this->validate($request, [
+            'titre'            => 'required|unique:cours',
+            'coordinateur'     => 'required',
+            'devise'           => 'required',
+            'prix'             => 'required',
+            'duree'            => 'required',
+        ]);
+
         $cour = new Cour();
         $cour->titre=$request->input('titre');
         $cour->description=$request->input('description');
@@ -32,7 +40,11 @@ class CourController extends Controller
         $cour->user_id=$request->input('coordinateur');
         $cour->save();
         return redirect('cours');
+    }
 
+    public function show($id){
+        $cour =  Cour::find($id);
+        return view('cours.show', ['c' => $cour]);
     }
 
     public function edit($id){
@@ -42,6 +54,14 @@ class CourController extends Controller
     }
 
     public function update(Request $request, $id){
+        $this->validate($request, [
+            'titre'            => 'required',
+            'coordinateur'           => 'required',
+            'devise'          => 'required',
+            'prix'          => 'required',
+            'duree'          => 'required',
+        ]);
+
         $cour = Cour::find($id);
         $cour->titre=$request->input('titre');
         $cour->description=$request->input('description');

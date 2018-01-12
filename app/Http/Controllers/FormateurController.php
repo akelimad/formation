@@ -20,7 +20,16 @@ class FormateurController extends Controller
     }
 
     public function store(Request $request){
-        //dd($request->all());
+        $this->validate($request, [
+            'nom'            => 'required|unique:formateurs',
+            'type'           => 'required',
+            'email'          => 'required',
+            'tel'            => 'required',
+            'qualification'  => 'required',
+            'expertise'      => 'required',
+            'cv'             => 'max:500',
+        ]);
+
         $Formateurs = new Formateur();
         $Formateurs->nom=$request->input('nom');
         $Formateurs->type=$request->input('type');
@@ -45,12 +54,27 @@ class FormateurController extends Controller
 
     }
 
+    public function show($id){
+        $formateur =  Formateur::find($id);
+        return view('formateurs.show', ['f' => $formateur]);
+    }
+
     public function edit($id){
         $f = Formateur::find($id);
         return view('formateurs.edit', ['f' => $f]);
     }
 
     public function update(Request $request ,$id){
+        $this->validate($request, [
+            'nom'            => 'required',
+            'type'           => 'required',
+            'email'          => 'required',
+            'tel'            => 'required',
+            'qualification'  => 'required',
+            'expertise'      => 'required',
+            'cv'             => 'max:500',
+        ]);
+        
         $Formateurs = Formateur::find($id);
         $Formateurs->nom=$request->input('nom');
         $Formateurs->type=$request->input('type');

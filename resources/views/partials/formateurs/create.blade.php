@@ -1,11 +1,13 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="card">
-                <form id="allInputsFormValidation" action="{{ url('formateurs') }}" method="post" enctype="multipart/form-data" novalidate="novalidate">
+<div class="modal fade" id="formateur_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                <h3 class="modal-title text-center">Ajouter un formateur</h3>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <form id="allInputsFormValidation" action="{{ url('formateurs') }}" method="post" enctype="multipart/form-data" novalidate="novalidate" class="col-md-10 col-md-offset-1">
                     {{ csrf_field() }}
                     <div class="content">
                         @if ($errors->any())
@@ -109,9 +111,8 @@
                         </div>
                     </div>
                 </form>
+                </div>
             </div>
         </div>
     </div>
 </div>
-
-@endsection

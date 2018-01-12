@@ -40,7 +40,6 @@
                                     <th>Coordinateur</th>
                                     <th>Durée(j)</th>
                                     <th>Budget(DH)</th>
-                                    <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -50,11 +49,6 @@
                                     <td> {{ $cour->user->name }} </td>
                                     <td> {{ $cour->duree }} </td>
                                     <td> {{ $cour->prix }} </td>
-                                    <td class="text-right">
-                                        {{ csrf_field() }}
-                                        <a href="{{url('cours/'.$cour->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-cours" data-id="{{$cour->id}}"><i class="ti-close"></i></a>
-                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -64,7 +58,6 @@
                                     <th>Coordinateur</th>
                                     <th>Durée(j)</th>
                                     <th>Budget(DH)</th>
-                                    <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>
                         </table>

@@ -1,7 +1,23 @@
 
 $().ready(function() {
 
-    $('#allInputsFormValidation').validate();
+    $('#allInputsFormValidation').validate({
+        rules: {
+            tel: {
+                number: true
+            },
+            fax: {
+                number: true
+            },
+            photo:{
+                accept:"image/*",
+                filesize: 2000000   //max size 200 kb
+            }
+        }
+    });
+    $('#allInputsFormValidation1').validate({
+        
+    });
 
     $('body').on('keyup', '.prevu, .realise', function(){
         var $container = $(this).closest('.form-group');

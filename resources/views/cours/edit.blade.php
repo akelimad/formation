@@ -9,18 +9,28 @@
                 	<input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
+                        @if ($errors->any())
+                            @foreach ($errors->all() as $error)
+                                <div class="alert alert-danger alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert">
+                                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                                    </button>
+                                    <span><strong>Attention !</strong> {{ $error }}</span>
+                                </div>
+                            @endforeach
+                        @endif
                         <h4 class="title">Modifier le cours</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Titre<star>*</star></label>
-                                    <input class="form-control" name="titre" type="text" required="true" placeholder="Titre" value="{{$c->titre}}" />
+                                    <input class="form-control" name="titre" type="text" required="required" placeholder="Titre" value="{{$c->titre}}" />
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Coordinateur<star>*</star> </label>
-                                    <select class="selectpicker" name="coordinateur" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                    <select class="selectpicker" name="coordinateur" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="required">
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" {{$c->user_id == $user->id ? 'selected' : '' }} > {{ $user->name }} </option>
                                         @endforeach

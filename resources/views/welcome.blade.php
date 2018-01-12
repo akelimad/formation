@@ -92,41 +92,84 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-lg-6">
             <div class="card" style="min-height: 648px">
                 <div class="header card-header-text">
                     <h4 class="title">Les sessions prochaines</h4>
-                    <!-- <p class="category">New employees on 15th December, 2016</p> -->
                 </div>
-                <div class="content table-responsive">
-                    <table class="table table-hover">
-                        <thead class="text-primary">
-                            <tr>
-                                <th>Nom de session</th>
-                                <th>Date début</th>
-                                <th>Date fin</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            
-                            @forelse($sessions as $s)
-                                <tr>
-                                    <td> {{$s->nom}} </td>
-                                    <td> {{ Carbon\Carbon::parse($s->start)->format('d/m/Y')}} </td>
-                                    <td> {{ Carbon\Carbon::parse($s->end)->format('d/m/Y')}} </td>
-                                </tr>
-                            @empty
-                                <tr>
-                                    <td>Aucune session prochaine.</td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                <div class="content card-padding hommeBarchart">
+                    <div class="chart chart-js-container">
+                        <canvas id="barChart" style="width: 100%" height="300"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('javascript')
+    <script>
+        $(function() {
+            var barChartData = {
+                labels: [
+                    @foreach($sessionsPerMonth as $key=>$value)
+                    "{{$key}}",
+                    @endforeach
+                ],
+                datasets: [{
+                    label: 'Nombre de sessions',
+                    backgroundColor: "#FF6384",
+                    borderColor: "#FF6384",
+                    borderWidth: 1,
+                    data: [
+                        @foreach($sessionsPerMonth as $key=>$value)
+                            {{$value}},
+                        @endforeach
+                    ]
+                }]
+            };
+            var config = {
+                type: 'bar',
+                data: barChartData,
+                width:320,
+                height:520,
+                options: {
+                    responsive: true,
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Nombre de sessions par mois pour l\'année en cours: '+ (new Date()).getFullYear()
+                    },
+                    scales: {
+                        xAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Les mois'
+                            }
+                        }],
+                        yAxes: [{
+                            display: true,
+                            scaleLabel: {
+                                display: true,
+                                labelString: 'Le nombre se sessions'
+                            },
+                            ticks:{
+                                stepSize : 1,
+                            }
+                        }]
+                    }
+                }
+            }
+            if($('#barChart')[0]){
+                var barChartCanvas = $("#barChart").get(0).getContext("2d");
+                barChartCanvas.height = 500;
+                var barChart = new Chart(barChartCanvas, config);
+
+            }
+        })
+    </script>
 @endsection

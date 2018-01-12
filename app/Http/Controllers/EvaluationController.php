@@ -36,7 +36,7 @@ class EvaluationController extends Controller
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
-            'nom'            => 'required',
+            'nom'            => 'required|unique:evaluations',
             'type'           => 'required',
             'session'        => 'required',
         ]);
@@ -137,6 +137,12 @@ class EvaluationController extends Controller
     }
 
     public function update(Request $request, $id){
+        $this->validate($request, [
+            'nom'            => 'required',
+            'type'           => 'required',
+            'session'        => 'session',
+        ]);
+
         $evaluation =  Evaluation::find($id);
         $evaluation->nom=$request->input('nom');
         $evaluation->type=$request->input('type');

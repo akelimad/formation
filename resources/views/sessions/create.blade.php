@@ -31,7 +31,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Cours<star>*</star> </label>
-                                            <select class="selectpicker" name="cour" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="required">
+                                            <select class="selectpicker" name="cour" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="required">
                                                 <option disabled selected value="">-- select --</option>
                                                 @foreach ($cours as $cour)
                                                     <option value="{{ $cour->id }}" {{$cour->id == old('cour') ? 'selected': ''}} > {{ $cour->titre }} </option>
@@ -42,7 +42,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Formateur<star>*</star> </label>
-                                            <select class="selectpicker" name="formateur" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                            <select class="selectpicker" name="formateur" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="">
                                                 <option disabled selected>-- select --</option>
                                                 @foreach ($formateurs as $formateur)
                                                     <option value="{{ $formateur->id }}" {{$formateur->id == old('formateur') ? 'selected': ''}} > {{ $formateur->nom }} </option>
@@ -71,7 +71,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Lieu</label>
-                                    <input class="form-control" name="lieu" type="text" placeholder="Lieu" value="{{ old('lieu') }}"  />
+                                    <input class="form-control" name="lieu" type="text" placeholder="Lieu" value="{{ old('lieu') }}" required="required" />
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -79,7 +79,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Methode </label>
-                                            <select class="selectpicker" name="methode" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                            <select class="selectpicker" name="methode" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="">
                                                 <option disabled selected>-- select --</option>
                                                 <option value="Salle de classe" {{old('methode') == 'Salle de classe' ? 'selected':''}} >Salle de classe</option>
                                                 <option value="Autoformation" {{old('methode') == 'Autoformation' ? 'selected':''}} >Autoformation</option>
@@ -90,7 +90,7 @@
                                     <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Statut </label>
-                                            <select class="selectpicker" name="statut" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
+                                            <select class="selectpicker" name="statut" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="">
                                                 <option disabled selected>-- select --</option>
                                                 <option value="Aprobation en attente" {{old('statut') == 'Aprobation en attente' ? 'selected':''}}>Aprobation en attente</option>
                                                 <option value="Programmé" {{old('statut') == 'Programmé' ? 'selected':''}}>Programmé</option>
@@ -117,7 +117,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Salle <star>*</star></label>
-                                    <select class="selectpicker" required="" name="salle" data-style="btn btn-primary btn-round" title="Single Select" data-size="7">
+                                    <select class="selectpicker" required="" name="salle" data-style="btn btn-primary btn-round" title="Select" data-size="7">
                                         <option disabled selected>-- select --</option>
                                         @foreach ($salles as $salle)
                                             <option value="{{ $salle->id }}" {{$salle->id == old('salle') ? 'selected': ''}} > {{ $salle->numero }} </option>

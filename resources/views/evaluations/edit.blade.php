@@ -13,18 +13,16 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Nom
-                                        <star>*</star>
-                                    </label>
-                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" />
+                                    <label class="control-label">Nom <star>*</star></label>
+                                    <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" required="required" />
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Type</label>
-                                    <select class="form-control" required="" name="type">
+                                    <label class="control-label">Type  <star>*</star></label>
+                                    <select class="form-control" required="required" name="type">
                                         <option disabled selected value="">-- select --</option>
                                         <option value="a-chaud" {{$e->type = 'a-chaud' ? 'selected':''}}> A chaud </option>
                                         <option value="a-froid" {{$e->type = 'a-froid' ? 'selected':''}}> A froid </option>
@@ -34,7 +32,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Session <star>*</star></label>
-                                    <select class="form-control" required="" name="session" disabled="">
+                                    <select class="form-control" required="required" name="session" disabled="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($sessions as $session)
                                             <option value="{{ $session->id }}" {{$e->session = $session->id ? 'selected':''}} > {{ $session->nom }} </option>

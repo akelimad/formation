@@ -40,11 +40,10 @@ class SessionController extends Controller
         $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
         $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
         $validator = Validator::make($request->all(), [
-            'nom'            => 'required',
+            'nom'            => 'required|unique:sessions',
             'cour'           => 'required',
             'formateur'      => 'required',
-            // 'start'          => 'required',
-            // 'end'            => 'required|date|after:start',
+            'lieu'           => 'required',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
@@ -167,8 +166,7 @@ class SessionController extends Controller
             'nom'            => 'required',
             'cour'           => 'required',
             'formateur'      => 'required',
-            // 'start'          => 'required|date',
-            // 'end'            => 'required|date|after:start',
+            'lieu'           => 'required',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
