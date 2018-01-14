@@ -238,8 +238,13 @@ class SessionController extends Controller
                         $sess_participants= new Participant_sessions();
                         $sess_participants->session_id = $session_id;
                         $sess_participants->participant_id = $par;
+                        $sess_participants->prevu = 0;
                         $sess_participants->present = 1;
                         $sess_participants->save();  
+                    }else{
+                        \DB::table('participant_session')
+                        ->where(['session_id' => $session_id,'participant_id' =>$par])
+                        ->update(['present'=>1]);
                     }
                 }
             }

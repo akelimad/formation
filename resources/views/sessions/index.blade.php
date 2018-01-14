@@ -9,7 +9,7 @@
                     <form action="{{url('sessions/filter/search')}}" method="get" novalidate="novalidate">
                         <div class="filter">
                             <div class="col-md-1">
-                                <p>Filtres: </p>
+                                <p class="filter-label">Filtres: </p>
                             </div>
                             <div class="col-md-2">
                                 <input type="search" name="start" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date début" value="{{isset($selected_start) ? $selected_start: ''}}">
@@ -18,7 +18,7 @@
                                 <input type="search" name="end" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date fin" value="{{isset($selected_end) ? $selected_end: ''}}">
                             </div>
                             <div class="col-md-1">
-                                <p class="pull-right">Statut: </p>
+                                <p class="pull-right filter-label">Statut: </p>
                             </div>
                             <div class="col-md-2">
                                 <select class="form-control" name="statut">
@@ -62,15 +62,15 @@
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
-                                    <th>Nom de la session</th>
-                                    <th>Cours</th>
-                                    <th>Formateur</th>
-                                    <th>Salle</th>
-                                    <th>Lieu</th>
-                                    <th>Date de début</th>
-                                    <th>Date de fin</th>
-                                    <th>Statut</th>
-                                    <th class="disabled-sorting text-right">Actions</th>
+                                    <th style="width: 13%">Nom session</th>
+                                    <th style="width: 13%">Cours</th>
+                                    <th style="width: 9%">Formateur</th>
+                                    <th style="width: 9%">Salle</th>
+                                    <th style="width: 9%">Lieu</th>
+                                    <th style="width: 9%">Date début</th>
+                                    <th style="width: 9%">Date fin</th>
+                                    <th style="width: 9%">Statut</th>
+                                    <th style="width: 20%" class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,28 +95,70 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Nom de la session</th>
-                                    <th>Cour</th>
-                                    <th>Formateur</th>
-                                    <th>Salle</th>
-                                    <th>Lieu</th>
-                                    <th>Date de début</th>
-                                    <th>Date de fin</th>
-                                    <th>Statut</th>
-                                    <th class="text-right">Actions</th>
+                                    <th style="width: 13%">Nom session</th>
+                                    <th style="width: 13%">Cours</th>
+                                    <th style="width: 9%">Formateur</th>
+                                    <th style="width: 9%">Salle</th>
+                                    <th style="width: 9%">Lieu</th>
+                                    <th style="width: 9%">Date début</th>
+                                    <th style="width: 9%">Date fin</th>
+                                    <th style="width: 9%">Statut</th>
+                                    <th style="width: 20%" class="text-right">Actions</th>
                                 </tr>
                             </tfoot>
                         </table>
                     </div>
 
                     <!-- formateurs modal -->
-                    @include('partials/formateurs.create')
+                    <div class="modal fade" id="formateur_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Ajouter un formateur</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        @include('partials/formateurs.create')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- participant modal -->
-                    @include('partials/participants.create')
+                    <div class="modal fade" id="participant_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Ajouter un participant</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        @include('partials/participants.create')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <!-- budgets modal -->
-                    @include('partials/budgets.create')
+                    <div class="modal fade" id="budget_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Ajouter les budgets de la session</h3>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        @include('partials/budgets.create')
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
                 <!-- end content-->

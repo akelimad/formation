@@ -144,7 +144,7 @@
                                     <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-list"></i> Gestion de formateurs</a>
+                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-gear"></i> Gestion de formateurs</a>
                                 </li>
                             </ul>
                         </div>

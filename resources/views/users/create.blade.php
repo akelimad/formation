@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('utilisateurs') }}">
+                <form id="allInputsFormValidation" class="form-horizontal" role="form" method="POST" action="{{ url('utilisateurs') }}">
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title text-center h4">Ajouter un utilisateur</h4>
@@ -51,7 +51,7 @@
                             <label for="password-confirm" class="col-md-3 control-label">Confirmation <star>*</star></label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required="required" equalTo="#password">
 
                                 @if ($errors->has('password_confirmation'))
                                     <span class="help-block">

@@ -158,7 +158,38 @@ label.star:before {
 }
 
 .hommeBarchart .chart-js-container{
-  max-width: 100%;
-  padding: 1em;
+  max-width: 100% !important;
+  padding-left: 0px;
+
+}
+
+.filter-label{
+  margin-top: 0.5em;
+}
+
+.no-border-bottom td:first-child{
+  border-top: none !important;
+}
+
+@media (max-width: 1400px) {
+  table.dataTable .btn.btn-icon{
+    margin: 0;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 26px;
+  }
+  table.dataTable thead > tr > th.sorting{
+    padding-right: 0;
+  }
+  .table > thead > tr > th {
+    font-size: 1em;
+    font-weight: 600;
+  }
+
+  .sidebar-mini .sidebar .sidebar-wrapper .collapse .nav{
+    width: 250px;
+  }
+
 
 }

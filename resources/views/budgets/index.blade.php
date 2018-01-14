@@ -47,8 +47,8 @@
                                             <a href="#" class="btn btn-fill btn-danger btn-icon delete-budget" data-id="{{$session->id}}"><i class="ti-close"></i></a>
                                         </td>
                                         @foreach($session->budgets as $budget)
-                                        <tr>
-                                            <td></td>
+                                        <tr class="no-border-bottom">
+                                            <td ></td>
                                             <td>{{ $budget->budget }}</td>
                                             <td>{{ $budget->prevu }}</td>
                                             <td>{{ $budget->realise }}</td>

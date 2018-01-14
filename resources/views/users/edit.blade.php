@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form class="form-horizontal" role="form" method="POST" action="{{ url('utilisateurs/'.$user->id) }}">
+                <form id="allInputsFormValidation" class="form-horizontal" role="form" method="POST" action="{{ url('utilisateurs/'.$user->id) }}">
                     <input type="hidden" name="_method" value="PUT" data-toggle="validator">
                     {{ csrf_field() }}
                     <div class="content">

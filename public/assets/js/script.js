@@ -474,7 +474,7 @@ $().ready(function() {
     demo.initFormExtendedDatetimepickers();
 
     var MAX_OPTIONS = 30;
-    $('#surveyForm').bootstrapValidator({
+    $('.surveyForm').bootstrapValidator({
         feedbackIcons: {
             valid: 'glyphicon glyphicon-ok',
             invalid: 'glyphicon glyphicon-remove',
@@ -488,17 +488,6 @@ $().ready(function() {
                     }
                 }
             },
-            'option[]': {
-                validators: {
-                    notEmpty: {
-                        message: 'The option required and cannot be empty'
-                    },
-                    stringLength: {
-                        max: 100,
-                        message: 'The option must be less than 100 characters long'
-                    }
-                }
-            }
         }
     })
 

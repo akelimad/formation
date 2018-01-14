@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="modal-body">
                                     <div class="row">
-                                        <form id="surveyForm" class="form-horizontal" action="{{ url('questions') }}" method="post">
+                                        <form class="surveyForm form-horizontal" action="{{ url('questions') }}" method="post">
                                             {{ csrf_field() }}
                                             <div class="form-group">
                                                 <label class="col-md-2 control-label">Evaluation</label>
