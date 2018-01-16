@@ -48,15 +48,13 @@ class CourController extends Controller
             ->select('cours.*', 'users.name as coordinateur')
             ->where('cours.id','=', $id)
             ->first();
-        return response()->json($cour);
-        //return view('cours.show', ['c' => $cour]);
+        return view('cours.show', ['c' => $cour]);
     }
 
     public function edit($id){
         $users = User::all();
         $cour = Cour::find($id);
-        return response()->json(['cour'=>$cour, 'users' => $users]);
-        //return view('cours.edit', ['c' => $cour, 'users' => $users]);
+        return view('cours.edit', ['c' => $cour, 'users' => $users]);
     }
 
     public function update(Request $request, $id){

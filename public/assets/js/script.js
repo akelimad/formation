@@ -102,6 +102,7 @@ $().ready(function() {
     $('#editPrestataire_modal').appendTo("body");
     $('#showCours_modal').appendTo("body");
     $('#editCours_modal').appendTo("body");
+    $('#addCours_modal').appendTo("body");
     
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -182,7 +183,7 @@ $().ready(function() {
     });
 
     //delete cours
-    $("#datatables").on('click', '.delete-cours',function () {
+    $(".table").on('click', '.delete-cours',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'cours/'+id+'/delete';
@@ -458,7 +459,6 @@ $().ready(function() {
         $.get('prestataires/create' , function( data ) {
             $("#addPrestataire_modal .modal-body").html(data);
         });
-
     });
 
     //add prestataire in modal
@@ -514,42 +514,12 @@ $().ready(function() {
         });
     });
 
-    // $("#datatables").on('click', '.showPrestataire',function () {
-    //     var id= $(this).data('id')
-    //     var route = 'prestataires/'+ id
-    //     $.get(route, function(data){
-    //         $("#nom").empty().html(data.nom)
-    //         $("#code").empty().html(data.code)
-    //         $("#type").empty().html(data.type)
-    //         $("#specialite").empty().html(data.specialite)
-    //         $("#tel").empty().html(data.tel)
-    //         $("#fax").empty().html(data.fax)
-    //         $("#email").empty().html(data.email)
-    //         $("#personne_contacter").empty().html(data.personne_contacter)
-    //         $("#type_entreprise").empty().html(data.type_entreprise)
-    //         $("#qualification").empty().html(data.qualification)
-    //         $("#commentaire").empty().html(data.commentaire)
-    //         $("#addPrestataire_modal .modal-body").html(data);
-    //     });
-    // });
-
-    //edit prestataire in modal
-    $("#datatables").on('click', '.editPrestataire',function () {
+    //show edit form prestataire in modal
+    $(".editPrestataire").on("click", function(e) {
         var id= $(this).data('id')
-        var route = 'prestataires/'+id+'/edit'
-        $.get(route, function(data){
-            $("input[name='id']").val(data.id)
-            $("input[name='nom']").val(data.nom)
-            $("input[name='code']").val(data.code)
-            $("select#type option[value='"+data.type+"']").prop('selected', true)
-            $("select#specialite option[value='"+data.specialite+"']").prop('selected', true)
-            $("input[name='tel']").val(data.tel)
-            $("input[name='fax']").val(data.fax)
-            $("input[name='email']").val(data.email)
-            $("input[name='personne_contacter']").val(data.personne_contacter)
-            $("input[name='type_entreprise']").val(data.type_entreprise)
-            $("input[name='qualification']").val(data.qualification)
-            $("textarea[name='commentaire']").val(data.commentaire)
+        var route = 'prestataires/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editPrestataire_modal .modal-body").html(data);
         });
     });
 
@@ -598,36 +568,28 @@ $().ready(function() {
         });
     });
 
-    //show cours in modal
-    $("#datatables").on('click', '.showCours',function () {
-        var id= $(this).data('id')
-        var route = 'cours/'+ id
-        $.get(route, function(data){
-            $("#titre").empty().html(data.titre)
-            $("#coordianteur").empty().html(data.coordinateur)
-            $("#devise").empty().html(data.devise)
-            $("#budget").empty().html(data.prix)
-            $("#duree").empty().html(data.duree)
-            $("#description").empty().html(data.description)
+    //cours add form
+    $("#addCours_modal").on("show.bs.modal", function(e) {
+        $.get('cours/create' , function( data ) {
+            $("#addCours_modal .modal-body").html(data);
         });
     });
 
-    //edit cours in modal
-    $("#datatables").on('click', '.editCours',function () {
+    //show cours in modal
+    $(".showCours").on("click", function(e) {
         var id= $(this).data('id')
-        var route = 'cours/'+ id +'/edit'
+        var route = 'cours/'+ id 
         $.get(route, function(data){
-            $("input[name='id']").val(data.cour.id)
-            $("input[name='titre']").val(data.cour.titre)
-            $("select[name='coordinateur']").empty();
-            $.each(data.users, function(index, user){
-                $("select[name='coordinateur']").append($('<option>', { value: user.id, text : user.name}));
-            });
-            $("select[name='coordinateur'] option[value='"+data.cour.user_id+"']").prop('selected', true)
-            $("select[name='devise'] option[value='"+data.cour.devise+"']").prop('selected', true)
-            $("input[name='prix']").val(data.cour.prix)
-            $("input[name='duree']").val(data.cour.duree)
-            $("input[name='description']").val(data.cour.description)
+            $("#showCours_modal .modal-body").html(data);
+        });
+    });
+
+    //show edit form prestataire in modal
+    $(".editCours").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'cours/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editCours_modal .modal-body").html(data);
         });
     });
 

@@ -15,7 +15,7 @@ class FournisseurController extends Controller
 
     public function create(){
         $code= substr(str_shuffle(md5(rand(0,100000))), 0, 8);
-        return view('prestataires.create', compact('code'))->render();
+        return view('prestataires.create', compact('code'));
     }
 
     public function store(Request $request){
@@ -49,14 +49,12 @@ class FournisseurController extends Controller
 
     public function edit($id){
         $p = Fournisseur::find($id);
-        return response()->json($p);
-        //return view('prestataires.edit', ['p' => $p]);
+        return view('prestataires.edit', ['p' => $p]);
     }
 
     public function show($id){
         $prestataire =  Fournisseur::find($id);
-        //return response()->json($prestataire);
-        return view('prestataires.show', compact('prestataire'))->render();
+        return view('prestataires.show', compact('prestataire'));
     }
 
     public function update(Request $request, $id){

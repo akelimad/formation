@@ -1,11 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-10 col-md-offset-1">
-            <div class="card">
-                <form class="allInputsFormValidation" action="{{ url('cours') }}" method="post">
+<form class="allInputsFormValidation" action="{{ url('cours') }}" method="post">
                     {{ csrf_field() }}
                     <div class="content">
                         @if ($errors->any())
@@ -18,7 +11,6 @@
                                 </div>
                             @endforeach
                         @endif
-                        <h4 class="title">Ajouter un cours</h4>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
@@ -29,7 +21,7 @@
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
                                     <label class="control-label">Coordinateur <star>*</star> </label>
-                                    <select class="selectpicker" name="coordinateur" required="required" data-style="btn btn-primary btn-round" title="Select" data-size="7" >
+                                    <select class="form-control" name="coordinateur" required="required">
 
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}" {{old('coordinateur') == $user->id ? 'selected':''}}> {{ $user->name }} </option>
@@ -41,10 +33,10 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="row">
-                                    <div class="col-md-4">
+                                    <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Devise <star>*</star></label>
-                                            <select class="selectpicker" name="devise" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="required">
+                                            <select class="form-control" name="devise" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="required">
                                                 <option value="USD" selected="selected">United States Dollars</option>
                                                 <option value="EUR">Euro</option>
                                                 <option value="MAD">Maghreb Dirham</option>
@@ -128,7 +120,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         <div class="form-group label-floating">
                                             <label class="control-label">Budget <star>*</star></label>
                                             <input class="form-control" name="prix" type="number" placeholder="Budget" required="required" value="{{old('prix')}}" />
@@ -159,9 +151,3 @@
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-@endsection
