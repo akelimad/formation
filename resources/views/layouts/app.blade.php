@@ -28,6 +28,8 @@
     <link href="{{ asset('assets/vendors/select2/select2.min.css')}}" rel="Stylesheet" >
     <!--     custom style css     -->
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+
+    <link href="{{ App\Asset::path('app.css') }}" rel="stylesheet">
 </head>
 <body id="app-layout">
     <div class="wrapper">
@@ -92,7 +94,7 @@
                                     <a href="{{ url('cours/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('cours/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
+                                    <a href="{{ url('cours/u/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
                             </ul>
                         </div>
@@ -115,7 +117,7 @@
                                     <a href="{{url('salles/create')}}"><i class="fa fa-plus"></i> Ajouter</a>
                                 </li>
                                 <li>
-                                    <a href="{{url('salles/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
+                                    <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
                             </ul>
                         </div>
@@ -144,7 +146,7 @@
                                     <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('formateurs/gestion') }}"><i class="fa fa-gear"></i> Gestion de formateurs</a>
+                                    <a href="{{ url('formateurs/s/gestion') }}"><i class="fa fa-gear"></i> Gestion de formateurs</a>
                                 </li>
                             </ul>
                         </div>
@@ -313,7 +315,7 @@
     <!-- Select Plugin -->
     <script src="{{ asset('assets/vendors/jquery.select-bootstrap.js')}}"></script>
     <!--  DataTables.net Plugin    -->
-    <script src="{{ asset('assets/vendors/jquery.datatables.js')}}"></script>
+    <!-- <script src="{{ asset('assets/vendors/jquery.datatables.js')}}"></script> -->
     <!-- Sweet Alert 2 plugin -->
     <script src="{{ asset('assets/vendors/sweetalert/js/sweetalert2.min.js')}}"></script>
     <!--    Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
@@ -330,7 +332,9 @@
     <script src="{{ asset('assets/js/demo.js')}}"></script>
     <!-- <script src="{{ asset('assets/js/charts/chartjs-charts.js')}}"></script> -->
     <script src="{{ asset('assets/js/script.js')}}?v={{ time() }}"></script>
-
+        
+    <script src="{{ App\Asset::path('app.js') }}"></script>
+            
     @yield('javascript')
 
 </body>

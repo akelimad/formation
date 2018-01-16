@@ -1,7 +1,7 @@
 
 $().ready(function() {
 
-    $('#allInputsFormValidation').validate({
+    $('.allInputsFormValidation').validate({
         rules: {
             tel: {
                 number: true
@@ -14,9 +14,6 @@ $().ready(function() {
                 filesize: 2000000   //max size 200 kb
             }
         }
-    });
-    $('#allInputsFormValidation1').validate({
-        
     });
 
     $('body').on('keyup', '.prevu, .realise', function(){
@@ -97,57 +94,45 @@ $().ready(function() {
     $('#participant_modal').appendTo("body");
     $('#questionnaire_modal').appendTo("body");
     $('#budget_modal').appendTo("body");
+    $("#budget_modal").on("hidden.bs.modal", function(){
+        $("#budgets-wrap > div").removeClass('has-error')
+    })
+    $('#addPrestataire_modal').appendTo("body");
+    $('#showPrestataire_modal').appendTo("body");
+    $('#editPrestataire_modal').appendTo("body");
+    $('#showCours_modal').appendTo("body");
+    $('#editCours_modal').appendTo("body");
     
     $('[data-toggle="tooltip"]').tooltip();
 
-    $('#datatables').DataTable({
-        "order": [],
-        "pagingType": "full_numbers",
-        "lengthMenu": [
-            [10, 25, 50, -1],
-            [10, 25, 50, "Tous"]
-        ],
-        responsive: true,
-        language: {
-            search: "_INPUT_",
-            searchPlaceholder: "Recherche ...",
-            "paginate": {
-                "first":      "Premier",
-                "last":       "Dernier",
-                "next":       "Suivant",
-                "previous":   "Précedent"
-            },
-            "lengthMenu":     "Affichage _MENU_ entrées",
-            "zeroRecords":    "Aucun resultat trouvée !",
-            "emptyTable":     "Aucune donnée dans la table",
-            "info":           "Affichage _START_ à _END_ du _TOTAL_ entrées",
-            "infoEmpty":      "Affichage 0 à 0 du 0 entrées",
-        },
+    // $('#datatables').DataTable({
+    //     "order": [],
+    //     "pagingType": "full_numbers",
+    //     "lengthMenu": [
+    //         [10, 25, 50, -1],
+    //         [10, 25, 50, "Tous"]
+    //     ],
+    //     responsive: true,
+    //     language: {
+    //         search: "_INPUT_",
+    //         searchPlaceholder: "Recherche ...",
+    //         "paginate": {
+    //             "first":      "Premier",
+    //             "last":       "Dernier",
+    //             "next":       "Suivant",
+    //             "previous":   "Précedent"
+    //         },
+    //         "lengthMenu":     "Affichage _MENU_ entrées",
+    //         "zeroRecords":    "Aucun resultat trouvée !",
+    //         "emptyTable":     "Aucune donnée dans la table",
+    //         "info":           "Affichage _START_ à _END_ du _TOTAL_ entrées",
+    //         "infoEmpty":      "Affichage 0 à 0 du 0 entrées",
+    //     },
 
-    });
+    // });
 
 
-    var table = $('#datatables').DataTable();
-
-    // Edit record
-    table.on('click', '.edit', function() {
-        $tr = $(this).closest('tr');
-
-        var data = table.row($tr).data();
-        //alert('You press on Row: ' + data[0] + ' ' + data[1] + ' ' + data[2] + '\'s row.');
-    });
-
-    // Delete a record
-    table.on('click', '.remove', function(e) {
-        $tr = $(this).closest('tr');
-        table.row($tr).remove().draw();
-        e.preventDefault();
-    });
-
-    //Like record
-    table.on('click', '.like', function() {
-        alert('You clicked on Like button');
-    });
+    // var table = $('#datatables').DataTable();
 
     $('.card .material-datatables label').addClass('form-group');
 
@@ -468,6 +453,227 @@ $().ready(function() {
             allowOutsideClick: false     
         }); 
     });
+
+    $("#addPrestataire_modal").on("show.bs.modal", function(e) {
+        $.get('prestataires/create' , function( data ) {
+            $("#addPrestataire_modal .modal-body").html(data);
+        });
+
+    });
+
+    //add prestataire in modal
+    $("#addPrestataireForm").submit(function (e) {
+        e.preventDefault();
+        var token = $('input[name="_token"]').val();
+        var route = 'prestataires'
+        $.ajax({
+            url: route,
+            headers : {'X-CSRF-TOKEN' : token},
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                nom: $("input[name='nom']").val(),
+                type: $("select#type").val(),
+                specialite: $("select#specialite").val(),
+                tel: $("input[name='tel']").val(),
+                fax: $("input[name='fax']").val(),
+                email: $("input[name='email']").val(),
+                personne_contacter: $("input[name='personne_contacter']").val(),
+                type_entreprise: $("input[name='type_entreprise']").val(),
+                qualification: $("input[name='qualification']").val(),
+                commentaire: $("textarea[name='commentaire']").val(),
+            },
+            success: function(data){
+                if(data.success == 'true'){
+                    $("#editPrestataire_modal").modal('toggle')
+                    $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
+                        $(this).fadeOut(2000);
+                    });
+                }
+            },
+            error: function(data){
+                console.log(data);
+                $(".prestataire.alert-danger").toggle();
+                var errorString = '<ul>';
+                $.each(data.responseJSON, function( key, value) {
+                    errorString += '<li>' + value + '</li>';
+                })
+                errorString += '</ul>';
+                $(".prestataire.alert-danger").html(errorString);
+            }
+
+        });
+    });
+
+    //show prestataire in modal
+    $(".showPrestataire").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'prestataires/'+ id 
+        $.get(route, function(data){
+            $("#showPrestataire_modal .modal-body").html(data);
+        });
+    });
+
+    // $("#datatables").on('click', '.showPrestataire',function () {
+    //     var id= $(this).data('id')
+    //     var route = 'prestataires/'+ id
+    //     $.get(route, function(data){
+    //         $("#nom").empty().html(data.nom)
+    //         $("#code").empty().html(data.code)
+    //         $("#type").empty().html(data.type)
+    //         $("#specialite").empty().html(data.specialite)
+    //         $("#tel").empty().html(data.tel)
+    //         $("#fax").empty().html(data.fax)
+    //         $("#email").empty().html(data.email)
+    //         $("#personne_contacter").empty().html(data.personne_contacter)
+    //         $("#type_entreprise").empty().html(data.type_entreprise)
+    //         $("#qualification").empty().html(data.qualification)
+    //         $("#commentaire").empty().html(data.commentaire)
+    //         $("#addPrestataire_modal .modal-body").html(data);
+    //     });
+    // });
+
+    //edit prestataire in modal
+    $("#datatables").on('click', '.editPrestataire',function () {
+        var id= $(this).data('id')
+        var route = 'prestataires/'+id+'/edit'
+        $.get(route, function(data){
+            $("input[name='id']").val(data.id)
+            $("input[name='nom']").val(data.nom)
+            $("input[name='code']").val(data.code)
+            $("select#type option[value='"+data.type+"']").prop('selected', true)
+            $("select#specialite option[value='"+data.specialite+"']").prop('selected', true)
+            $("input[name='tel']").val(data.tel)
+            $("input[name='fax']").val(data.fax)
+            $("input[name='email']").val(data.email)
+            $("input[name='personne_contacter']").val(data.personne_contacter)
+            $("input[name='type_entreprise']").val(data.type_entreprise)
+            $("input[name='qualification']").val(data.qualification)
+            $("textarea[name='commentaire']").val(data.commentaire)
+        });
+    });
+
+    //update prestataire in modal
+    $("#editPrestataireForm").submit(function (e) {
+        e.preventDefault();
+        var id= $("input[name='id']").val()
+        var token = $('input[name="_token"]').val();
+        var route = 'prestataires/'+ id
+        $.ajax({
+            url: route,
+            headers : {'X-CSRF-TOKEN' : token},
+            type: 'PUT',
+            dataType: 'json',
+            data: {
+                nom: $("input[name='nom']").val(),
+                type: $("select#type").val(),
+                specialite: $("select#specialite").val(),
+                tel: $("input[name='tel']").val(),
+                fax: $("input[name='fax']").val(),
+                email: $("input[name='email']").val(),
+                personne_contacter: $("input[name='personne_contacter']").val(),
+                type_entreprise: $("input[name='type_entreprise']").val(),
+                qualification: $("input[name='qualification']").val(),
+                commentaire: $("textarea[name='commentaire']").val(),
+            },
+            success: function(data){
+                if(data.success == 'true'){
+                    $("#editPrestataire_modal").modal('toggle')
+                    $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
+                        $(this).fadeOut(2000);
+                    });
+                }
+            },
+            error: function(data){
+                console.log(data);
+                $(".prestataire.alert-danger").toggle();
+                var errorString = '<ul>';
+                $.each(data.responseJSON, function( key, value) {
+                    errorString += '<li>' + value + '</li>';
+                })
+                errorString += '</ul>';
+                $(".prestataire.alert-danger").html(errorString);
+            }
+
+        });
+    });
+
+    //show cours in modal
+    $("#datatables").on('click', '.showCours',function () {
+        var id= $(this).data('id')
+        var route = 'cours/'+ id
+        $.get(route, function(data){
+            $("#titre").empty().html(data.titre)
+            $("#coordianteur").empty().html(data.coordinateur)
+            $("#devise").empty().html(data.devise)
+            $("#budget").empty().html(data.prix)
+            $("#duree").empty().html(data.duree)
+            $("#description").empty().html(data.description)
+        });
+    });
+
+    //edit cours in modal
+    $("#datatables").on('click', '.editCours',function () {
+        var id= $(this).data('id')
+        var route = 'cours/'+ id +'/edit'
+        $.get(route, function(data){
+            $("input[name='id']").val(data.cour.id)
+            $("input[name='titre']").val(data.cour.titre)
+            $("select[name='coordinateur']").empty();
+            $.each(data.users, function(index, user){
+                $("select[name='coordinateur']").append($('<option>', { value: user.id, text : user.name}));
+            });
+            $("select[name='coordinateur'] option[value='"+data.cour.user_id+"']").prop('selected', true)
+            $("select[name='devise'] option[value='"+data.cour.devise+"']").prop('selected', true)
+            $("input[name='prix']").val(data.cour.prix)
+            $("input[name='duree']").val(data.cour.duree)
+            $("input[name='description']").val(data.cour.description)
+        });
+    });
+
+    //update cour in modal
+    $("#editCoursForm").submit(function (e) {
+        e.preventDefault();
+        var id= $("input[name='id']").val()
+        var token = $('input[name="_token"]').val();
+        var route = 'cours/'+ id
+        $.ajax({
+            url: route,
+            headers : {'X-CSRF-TOKEN' : token},
+            type: 'PUT',
+            dataType: 'json',
+            data: {
+                titre : $("input[name='titre']").val(),
+                coordinateur : $("select#coordinateur").val(),
+                devise : $("select[name='devise']").val(),
+                prix : $("input[name='prix']").val(),
+                duree : $("input[name='duree']").val(),
+                description : $("input[name='description']").val(),
+            },
+            success: function(response){
+                if(response.success == 'true'){
+                    $("#editCours_modal").modal('toggle')
+                    $(".cours.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
+                        $(this).fadeOut(2000);
+                    });
+                }
+            },
+            error: function(response){
+                $(".cours.alert-danger").toggle();
+                var errorString = '<ul>';
+                $.each(response.responseJSON, function( key, value) {
+                    errorString += '<li>' + value + '</li>';
+                })
+                errorString += '</ul>';
+                $(".cours.alert-danger").html(errorString);
+            }
+        });
+    });
+
+
+    $(".btnFilter").click(function(){
+        $(".filterContent").slideToggle(300);
+    })
 
 
 });

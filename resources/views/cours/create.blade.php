@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="allInputsFormValidation" action="{{ url('cours') }}" method="post">
+                <form class="allInputsFormValidation" action="{{ url('cours') }}" method="post">
                     {{ csrf_field() }}
                     <div class="content">
                         @if ($errors->any())

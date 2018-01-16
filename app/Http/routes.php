@@ -50,8 +50,8 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], fu
     Route::put('cours/{id}', 'CourController@update');
     Route::delete('cours/{id}/delete', 'CourController@destroy');
     //Route::resource('cours', 'CourController');
-    Route::get('cours/export', 'CourController@export');
-    Route::get('cours/gestion', 'CourController@gestion');
+    Route::get('cours/c/export', 'CourController@export');
+    Route::get('cours/u/gestion', 'CourController@usersCours');
 });
 
 
@@ -98,7 +98,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']
     Route::put('formateurs/{id}', 'FormateurController@update');
     Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
     //Route::resource('formateurs', 'FormateurController');
-    Route::get('formateurs/gestion', 'FormateurController@gestion');
+    Route::get('formateurs/s/gestion', 'FormateurController@gestion');
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], function() {
@@ -110,7 +110,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], f
     Route::put('salles/{id}', 'SalleController@update');
     Route::delete('salles/{id}/delete', 'SalleController@destroy');
     //Route::resource('salles', 'SalleController');
-    Route::get('salles/gestion', 'SalleController@gestion');
+    Route::get('salles/s/gestion', 'SalleController@gestion');
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations']], function() {

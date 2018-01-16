@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="allInputsFormValidation" class="form-horizontal" role="form" method="POST" action="{{ url('utilisateurs') }}">
+                <form class="allInputsFormValidation form-horizontal" role="form" method="POST" action="{{ url('utilisateurs') }}">
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title text-center h4">Ajouter un utilisateur</h4>

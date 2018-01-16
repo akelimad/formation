@@ -36,8 +36,8 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group label-floating">
-                                    <label class="control-label">Equipements</label>
-                                    <input class="form-control" name="equipements" type="text" placeholder="Equipements" value="{{old('equipements')}}"/>
+                                    <label class="control-label">Equipements <star>*</star></label>
+                                    <input class="form-control" name="equipements" type="text" placeholder="Equipements" value="{{old('equipements')}}" required="required" />
                                 </div>
                             </div>
                             <div class="col-md-6">

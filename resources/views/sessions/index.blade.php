@@ -4,42 +4,49 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <div class="card">
+            <div class="card filterCard">
                 <div class="content">
-                    <form action="{{url('sessions/filter/search')}}" method="get" novalidate="novalidate">
-                        <div class="filter">
-                            <div class="col-md-1">
-                                <p class="filter-label">Filtres: </p>
-                            </div>
-                            <div class="col-md-2">
-                                <input type="search" name="start" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date début" value="{{isset($selected_start) ? $selected_start: ''}}">
-                            </div>
-                            <div class="col-md-2">
-                                <input type="search" name="end" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date fin" value="{{isset($selected_end) ? $selected_end: ''}}">
-                            </div>
-                            <div class="col-md-1">
-                                <p class="pull-right filter-label">Statut: </p>
-                            </div>
-                            <div class="col-md-2">
-                                <select class="form-control" name="statut">
-                                    <option disabled selected>-- select --</option>
-                                    <option value="Aprobation en attente" @if(isset($selected) && $selected == "Aprobation en attente") selected @endif >Aprobation en attente</option>
+                    <h5>Filters <button class="btn btn-primary pull-right btnFilter"> <i class="fa fa-plus"></i> </button></h5>
+                    <div class="filterContent">
+                        <form action="{{url('sessions/filter/search')}}" method="get" novalidate="novalidate">
+                            <div class="filter">
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Date début</label>
+                                        <input type="search" name="start" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date début" value="{{isset($selected_start) ? $selected_start: ''}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label">Date début</label>
+                                        <input type="search" name="end" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date fin" value="{{isset($selected_end) ? $selected_end: ''}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group label-floating">
+                                        <label class="control-label"> Statut </label>
+                                        <select class="form-control" name="statut">
+                                            <option disabled selected>-- select --</option>
+                                            <option value="Aprobation en attente" @if(isset($selected) && $selected == "Aprobation en attente") selected @endif >Aprobation en attente</option>
 
-                                    <option value="Programmé" @if(isset($selected) && $selected == "Programmé") selected @endif >Programmé</option>
+                                            <option value="Programmé" @if(isset($selected) && $selected == "Programmé") selected @endif >Programmé</option>
 
-                                    <option value="Terminé" @if(isset($selected) && $selected == "Terminé") selected @endif >Terminé</option>
+                                            <option value="Terminé" @if(isset($selected) && $selected == "Terminé") selected @endif >Terminé</option>
 
-                                    <option value="Annulé" @if(isset($selected) && $selected == "Annulé") selected @endif >Annulé</option>
-
-                                </select>
+                                            <option value="Annulé" @if(isset($selected) && $selected == "Annulé") selected @endif >Annulé</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="filterActions">
+                                        <a href="{{url('sessions')}}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
+                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Consulter</button>
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="col-md-4">
-                                <a href="{{url('sessions')}}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
-                                <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Consulter</button>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="card">

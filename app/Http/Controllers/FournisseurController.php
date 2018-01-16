@@ -9,13 +9,13 @@ use App\Http\Requests;
 class FournisseurController extends Controller
 {
     public function index(){
-        $prestataires = Fournisseur::all();
+        $prestataires = Fournisseur::paginate(2);
         return view('prestataires.index', ['prestataires'=>$prestataires]);
     }
 
     public function create(){
         $code= substr(str_shuffle(md5(rand(0,100000))), 0, 8);
-        return view('prestataires.create', compact('code'));
+        return view('prestataires.create', compact('code'))->render();
     }
 
     public function store(Request $request){
@@ -49,18 +49,19 @@ class FournisseurController extends Controller
 
     public function edit($id){
         $p = Fournisseur::find($id);
-        return view('prestataires.edit', ['p' => $p]);
+        return response()->json($p);
+        //return view('prestataires.edit', ['p' => $p]);
     }
 
     public function show($id){
         $prestataire =  Fournisseur::find($id);
-        return view('prestataires.show', ['p' => $prestataire]);
+        //return response()->json($prestataire);
+        return view('prestataires.show', compact('prestataire'))->render();
     }
 
     public function update(Request $request, $id){
         $this->validate($request, [
             'nom'            => 'required',
-            'code'           => 'required',
             'type'          => 'required',
             'specialite'      => 'required',
             'tel'            => 'required',
@@ -68,21 +69,27 @@ class FournisseurController extends Controller
             'email'              => 'required',
             'personne_contacter' => 'required',
         ]);
-        
-        $prestataire = Fournisseur::find($id);
-        $prestataire->nom=$request->input('nom');
-        $prestataire->code=$request->input('code');
-        $prestataire->type=$request->input('type');
-        $prestataire->specialite=$request->input('specialite');
-        $prestataire->tel=$request->input('tel');
-        $prestataire->fax=$request->input('fax');
-        $prestataire->email=$request->input('email');
-        $prestataire->personne_contacter=$request->input('personne_contacter');
-        $prestataire->type_entreprise=$request->input('type_entreprise');
-        $prestataire->qualification=$request->input('qualification');
-        $prestataire->commentaire=$request->input('commentaire');
-        $prestataire->save();
-        return redirect('prestataires');
+
+        if($request->ajax()){
+            $prestataire = Fournisseur::find($id);
+            $prestataire->nom=$request->input('nom');
+            $prestataire->type=$request->input('type');
+            $prestataire->specialite=$request->input('specialite');
+            $prestataire->tel=$request->input('tel');
+            $prestataire->fax=$request->input('fax');
+            $prestataire->email=$request->input('email');
+            $prestataire->personne_contacter=$request->input('personne_contacter');
+            $prestataire->type_entreprise=$request->input('type_entreprise');
+            $prestataire->qualification=$request->input('qualification');
+            $prestataire->commentaire=$request->input('commentaire');
+            $prestataire->save();
+            if($prestataire->save()){
+                return response()->json(['success' => 'true']);
+            }else{
+                return response()->json(['success' => 'false']);
+            }
+            //return redirect('prestataires');
+        }
     }
 
     public function destroy($id){

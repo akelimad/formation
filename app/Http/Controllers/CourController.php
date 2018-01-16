@@ -13,7 +13,7 @@ class CourController extends Controller
 {
 
     public function index(){
-        $cours = Cour::all();
+        $cours = Cour::paginate(2);
         return view('cours.index', ['cours'=>$cours]);
     }
 
@@ -43,34 +43,46 @@ class CourController extends Controller
     }
 
     public function show($id){
-        $cour =  Cour::find($id);
-        return view('cours.show', ['c' => $cour]);
+        $cour = \DB::table('cours')
+            ->join('users', 'users.id', '=', 'cours.user_id')
+            ->select('cours.*', 'users.name as coordinateur')
+            ->where('cours.id','=', $id)
+            ->first();
+        return response()->json($cour);
+        //return view('cours.show', ['c' => $cour]);
     }
 
     public function edit($id){
         $users = User::all();
         $cour = Cour::find($id);
-        return view('cours.edit', ['c' => $cour, 'users' => $users]);
+        return response()->json(['cour'=>$cour, 'users' => $users]);
+        //return view('cours.edit', ['c' => $cour, 'users' => $users]);
     }
 
     public function update(Request $request, $id){
         $this->validate($request, [
             'titre'            => 'required',
-            'coordinateur'           => 'required',
+            'coordinateur'     => 'required',
             'devise'          => 'required',
             'prix'          => 'required',
             'duree'          => 'required',
         ]);
 
-        $cour = Cour::find($id);
-        $cour->titre=$request->input('titre');
-        $cour->description=$request->input('description');
-        $cour->devise=$request->input('devise');
-        $cour->prix=$request->input('prix');
-        $cour->duree=$request->input('duree');
-        $cour->user_id=$request->input('coordinateur');
-        $cour->save();
-        return redirect('cours');
+            $cour = Cour::find($id);
+            $cour->titre=$request->titre;
+            $cour->description=$request->description;
+            $cour->devise=$request->devise;
+            $cour->prix=$request->prix;
+            $cour->duree=$request->duree;
+            $cour->user_id=$request->coordinateur;
+            $cour->save();
+            if($cour->save()){
+                return response()->json(['success' => 'true']);
+            }else{
+                return response()->json(['success' => 'false']);
+            }
+
+        //return redirect('cours');
     }
 
     public function destroy(Request $request, $id){
@@ -80,17 +92,16 @@ class CourController extends Controller
     }
 
     public function export(){
-
+ 
         $cours = \DB::table('cours as c')
         ->join('users as u', 'u.id', '=', 'c.user_id')
-        ->selectRaw('c.id, titre, description, devise, prix, duree, u.name as coordinateur, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i") as creation')
+        ->selectRaw('c.id as ID, titre as Titre, description as Description, devise as Devise, prix as Budget, duree as Durée, u.name as Coordinateur, DATE_FORMAT(c.created_at, "%d/%m/%Y %H:%i") as "Date de création" ')
         ->get();
+        //dd($cours);
         $data = array();
         foreach ($cours as $cour) {
             $data[] = (array)$cour;
         }
-
-
         Excel::create('liste-des-cours', function($excel) use($data) {
             $excel->sheet('cours', function($sheet) use($data) {
                 $sheet->fromArray($data);
@@ -100,11 +111,13 @@ class CourController extends Controller
         return redirect('cours');
     }
 
-    public function gestion(Request $request){
+    public function usersCours(Request $request){
         $user = User::find($request->user);
-        $selected= $request->user;
         $users = User::all();
-        if($request->user) $user_cours = $user->cours;
+        $selected= $request->user;
+        if($request->user){
+            $user_cours = $user->cours;
+        }
         return view('cours.gestion', compact('users', 'selected','user_cours'));
     }
 

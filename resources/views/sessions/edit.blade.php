@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="card">
-                <form id="allInputsFormValidation" action="{{ url('sessions/'.$s->id) }}" method="post">
+                <form class="allInputsFormValidation" action="{{ url('sessions/'.$s->id) }}" method="post">
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
@@ -128,7 +128,6 @@
                                 <div class="form-group label-floating">
                                     <label class="control-label">Salle <star>*</star></label>
                                     <select class="selectpicker" required="required" name="salle" data-style="btn btn-primary btn-round" title="Select" data-size="7">
-                                        <option disabled selected>-- select --</option>
                                         @foreach ($salles as $salle)
                                             <option value="{{ $salle->id }}" {{$salle->id == $s->salle->id ? 'selected':''}} > {{ $salle->numero }} </option>
                                         @endforeach

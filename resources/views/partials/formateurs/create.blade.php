@@ -1,4 +1,4 @@
-<form id="allInputsFormValidation" action="{{ url('formateurs') }}" method="post" enctype="multipart/form-data" novalidate="novalidate" class="col-md-10 col-md-offset-1">
+<form class="allInputsFormValidation" action="{{ url('formateurs') }}" method="post" enctype="multipart/form-data" novalidate="novalidate" class="col-md-10 col-md-offset-1">
     {{ csrf_field() }}
     <div class="content">
         @if ($errors->any())

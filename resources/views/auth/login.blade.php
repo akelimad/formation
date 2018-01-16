@@ -8,7 +8,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-6 col-sm-6 col-md-offset-3 col-sm-offset-3">
-                            <form id="allInputsFormValidation" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+                            <form id="" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
 
                                 @if ($errors->any())
                                     @foreach ($errors->all() as $error)

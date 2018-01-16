@@ -63,7 +63,10 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
-        if(!empty($request->password) && !empty($request->password_confirmation)){
+        if(!empty($request->password) || !empty($request->password_confirmation)){
+            $this->validate($request, [
+                'password' => 'required|min:6|confirmed',
+            ]);
             $user->password = bcrypt($request->password);
         }
         $user->detachRoles( $user->roles );

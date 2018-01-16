@@ -24,6 +24,7 @@ class SalleController extends Controller
             'numero'            => 'required|unique:salles',
             'capacite'          => 'required',
             'photo'              => 'max:2000',
+            'equipements'        => 'required',
         ]);
 
         $salle = new Salle();
@@ -60,6 +61,7 @@ class SalleController extends Controller
             'numero'            => 'required',
             'capacite'          => 'required',
             'photo'              => 'max:2000',
+            'equipements'        => 'required',
         ]);
 
         $salle = Salle::find($id);
