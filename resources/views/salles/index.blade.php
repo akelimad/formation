@@ -12,7 +12,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="{{ url('salles/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouvelle</a>
+                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addSalle_modal"> <i class="fa fa-plus"></i> Nouvelle</a>
                         </div>
                     </div>
                     
@@ -20,7 +20,7 @@
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
                     <div class="material-datatables">
-                        <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
+                        <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
                                     <th>Numéro</th>
@@ -47,8 +47,8 @@
                                     <td> {{ $salle->disposition }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="{{url('salles/'.$salle->id)}}" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
-                                        <a href="{{ url('salles/'.$salle->id.'/edit') }}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" data-toggle="modal" data-target="#showSalle_modal" class="btn btn-fill btn-default btn-icon showSalle" data-id="{{$salle->id}}"><i class="fa fa-eye"></i></a>
+                                        <a href="#" data-toggle="modal" data-target="#editSalle_modal" class="btn btn-fill btn-warning btn-icon editSalle" data-id="{{$salle->id}}"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -65,6 +65,49 @@
                                 </tr>
                             </tfoot>
                         </table>
+                    </div>
+                    {{ $salles->links() }}
+
+                    <div class="modal fade" id="showSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center"> Détails de la salle </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="editSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center"> Editer la salle </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="addSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center"> Ajouter une salle </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- end content-->

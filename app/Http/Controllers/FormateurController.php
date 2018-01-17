@@ -11,7 +11,7 @@ class FormateurController extends Controller
 {
 
     public function index(){
-        $Formateurs = Formateur::orderBy('id','DESC')->get();
+        $Formateurs = Formateur::orderBy('id','desc')->paginate(10);
         return view('formateurs.index', ['formateurs'=>$Formateurs]);
     }
 
@@ -50,7 +50,7 @@ class FormateurController extends Controller
         $Formateurs->autres=$request->input('autres');
         $Formateurs->rating=$request->input('rating')*20;
         $Formateurs->save();
-        return redirect('sessions');
+        return redirect('formateurs');
 
     }
 

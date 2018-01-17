@@ -68,7 +68,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="{{ url('evaluations/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouvelle</a>
+                            <a href="#" data-toggle="modal" data-target="#addEvaluation_modal" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouvelle</a>
                         </div>
                     </div>
                     
@@ -102,10 +102,10 @@
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
                                         <a href="@if(!$evaluation->envoye_le) {{ url('evaluations/'.$evaluation->id.'/sendMail') }}@else#@endif" class="btn btn-fill btn-success btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Le mail est déjà envoyé':'Envoyer un email aux participants'}}" data-toggle="tooltip" {{$evaluation->envoye_le ? 'disabled':''}}><i class="fa fa-envelope"></i></a>
                                         <a href="@if($evaluation->envoye_le){{ url('evaluations/'.$evaluation->id.'/remembreMail') }}@else#@endif" class="btn btn-fill btn-warning btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Rappeler les participants qui n\'ont pas repondu':'Le questionnaire pas encore envoyé' }}" data-toggle="tooltip" {{$evaluation->envoye_le ? '':'disabled'}}><i class="fa fa-bell-o"></i></a>
-                                        <a href="{{url('questionnaire/'.$evaluation->id)}}" class="btn btn-fill btn-default btn-icon add" title="voir le questionnaire" data-toggle="tooltip"> <i class="fa fa-eye"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon add" data-toggle="{{$evaluation->questions ? 'tooltip':'modal'}}" data-target="{{$evaluation->questions ? '#':'#questionnaire_modal'}}" data-id="{{$evaluation->id}}" title="{{$evaluation->questions ? 'Le questionnaire est déjà ajouté':'Ajouter un questionnaire'}}" {{$evaluation->questions ? 'disabled':''}}> <i class="fa fa-question-circle-o"></i> </a>
-                                        <a href="@if(!$evaluation->envoye_le){{url('questionnaire/'.$evaluation->id.'/edit')}} @else#@endif" class="btn btn-fill btn-info btn-icon add" data-toggle="tooltip" title="{{$evaluation->envoye_le ? 'Le questionnaire est déjà envoyé':'Editer le questionnaire'}}" {{$evaluation->envoye_le ? 'disabled':''}} > <i class="ti-pencil-alt"></i> </a>
-                                        <a href="{{url('evaluations/'.$evaluation->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit" title="Editer l'evaluation" data-toggle="tooltip"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" class="btn btn-fill btn-default btn-icon showQuestionnaire" title="voir le questionnaire" data-toggle="modal" data-target="#showQuestionnaire_modal" data-id="{{$evaluation->id}}"> <i class="fa fa-eye"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon addQuestionaire" data-toggle="modal" data-target="#addQuestionnaire_modal" data-id="{{$evaluation->id}}" title="{{$evaluation->questions ? 'Le questionnaire est déjà ajouté':'Ajouter un questionnaire'}}" {{$evaluation->questions ? 'disabled':''}}> <i class="fa fa-question-circle-o"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon editQuestionnaire" data-toggle="modal" data-target="#editQuestionnaire_modal" data-id="{{$evaluation->id}}" title="{{$evaluation->envoye_le ? 'Le questionnaire est déjà envoyé':'Editer le questionnaire'}}" {{$evaluation->envoye_le ? 'disabled':''}} > <i class="ti-pencil-alt"></i> </a>
+                                        <a href="#" class="btn btn-fill btn-warning btn-icon editEvaluation" title="Editer l'evaluation" data-toggle="modal" data-target="#editEvaluation_modal" data-id="{{$evaluation->id}}"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" title="Supprimer l'evaluation" data-toggle="tooltip"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -124,57 +124,68 @@
                             </tfoot>
                         </table>
                     </div>
-                    <div class="modal fade" id="questionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+
+                    <div class="modal fade" id="addEvaluation_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
                         <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Ajouter une evaluation</h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editEvaluation_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Editer une evaluation</h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="addQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
                                     <h3 class="modal-title text-center">Ajouter les questions</h3>
                                 </div>
                                 <div class="modal-body">
-                                    <div class="row">
-                                        <form class="surveyForm form-horizontal" action="{{ url('questions') }}" method="post">
-                                            {{ csrf_field() }}
-                                            <div class="form-group">
-                                                <label class="col-md-2 control-label">Evaluation</label>
-                                                <div class="col-md-8">
-                                                    <select class="form-control" id="evaluationsList" name="evaluation"  required>
-                                                        <option>-- select --</option>
-                                                        @foreach ($evaluations as $e)
-                                                            <option value="{{ $e->id }}" > {{ $e->nom }} </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div id="questions-wrap">
-                                                <div class="form-group" >
-                                                    <label class="col-md-2 control-label">Question</label>
-                                                    <div class="col-md-8">
-                                                        <input type="text" class="form-control" name="questions[0]" required="required" />
-                                                    </div>
-                                                    <div class="col-md-2">
-                                                        <button type="button" class="btn btn-default addLine"><i class="fa fa-plus"></i></button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <!-- The option field template containing an option field and a Remove button -->
-                                            <!-- <div class="form-group hide" id="optionTemplate">
-                                                <label class="col-md-2 control-label">Question</label>
-                                                <div class="col-md-8">
-                                                    <input class="form-control" type="text" name="questions[]" />
-                                                </div>
-                                                <div class="col-md-2">
-                                                    <button type="button" class="btn btn-default removeButton"><i class="fa fa-minus"></i></button>
-                                                </div>
-                                            </div> -->
-
-                                            <div class="form-group">
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-rose btn-fill btn-wd">Sauvegarder</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="editQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Editer le questionnaire </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="showQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center">Les questionnaire de l'évaluation </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
                                 </div>
                             </div>
                         </div>

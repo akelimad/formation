@@ -1,4 +1,4 @@
-<form class="allInputsFormValidation" method="post" >
+<form class="allInputsFormValidation" method="post" action="{{url('prestataires')}}">
     {{ csrf_field() }}
     <div class="content">
         @if ($errors->any())
@@ -15,7 +15,7 @@
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label">Nom complet <star>*</star> </label>
-                    <input class="form-control" name="nom" type="text"  placeholder="Nom" value="{{ old('nom') }}"/>
+                    <input class="form-control" name="nom" type="text"  placeholder="Nom" value="{{ old('nom') }}" required="required" />
                 </div>
             </div>
             <div class="col-md-6">
@@ -55,13 +55,13 @@
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label">N° de téléphone <star>*</star></label>
-                    <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="[0-9]{10}" value="{{ old('tel') }}"/>
+                    <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" value="{{ old('tel') }}" minlength="10" maxlength="10" />
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label">N° de Fax <star>*</star></label>
-                    <input class="form-control" name="fax" type="tel" placeholder="0500000000" required="required" pattern="[0-9]{10}" value="{{ old('fax') }}"/>
+                    <input class="form-control" name="fax" type="tel" placeholder="0500000000" required="required" value="{{ old('fax') }}" minlength="10" maxlength="10" />
                 </div>
             </div>
         </div>

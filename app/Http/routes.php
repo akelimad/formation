@@ -68,10 +68,12 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::get('participants', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
     Route::post('participants', 'ParticipantController@store');
+    Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
 
     Route::get('budgets', 'BudgetController@index');
     Route::get('budgets/create', 'BudgetController@create');
     Route::post('budgets', 'BudgetController@store');
+    Route::get('budgetsSession/{id}', 'BudgetController@show');
     Route::get('budgetsSession/{id}/edit', 'BudgetController@edit');
     Route::put('budgetsSession/{id}', 'BudgetController@update');
     Route::delete('budgetsSession/{id}/delete', 'BudgetController@destroy');

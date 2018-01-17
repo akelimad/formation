@@ -1,6 +1,5 @@
-<form class="allInputsFormValidation" id="editPrestataireForm" method="post" novalidate="novalidate">
+<form class="allInputsFormValidation" id="editPrestataireForm" action="{{url('prestataires/'.$p->id)}}" method="post" novalidate="novalidate" >
     <input type="hidden" name="_method" value="PUT">
-    <input type="hidden" name="id">
     {{ csrf_field() }}
     <div class="content">
         @if ($errors->any())
@@ -108,7 +107,7 @@
         <div class="category form-category">
             <star>*</star> Champ obligatoire</div>
         <div class="text-center">
-            <button type="submit" class="btn btn-rose btn-fill btn-wd updatePrestataire" value="">Sauvegarder</button>
+            <button type="submit" class="updatePrestataire btn btn-rose btn-fill btn-wd " >Sauvegarder</button>
         </div>
     </div>
 </form>

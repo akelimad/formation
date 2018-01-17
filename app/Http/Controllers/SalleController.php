@@ -11,7 +11,7 @@ use Carbon\Carbon;
 class SalleController extends Controller
 {
     public function index(){
-        $salles = Salle::all();
+        $salles = Salle::orderBy('id', 'desc')->paginate(10);
         return view('salles.index', ['salles'=>$salles]);
     }
 

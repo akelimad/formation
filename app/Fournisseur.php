@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Fournisseur extends Model
 {
-    //
+    protected $guarded = ['_token'];
 }

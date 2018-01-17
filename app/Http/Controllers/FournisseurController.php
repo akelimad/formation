@@ -9,7 +9,7 @@ use App\Http\Requests;
 class FournisseurController extends Controller
 {
     public function index(){
-        $prestataires = Fournisseur::paginate(2);
+        $prestataires = Fournisseur::OrderBy('id', 'desc')->paginate(10);
         return view('prestataires.index', ['prestataires'=>$prestataires]);
     }
 
@@ -24,8 +24,8 @@ class FournisseurController extends Controller
             'code'           => 'required',
             'type'          => 'required',
             'specialite'      => 'required',
-            'tel'            => 'required',
-            'fax'               => 'required',
+            'tel'            => 'required|min:10|max:10',
+            'fax'               => 'required|min:10|max:10',
             'email'              => 'required',
             'personne_contacter' => 'required',
         ]);
@@ -68,7 +68,6 @@ class FournisseurController extends Controller
             'personne_contacter' => 'required',
         ]);
 
-        if($request->ajax()){
             $prestataire = Fournisseur::find($id);
             $prestataire->nom=$request->input('nom');
             $prestataire->type=$request->input('type');
@@ -81,13 +80,13 @@ class FournisseurController extends Controller
             $prestataire->qualification=$request->input('qualification');
             $prestataire->commentaire=$request->input('commentaire');
             $prestataire->save();
-            if($prestataire->save()){
-                return response()->json(['success' => 'true']);
-            }else{
-                return response()->json(['success' => 'false']);
-            }
-            //return redirect('prestataires');
-        }
+            // if($prestataire->save()){
+            //     return response()->json(['success' => 'true']);
+            // }else{
+            //     return response()->json(['success' => 'false']);
+            // }
+            return redirect('prestataires');
+        
     }
 
     public function destroy($id){

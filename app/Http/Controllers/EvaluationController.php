@@ -140,13 +140,12 @@ class EvaluationController extends Controller
         $this->validate($request, [
             'nom'            => 'required',
             'type'           => 'required',
-            'session'        => 'session',
         ]);
 
         $evaluation =  Evaluation::find($id);
-        $evaluation->nom=$request->input('nom');
-        $evaluation->type=$request->input('type');
-        $evaluation->session_id=$request->input('session');
+        $evaluation->nom=$request->nom;
+        $evaluation->type=$request->type;
+        $evaluation->session_id=$request->session;
         $evaluation->save();
         return redirect('evaluations');
     }

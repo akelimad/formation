@@ -1,20 +1,29 @@
 
-$().ready(function() {
+$(function() {
 
-    $('.allInputsFormValidation').validate({
-        rules: {
-            tel: {
-                number: true
-            },
-            fax: {
-                number: true
-            },
-            photo:{
-                accept:"image/*",
-                filesize: 2000000   //max size 200 kb
+    function validate(){
+        $('.allInputsFormValidation').validate({
+            rules: {
+                tel: {
+                    number: true
+                },
+                fax: {
+                    number: true
+                },
+                photo:{
+                    accept:"image/*",
+                    filesize: 2000000   //max size 200 kb
+                }
             }
-        }
-    });
+        });
+    }
+
+    demo.initFormExtendedDatetimepickers();
+
+    $(".btnFilter").click(function(){
+        $(".filterContent").slideToggle(300);
+        $('.btnFilter i').toggleClass('fa-plus fa-minus')
+    })
 
     $('body').on('keyup', '.prevu, .realise', function(){
         var $container = $(this).closest('.form-group');
@@ -29,50 +38,52 @@ $().ready(function() {
 
     //to get evaluation that you clicked on to attach question selected by default
     $("#questionnaire_modal" ).on('shown.bs.modal', function(event){
-        $('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+        //$('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
     });
 
     //to get session that you clicked on to attach budget selected by default
-    $("#budget_modal" ).on('shown.bs.modal', function(event){
-        $('#sessionsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+    $("#addBudget_modal" ).on('shown.bs.modal', function(event){
+        //$('#sessionsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
     });
 
-    // Add new Line for budget
-    $(".addLine").click(function(event){
-        event.preventDefault()
-        var copy = $('#budgets-wrap').find(".form-group:first").clone()
-        copy.find('input').val('')
-        copy.find('button').toggleClass('addLine deleteLine')
-        copy.find('button>i').toggleClass('fa-plus fa-minus')
-        var uid = uuidv4()
-        $.each(copy.find('input'), function(){
-            var name = $(this).attr('name')
-            $(this).attr('name', name.replace('[0]', '['+uid+']'))
+    function addLine(){
+        // Add new Line for budget
+        $(".addLine").click(function(event){
+            event.preventDefault()
+            var copy = $('#addLine-wrap').find(".form-group:first").clone()
+            copy.find('input').val('')
+            copy.find('button').toggleClass('addLine deleteLine')
+            copy.find('button>i').toggleClass('fa-plus fa-minus')
+            var uid = uuidv4()
+            $.each(copy.find('input'), function(){
+                var name = $(this).attr('name')
+                $(this).attr('name', name.replace('[0]', '['+uid+']'))
+            })
+            $('#addLine-wrap').append(copy)
         })
-        $('#budgets-wrap').append(copy)
-    })
-    $('#budgets-wrap').on('click', '.deleteLine', function(){
-        $(this).closest('.form-group').remove();
-    });
+        $('#addLine-wrap').on('click', '.deleteLine', function(){
+            $(this).closest('.form-group').remove();
+        });
+    }
 
 
-    // Add new Line
-    $(".addLine").click(function(event){
-        event.preventDefault()
-        var copy = $('#questions-wrap').find(".form-group:first").clone()
-        copy.find('input').val('')
-        copy.find('button').toggleClass('addLine deleteLine')
-        copy.find('button>i').toggleClass('fa-plus fa-minus')
-        var uid = uuidv4()
-        $.each(copy.find('input'), function(){
-            var name = $(this).attr('name')
-            $(this).attr('name', name.replace('[0]', '['+uid+']'))
-        })
-        $('#questions-wrap').append(copy)
-    })
-    $('#questions-wrap').on('click', '.deleteLine', function(){
-        $(this).closest('.form-group').remove();
-    });
+    // // Add new Line
+    // $(".addLine").click(function(event){
+    //     event.preventDefault()
+    //     var copy = $('#questions-wrap').find(".form-group:first").clone()
+    //     copy.find('input').val('')
+    //     copy.find('button').toggleClass('addLine deleteLine')
+    //     copy.find('button>i').toggleClass('fa-plus fa-minus')
+    //     var uid = uuidv4()
+    //     $.each(copy.find('input'), function(){
+    //         var name = $(this).attr('name')
+    //         $(this).attr('name', name.replace('[0]', '['+uid+']'))
+    //     })
+    //     $('#questions-wrap').append(copy)
+    // })
+    // $('#questions-wrap').on('click', '.deleteLine', function(){
+    //     $(this).closest('.form-group').remove();
+    // });
 
 
 
@@ -83,30 +94,47 @@ $().ready(function() {
     }
 
 
-    $('.js-example-basic-multiple').select2({
-        multiple: true,
-        width: "100%",
-        'placeholder':'Selectionnez',
-    });
+    function select2(){
+        $('.js-example-basic-multiple').select2({
+            multiple: true,
+            width: "100%",
+            'placeholder':'Selectionnez',
+        });
+    }
 
 
     $('#formateur_modal').appendTo("body");
     $('#participant_modal').appendTo("body");
-    $('#questionnaire_modal').appendTo("body");
-    $('#budget_modal').appendTo("body");
-    $("#budget_modal").on("hidden.bs.modal", function(){
-        $("#budgets-wrap > div").removeClass('has-error')
-    })
+    $('#addEvaluation_modal').appendTo("body");
+    $('#editEvaluation_modal').appendTo("body");
+    $('#addQuestionnaire_modal').appendTo("body");
+    $('#editQuestionnaire_modal').appendTo("body");
+    $('#addBudget_modal').appendTo("body");
+    $('#showBudget_modal').appendTo("body");
+    $('#editBudget_modal').appendTo("body");
+    // $("#budget_modal").on("hidden.bs.modal", function(){
+    //     $("#budgets-wrap > div").removeClass('has-error')
+    // })
     $('#addPrestataire_modal').appendTo("body");
     $('#showPrestataire_modal').appendTo("body");
     $('#editPrestataire_modal').appendTo("body");
     $('#showCours_modal').appendTo("body");
     $('#editCours_modal').appendTo("body");
     $('#addCours_modal').appendTo("body");
+    $('#addSalle_modal').appendTo("body");
+    $('#showSalle_modal').appendTo("body");
+    $('#editSalle_modal').appendTo("body");
+    $('#showFormateur_modal').appendTo("body");
+    $('#editFormateur_modal').appendTo("body");
+    $('#addFormateur_modal').appendTo("body");
+    $('#addSession_modal').appendTo("body");
+    $('#editSession_modal').appendTo("body");
+    $('#showSession_modal').appendTo("body");
+    $('#showQuestionnaire_modal').appendTo("body");
     
     $('[data-toggle="tooltip"]').tooltip();
 
-    // $('#datatables').DataTable({
+    // $('.table').DataTable({
     //     "order": [],
     //     "pagingType": "full_numbers",
     //     "lengthMenu": [
@@ -144,7 +172,7 @@ $().ready(function() {
     });
 
     //delete evaluation
-    $("#datatables").on('click', '.delete-evaluation',function () {
+    $(".table").on('click', '.delete-evaluation',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'evaluations/'+id+'/delete';
@@ -222,7 +250,7 @@ $().ready(function() {
     });
 
     //delete cours
-    $("#datatables").on('click', '.delete-salle',function () {
+    $(".table").on('click', '.delete-salle',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'salles/'+id+'/delete';
@@ -261,7 +289,7 @@ $().ready(function() {
     });
 
     //delete prestatire
-    $("#datatables").on('click', '.delete-prestataire',function () {
+    $(".table").on('click', '.delete-prestataire',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'prestataires/'+id+'/delete';
@@ -300,7 +328,7 @@ $().ready(function() {
     });
 
     //delete formateur
-    $("#datatables").on('click', '.delete-formateur',function () {
+    $(".table").on('click', '.delete-formateur',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'formateurs/'+id+'/delete';
@@ -339,7 +367,7 @@ $().ready(function() {
     });
 
     //delete session
-    $("#datatables").on('click', '.delete-session',function () {
+    $(".table").on('click', '.delete-session',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'sessions/'+id+'/delete';
@@ -378,7 +406,7 @@ $().ready(function() {
     });
 
     //delete user
-    $("#datatables").on('click', '.delete-user',function () {
+    $(".table").on('click', '.delete-user',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'utilisateurs/'+id+'/delete';
@@ -416,8 +444,8 @@ $().ready(function() {
         }); 
     });
 
-        //delete budgets of session
-    $("#datatables").on('click', '.delete-budget',function () {
+    //delete budgets of session
+    $(".table").on('click', '.delete-budget',function () {
         var id= $(this).data('id');
         var token = $('input[name="_token"]').val();
         var url = 'budgetsSession/'+id+'/delete';
@@ -455,53 +483,96 @@ $().ready(function() {
         }); 
     });
 
+    //delete participant 
+    $(".table").on('click', '.delete-participant',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = 'participants/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', "Le participant a été supprimés ave succès.", 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! il se peut que ce participant a une session en cours", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
+    
+
+    // //add prestataire in modal
+    // $("#addPrestataireForm").submit(function (e) {
+    //     e.preventDefault();
+    //     var token = $('input[name="_token"]').val();
+    //     var route = 'prestataires'
+    //     $.ajax({
+    //         url: route,
+    //         headers : {'X-CSRF-TOKEN' : token},
+    //         type: 'POST',
+    //         dataType: 'json',
+    //         data: {
+    //             nom: $("input[name='nom']").val(),
+    //             type: $("select#type").val(),
+    //             specialite: $("select#specialite").val(),
+    //             tel: $("input[name='tel']").val(),
+    //             fax: $("input[name='fax']").val(),
+    //             email: $("input[name='email']").val(),
+    //             personne_contacter: $("input[name='personne_contacter']").val(),
+    //             type_entreprise: $("input[name='type_entreprise']").val(),
+    //             qualification: $("input[name='qualification']").val(),
+    //             commentaire: $("textarea[name='commentaire']").val(),
+    //         },
+    //         success: function(data){
+    //             if(data.success == 'true'){
+    //                 $("#editPrestataire_modal").modal('toggle')
+    //                 $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
+    //                     $(this).fadeOut(2000);
+    //                 });
+    //             }
+    //         },
+    //         error: function(data){
+    //             console.log(data);
+    //             $(".prestataire.alert-danger").toggle();
+    //             var errorString = '<ul>';
+    //             $.each(data.responseJSON, function( key, value) {
+    //                 errorString += '<li>' + value + '</li>';
+    //             })
+    //             errorString += '</ul>';
+    //             $(".prestataire.alert-danger").html(errorString);
+    //         }
+
+    //     });
+    // });
+    ///********************************************************************************************
+    //Add form prestataire
     $("#addPrestataire_modal").on("show.bs.modal", function(e) {
         $.get('prestataires/create' , function( data ) {
             $("#addPrestataire_modal .modal-body").html(data);
-        });
-    });
-
-    //add prestataire in modal
-    $("#addPrestataireForm").submit(function (e) {
-        e.preventDefault();
-        var token = $('input[name="_token"]').val();
-        var route = 'prestataires'
-        $.ajax({
-            url: route,
-            headers : {'X-CSRF-TOKEN' : token},
-            type: 'POST',
-            dataType: 'json',
-            data: {
-                nom: $("input[name='nom']").val(),
-                type: $("select#type").val(),
-                specialite: $("select#specialite").val(),
-                tel: $("input[name='tel']").val(),
-                fax: $("input[name='fax']").val(),
-                email: $("input[name='email']").val(),
-                personne_contacter: $("input[name='personne_contacter']").val(),
-                type_entreprise: $("input[name='type_entreprise']").val(),
-                qualification: $("input[name='qualification']").val(),
-                commentaire: $("textarea[name='commentaire']").val(),
-            },
-            success: function(data){
-                if(data.success == 'true'){
-                    $("#editPrestataire_modal").modal('toggle')
-                    $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
-                        $(this).fadeOut(2000);
-                    });
-                }
-            },
-            error: function(data){
-                console.log(data);
-                $(".prestataire.alert-danger").toggle();
-                var errorString = '<ul>';
-                $.each(data.responseJSON, function( key, value) {
-                    errorString += '<li>' + value + '</li>';
-                })
-                errorString += '</ul>';
-                $(".prestataire.alert-danger").html(errorString);
-            }
-
+            validate();
         });
     });
 
@@ -520,58 +591,15 @@ $().ready(function() {
         var route = 'prestataires/'+ id + '/edit'
         $.get(route , function( data ) {
             $("#editPrestataire_modal .modal-body").html(data);
+            validate();
         });
     });
-
-    //update prestataire in modal
-    $("#editPrestataireForm").submit(function (e) {
-        e.preventDefault();
-        var id= $("input[name='id']").val()
-        var token = $('input[name="_token"]').val();
-        var route = 'prestataires/'+ id
-        $.ajax({
-            url: route,
-            headers : {'X-CSRF-TOKEN' : token},
-            type: 'PUT',
-            dataType: 'json',
-            data: {
-                nom: $("input[name='nom']").val(),
-                type: $("select#type").val(),
-                specialite: $("select#specialite").val(),
-                tel: $("input[name='tel']").val(),
-                fax: $("input[name='fax']").val(),
-                email: $("input[name='email']").val(),
-                personne_contacter: $("input[name='personne_contacter']").val(),
-                type_entreprise: $("input[name='type_entreprise']").val(),
-                qualification: $("input[name='qualification']").val(),
-                commentaire: $("textarea[name='commentaire']").val(),
-            },
-            success: function(data){
-                if(data.success == 'true'){
-                    $("#editPrestataire_modal").modal('toggle')
-                    $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
-                        $(this).fadeOut(2000);
-                    });
-                }
-            },
-            error: function(data){
-                console.log(data);
-                $(".prestataire.alert-danger").toggle();
-                var errorString = '<ul>';
-                $.each(data.responseJSON, function( key, value) {
-                    errorString += '<li>' + value + '</li>';
-                })
-                errorString += '</ul>';
-                $(".prestataire.alert-danger").html(errorString);
-            }
-
-        });
-    });
-
+    ///********************************************************************************************
     //cours add form
     $("#addCours_modal").on("show.bs.modal", function(e) {
         $.get('cours/create' , function( data ) {
             $("#addCours_modal .modal-body").html(data);
+            validate();
         });
     });
 
@@ -590,119 +618,185 @@ $().ready(function() {
         var route = 'cours/'+ id + '/edit'
         $.get(route , function( data ) {
             $("#editCours_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //salles add form
+    $("#addSalle_modal").on("show.bs.modal", function(e) {
+        $.get('salles/create' , function( data ) {
+            $("#addSalle_modal .modal-body").html(data);
+            validate();
         });
     });
 
-    //update cour in modal
-    $("#editCoursForm").submit(function (e) {
-        e.preventDefault();
-        var id= $("input[name='id']").val()
-        var token = $('input[name="_token"]').val();
-        var route = 'cours/'+ id
-        $.ajax({
-            url: route,
-            headers : {'X-CSRF-TOKEN' : token},
-            type: 'PUT',
-            dataType: 'json',
-            data: {
-                titre : $("input[name='titre']").val(),
-                coordinateur : $("select#coordinateur").val(),
-                devise : $("select[name='devise']").val(),
-                prix : $("input[name='prix']").val(),
-                duree : $("input[name='duree']").val(),
-                description : $("input[name='description']").val(),
-            },
-            success: function(response){
-                if(response.success == 'true'){
-                    $("#editCours_modal").modal('toggle')
-                    $(".cours.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
-                        $(this).fadeOut(2000);
-                    });
-                }
-            },
-            error: function(response){
-                $(".cours.alert-danger").toggle();
-                var errorString = '<ul>';
-                $.each(response.responseJSON, function( key, value) {
-                    errorString += '<li>' + value + '</li>';
-                })
-                errorString += '</ul>';
-                $(".cours.alert-danger").html(errorString);
-            }
+    //show salles in modal
+    $(".showSalle").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'salles/'+ id 
+        $.get(route, function(data){
+            $("#showSalle_modal .modal-body").html(data);
+        });
+    });
+
+    //show edit form prestataire in modal
+    $(".editSalle").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'salles/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editSalle_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //formateurs add form
+    $("#addFormateur_modal").on("show.bs.modal", function(e) {
+        $.get('formateurs/create' , function( data ) {
+            $("#addFormateur_modal .modal-body").html(data);
+            validate();
+        });
+    });
+
+    $("#formateur_modal").on("show.bs.modal", function(e) {
+        $.get('formateurs/create' , function( data ) {
+            $("#formateur_modal .modal-body").html(data);
+            validate();
+        });
+    });
+
+    //show formateurs in modal
+    $(".showFormateur").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'formateurs/'+ id 
+        $.get(route, function(data){
+            $("#showFormateur_modal .modal-body").html(data);
+        });
+    });
+
+    //show edit form prestataire in modal
+    $(".editFormateur").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'formateurs/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editFormateur_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //participants add form
+    $("#participant_modal").on("show.bs.modal", function(e) {
+        $.get('participants/create' , function( data ) {
+            $("#participant_modal .modal-body").html(data);
+            validate();
+        });
+    });
+
+    ///********************************************************************************************
+    //session add form
+    $("#addSession_modal").on("show.bs.modal", function(e) {
+        $.get('sessions/create' , function( data ) {
+            $("#addSession_modal .modal-body").html(data);
+            validate();
+            select2();
+        });
+    });
+    //show session in modal
+    $(".showSession").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'sessions/'+ id 
+        $.get(route, function(data){
+            $("#showSession_modal .modal-body").html(data);
+        });
+    });
+
+    //show edit form session in modal
+    $(".editSession").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'sessions/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editSession_modal .modal-body").html(data);
+            validate();
+            select2();
+        });
+    });
+    ///********************************************************************************************
+    //budget add form
+    $("#addBudget_modal" ).on('shown.bs.modal', function(event){
+        $.get('budgets/create' , function( data ) {
+            $("#addBudget_modal .modal-body").html(data);
+            $('#sessionsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+            addLine();
+            validate();
+        });
+    });
+    //show budget in modal
+    $(".showBudget").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'budgetsSession/'+ id 
+        $.get(route, function(data){
+            $("#showBudget_modal .modal-body").html(data);
+        });
+    });
+
+    //show edit form budget in modal
+    $(".editBudget").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'budgetsSession/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editBudget_modal .modal-body").html(data);
+            addLine();
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //evaluation add form
+    $("#addEvaluation_modal" ).on('shown.bs.modal', function(event){
+        $.get('evaluations/create' , function( data ) {
+            $("#addEvaluation_modal .modal-body").html(data);
+            validate();
+        });
+    });
+
+    //show edit form evaluation in modal
+    $(".editEvaluation").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'evaluations/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editEvaluation_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //questionnaire add form
+    $("#addQuestionnaire_modal" ).on('shown.bs.modal', function(event){
+        $.get('questions/create' , function( data ) {
+            $("#addQuestionnaire_modal .modal-body").html(data);
+            $('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+            addLine();
+            validate();
+        });
+    });
+    //show edit form questionnaire in modal
+    $(".editQuestionnaire").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'questionnaire/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editQuestionnaire_modal .modal-body").html(data);
+            addLine();
+            validate();
+        });
+    });
+    //show questionnaire in modal
+    $(".showQuestionnaire").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'questionnaire/'+ id
+        $.get(route , function( data ) {
+            $("#showQuestionnaire_modal .modal-body").html(data);
         });
     });
 
 
-    $(".btnFilter").click(function(){
-        $(".filterContent").slideToggle(300);
-    })
 
 
 });
-    demo.initFormExtendedDatetimepickers();
 
-    var MAX_OPTIONS = 30;
-    $('.surveyForm').bootstrapValidator({
-        feedbackIcons: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-            question: {
-                validators: {
-                    notEmpty: {
-                        message: 'The question required and cannot be empty'
-                    }
-                }
-            },
-        }
-    })
-
-    // Add button click handler
-    .on('click', '.addButton', function() {
-        var $template = $('#optionTemplate'),
-            $clone    = $template
-                            .clone()
-                            .removeClass('hide')
-                            .removeAttr('id')
-                            .insertBefore($template),
-            $option   = $clone.find('[name="option[]"]');
-
-        // Add new field
-        $('#surveyForm').bootstrapValidator('addField', $option);
-    })
-
-    // Remove button click handler
-    .on('click', '.removeButton', function() {
-        var $row    = $(this).parents('.form-group'),
-            $option = $row.find('[name="option[]"]');
-
-        // Remove element containing the option
-        $row.remove();
-
-        // Remove field
-        $('#surveyForm').bootstrapValidator('removeField', $option);
-    })
-
-    // Called after adding new field
-    .on('added.field.bv', function(e, data) {
-        // data.field   --> The field name
-        // data.element --> The new field element
-        // data.options --> The new field options
-
-        if (data.field === 'option[]') {
-            if ($('#surveyForm').find(':visible[name="option[]"]').length >= MAX_OPTIONS) {
-                $('#surveyForm').find('.addButton').attr('disabled', 'disabled');
-            }
-        }
-    })
-
-    // Called after removing the field
-    .on('removed.field.bv', function(e, data) {
-       if (data.field === 'option[]') {
-            if ($('#surveyForm').find(':visible[name="option[]"]').length < MAX_OPTIONS) {
-                $('#surveyForm').find('.addButton').removeAttr('disabled');
-            }
-        }
-    });

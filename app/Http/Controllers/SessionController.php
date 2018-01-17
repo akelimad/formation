@@ -19,7 +19,7 @@ use Carbon\Carbon;
 class SessionController extends Controller
 {
     public function index(){
-        $sessions = Session::orderBy('id', 'DESC')->get();
+        $sessions = Session::orderBy('id', 'desc')->paginate(10);
         return view('sessions.index', ['sessions'=>$sessions]);
     }
 

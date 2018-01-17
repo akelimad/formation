@@ -29,11 +29,12 @@ class QuestionController extends Controller
 
     public function show($id){
         $q = Question::where('evaluation_id', $id)->get();
-        return view('questionnaires.index',['questions' => $q ]);
+        return view('questionnaires.show',['questions' => $q ]);
     }
 
     public function create(){ 
-        
+        $evaluations= Evaluation::select('id', 'nom')->get();
+        return view('questionnaires.create', compact('evaluations'));
     }
 
     public function store(Request $request){

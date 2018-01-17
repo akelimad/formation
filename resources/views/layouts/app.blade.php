@@ -70,9 +70,9 @@
                                 <li>
                                     <a href="{{ url('prestataires') }}"><i class="fa fa-list"></i> Prestataires</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="{{ url('prestataires/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
-                                </li>
+                                </li> -->
                             </ul>
                         </div>
                     </li>
@@ -90,9 +90,9 @@
                                 <li>
                                     <a href="{{ url('cours') }}"><i class="fa fa-list"></i> Cours</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="{{ url('cours/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="{{ url('cours/u/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
@@ -113,9 +113,9 @@
                                 <li>
                                     <a href="{{url('salles')}}"><i class="fa fa-list"></i> Salles</a>
                                 </li>
-                                <li>
+                                <!-- <li>
                                     <a href="{{url('salles/create')}}"><i class="fa fa-plus"></i> Ajouter</a>
-                                </li>
+                                </li> -->
                                 <li>
                                     <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
@@ -137,7 +137,7 @@
                                     <a href="{{ url('sessions') }}"><i class="fa fa-list"></i> Sessions</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('sessions/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                                    <a href="{{ url('participants') }}"><i class="fa fa-list"></i> Participants</a>
                                 </li>
                                 <li>
                                     <a href="{{ url('budgets') }}"><i class="fa fa-usd"></i> Budgets</a>

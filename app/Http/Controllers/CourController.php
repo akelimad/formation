@@ -13,7 +13,7 @@ class CourController extends Controller
 {
 
     public function index(){
-        $cours = Cour::paginate(2);
+        $cours = Cour::orderBy('id', 'desc')->paginate(10);
         return view('cours.index', ['cours'=>$cours]);
     }
 
@@ -66,21 +66,15 @@ class CourController extends Controller
             'duree'          => 'required',
         ]);
 
-            $cour = Cour::find($id);
-            $cour->titre=$request->titre;
-            $cour->description=$request->description;
-            $cour->devise=$request->devise;
-            $cour->prix=$request->prix;
-            $cour->duree=$request->duree;
-            $cour->user_id=$request->coordinateur;
-            $cour->save();
-            if($cour->save()){
-                return response()->json(['success' => 'true']);
-            }else{
-                return response()->json(['success' => 'false']);
-            }
-
-        //return redirect('cours');
+        $cour = Cour::find($id);
+        $cour->titre=$request->titre;
+        $cour->description=$request->description;
+        $cour->devise=$request->devise;
+        $cour->prix=$request->prix;
+        $cour->duree=$request->duree;
+        $cour->user_id=$request->coordinateur;
+        $cour->save();
+        return redirect('cours');
     }
 
     public function destroy(Request $request, $id){

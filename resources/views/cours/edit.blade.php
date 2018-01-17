@@ -12,7 +12,6 @@
                 </div>
             @endforeach
         @endif
-        <h4 class="title">Modifier le cours</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group label-floating">

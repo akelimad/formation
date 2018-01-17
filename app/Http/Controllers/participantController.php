@@ -9,11 +9,9 @@ use App\Http\Requests;
 class ParticipantController extends Controller
 {
     public function index(){
-        $participants = Participant::all();
-        
+        $participants = Participant::orderBy('id', 'desc')->paginate(10);
         return view('participants.index', ['participants'=>$participants]);
     }
-
 
     public function create(){
         return view('participants.create');
@@ -24,7 +22,7 @@ class ParticipantController extends Controller
         $participant->nom=$request->input('nom');
         $participant->email=$request->input('email');
         $participant->save();
-        return redirect('sessions');
+        return redirect('participants');
 
     }
 
@@ -36,8 +34,10 @@ class ParticipantController extends Controller
         
     }
 
-    public function destroy(){
-        
+    public function destroy(Request $request, $id){
+        $cour = Participant::find($id);
+        $cour->delete();
+        return redirect('participants');
     }
 
     

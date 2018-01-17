@@ -11,7 +11,7 @@ class BudgetController extends Controller
 {
     
     public function index(){
-        $sessions = Session::with('budgets')->get();
+        $sessions = Session::with('budgets')->paginate(10);
 
         // $sessions = Session::leftJoin('budgets', 'sessions.id', '=', 'budgets.session_id')
         //  ->select(array('sessions.*', 'budgets.*'), \DB::raw('count(budgets.session_id) AS balance'))
@@ -41,6 +41,12 @@ class BudgetController extends Controller
         }
         return redirect('budgets');
 
+    }
+
+    public function show($id){
+        $session = Session::find($id);
+        $sess_budgets = $session->budgets;
+        return view('budgets.show', compact('sess_budgets', 'session'));
     }
 
     public function edit($id){
