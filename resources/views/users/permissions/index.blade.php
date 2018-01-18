@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des permissions <a href="{{ url('utilisateurs/permissions/create') }}" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouvelle</a></h4>
+                    <h4 class="title">La liste des permissions <span class="badge">{{$permissions->total()}}</span><a href="#" data-toggle="modal" data-target="#addPermission_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -27,7 +27,7 @@
                                     <td> {{ $permission->display_name ? $permission->display_name : '----' }} </td>
                                     <td> {{ $permission->description ? $permission->description  : '----'}} </td>
                                     <td class="text-right">
-                                        <a href="{{url('utilisateurs/permissions/'.$permission->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" data-toggle="modal" data-target="#editPermission_modal" class="btn btn-fill btn-warning btn-icon editPermission" data-id="{{$permission->id}}"><i class="ti-pencil-alt"></i></a>
                                         <a href="#" class="btn btn-fill btn-danger btn-icon remove disabled" disabled><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -44,6 +44,35 @@
                             </tfoot>
                         </table>
                     </div>
+
+                    <div class="modal fade" id="editPermission_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center"> Editer la permission </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="addPermission_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
+                                    <h3 class="modal-title text-center"> Ajouter une permission </h3>
+                                </div>
+                                <div class="modal-body">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <!-- end content-->
             </div>

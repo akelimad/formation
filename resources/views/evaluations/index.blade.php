@@ -64,11 +64,11 @@
                     @endif
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="title">La liste des évaluations</h4>
+                            <h4 class="title">La liste des évaluations <span class="badge">{{$evaluations->total()}}</span></h4>
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" data-toggle="modal" data-target="#addEvaluation_modal" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouvelle</a>
+                            <a href="#" data-toggle="modal" data-target="#addEvaluation_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
@@ -81,7 +81,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Type</th>
-                                    <th>Sessions</th>
+                                    <th>Session</th>
                                     <th>Créé le</th>
                                     <th>Envoyé le</th>
                                     <th>Rappelé le</th>
@@ -115,7 +115,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Type</th>
-                                    <th>Sessions</th>
+                                    <th>Session</th>
                                     <th>Créé le</th>
                                     <th>Envoyé le</th>
                                     <th>Rappelé le</th>
@@ -124,6 +124,7 @@
                             </tfoot>
                         </table>
                     </div>
+                    {{ $evaluations->links() }}
 
                     <div class="modal fade" id="addEvaluation_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
                         <div class="modal-dialog" role="document">
@@ -182,7 +183,7 @@
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Les questionnaire de l'évaluation </h3>
+                                    <h3 class="modal-title text-center">Le questionnaire de l'évaluation test session </h3>
                                 </div>
                                 <div class="modal-body">
                                     

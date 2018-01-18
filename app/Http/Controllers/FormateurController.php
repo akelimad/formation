@@ -50,6 +50,11 @@ class FormateurController extends Controller
         $Formateurs->autres=$request->input('autres');
         $Formateurs->rating=$request->input('rating')*20;
         $Formateurs->save();
+        // if($Formateurs->save()){
+        //     return response()->json(['success'=> true]);
+        // }else{
+        //     return response()->json(['success'=> false]);
+        // }
         return redirect('formateurs');
 
     }

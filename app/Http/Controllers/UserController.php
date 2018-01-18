@@ -22,7 +22,7 @@ class UserController extends Controller
     }
 
     public function users(){
-        $users = User::with('roles')->get();
+        $users = User::with('roles')->paginate(10);
         return view('users.index', ['users' => $users]);
     }
 
@@ -82,7 +82,7 @@ class UserController extends Controller
     }
 
     public function roles(){
-        $roles = Role::all();
+        $roles = Role::paginate(10);
         return view('users/roles.index' , ['roles' => $roles]);
     }
     public function createRole(){
@@ -126,7 +126,7 @@ class UserController extends Controller
     }
 
     public function permissions(){
-        $permissions = Permission::all();
+        $permissions = Permission::paginate(10);
         return view('users/permissions.index' ,['permissions' => $permissions]);
     }
     public function createPermission(){

@@ -40,7 +40,7 @@
                                 <div class="col-md-4">
                                     <div class="filterActions">
                                         <a href="{{url('sessions')}}" class="btn btn-success pull-right"><i class="fa fa-refresh"></i> Actualiser</a>
-                                        <button type="submit" class="btn btn-primary pull-right"><i class="fa fa-search"></i> Consulter</button>
+                                        <button type="submit" class="btn btn-primary pull-right "><i class="fa fa-search"></i> Consulter</button>
                                     </div>
                                 </div>
                                 <div class="clearfix"></div>
@@ -53,12 +53,12 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="title">La liste des sessions </h4>
+                            <h4 class="title">La liste des sessions <span class="badge">{{$sessions->total()}}</span> </h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="#" data-toggle="modal" data-target="#addSession_modal" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Session </a>
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#participant_modal"> <i class="fa fa-plus"></i> Participant </a>
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#formateur_modal"> <i class="fa fa-plus"></i> Formateur </a>
+                            <a href="#" data-toggle="modal" data-target="#addSession_modal" class="btn btn-primary pull-right "> <i class="fa fa-plus"></i> Session </a>
+                            <a href="#" class="btn btn-primary pull-right " data-toggle="modal" data-target="#participant_modal"> <i class="fa fa-plus"></i> Participant </a>
+                            <a href="#" class="btn btn-primary pull-right " data-toggle="modal" data-target="#formateur_modal"> <i class="fa fa-plus"></i> Formateur </a>
                         </div>
                     </div>
                     

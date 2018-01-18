@@ -8,11 +8,11 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="title">La liste des salles</h4>
+                            <h4 class="title">La liste des salles <span class="badge">{{$salles->total()}}</span></h4>
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addSalle_modal"> <i class="fa fa-plus"></i> Nouvelle</a>
+                            <a href="#" class="btn btn-primary pull-right addBtn" data-toggle="modal" data-target="#addSalle_modal"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
@@ -56,7 +56,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th>Numero</th>
+                                    <th>Numéro</th>
                                     <th>Capacité</th>
                                     <th>Equipements</th>
                                     <th>Photo</th>

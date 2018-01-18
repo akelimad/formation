@@ -5,7 +5,6 @@
     <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <meta charset="UTF-8">
-
     <title>Accueil | Plateforme de gestion de formation</title>
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' >
@@ -13,7 +12,7 @@
 
     <!-- Bootstrap core CSS     -->
     <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" >
-
+    
     <!--  Paper Dashboard CSS    -->
     <link href="{{ asset('assets/css/amaze.css')}}" rel="stylesheet" >
 
@@ -71,7 +70,7 @@
                                     <a href="{{ url('prestataires') }}"><i class="fa fa-list"></i> Prestataires</a>
                                 </li>
                                 <!-- <li>
-                                    <a href="{{ url('prestataires/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                                    <a href="{{ url('prestataires/create') }}"> <i class="fa fa-plus"></i> </a>
                                 </li> -->
                             </ul>
                         </div>
@@ -91,7 +90,7 @@
                                     <a href="{{ url('cours') }}"><i class="fa fa-list"></i> Cours</a>
                                 </li>
                                 <!-- <li>
-                                    <a href="{{ url('cours/create') }}"><i class="fa fa-plus"></i> Ajouter</a>
+                                    <a href="{{ url('cours/create') }}"> <i class="fa fa-plus"></i> </a>
                                 </li> -->
                                 <li>
                                     <a href="{{ url('cours/u/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
@@ -114,7 +113,7 @@
                                     <a href="{{url('salles')}}"><i class="fa fa-list"></i> Salles</a>
                                 </li>
                                 <!-- <li>
-                                    <a href="{{url('salles/create')}}"><i class="fa fa-plus"></i> Ajouter</a>
+                                    <a href="{{url('salles/create')}}"> <i class="fa fa-plus"></i> </a>
                                 </li> -->
                                 <li>
                                     <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
@@ -184,9 +183,6 @@
                             <ul class="nav">
                                 <li>
                                     <a href="{{ url('evaluations') }}"><i class="fa fa-list" aria-hidden="true"></i> Evaluations</a>
-                                </li>
-                                <li>
-                                    <a href="{{ url('evaluations/create') }}"><i class="fa fa-plus" aria-hidden="true"></i> Ajouter</a>
                                 </li>
                             </ul>
                         </div>

@@ -21,7 +21,6 @@ class FournisseurController extends Controller
     public function store(Request $request){
         $this->validate($request, [
             'nom'            => 'required|unique:fournisseurs',
-            'code'           => 'required',
             'type'          => 'required',
             'specialite'      => 'required',
             'tel'            => 'required|min:10|max:10',
@@ -43,6 +42,11 @@ class FournisseurController extends Controller
         $prestataire->qualification=$request->input('qualification');
         $prestataire->commentaire=$request->input('commentaire');
         $prestataire->save();
+        // if($prestataire->save()){
+        //     return response()->json(['success'=> true]);
+        // }else{
+        //     return response()->json(['success'=> false]);
+        // }
         return redirect('prestataires');
 
     }

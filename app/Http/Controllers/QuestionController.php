@@ -45,9 +45,9 @@ class QuestionController extends Controller
             $question->titre=$q;
             $question->save();
         }
-        $url=url('questionnaire/'.$request->evaluation);
+        //$url=url('questionnaire/'.$request->evaluation);
         return redirect('evaluations')
-        ->with('survey_add',"Le questionnaire a bien été ajouté. vous pouvez le <a href='$url'>consulter</a> ");
+        ->with('survey_add',"Le questionnaire a bien été ajouté. vous pouvez le consulter");
     }
 
     public function edit($id){
@@ -69,9 +69,9 @@ class QuestionController extends Controller
             $question->titre=$qst;
             $question->save();
         }
-        $url=url('questionnaire/'.$request->evaluation);
+        //$url=url('questionnaire/'.$request->evaluation);
         return redirect('evaluations')
-        ->with('survey_add',"Le questionnaire a bien été modifié. vous pouvez le <a href='$url'>consulter</a> ");
+        ->with('survey_add',"Le questionnaire a bien été modifié. vous pouvez le consulter ");
     }
 
     public function destroy($id){

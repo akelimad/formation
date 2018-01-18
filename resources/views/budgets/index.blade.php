@@ -12,7 +12,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addBudget_modal"> <i class="fa fa-plus"></i> Nouveau</a>
+                            <a href="#" class="btn btn-primary pull-right addBtn" data-toggle="modal" data-target="#addBudget_modal"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     

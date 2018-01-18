@@ -14,11 +14,11 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="title">La liste des cours</h4>
+                            <h4 class="title">La liste des cours <span class="badge">{{$cours->total()}}</span></h4>
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addCours_modal"> <i class="fa fa-plus"></i> Nouveau</a>
+                            <a href="#" class="btn btn-primary pull-right addBtn" data-toggle="modal" data-target="#addCours_modal"> <i class="fa fa-plus"></i>  </a>
                             <a href="{{url('cours/c/export')}}" class="pull-right excelIcon"  data-toggle="tooltip" title="Exporter vers Excel"><i class="fa fa-file-excel-o fa-2x"></i></a>
                         </div>
                     </div>

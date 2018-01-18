@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des participants <a href="#" data-toggle="modal" data-target="#participant_modal" class="btn btn-primary pull-right"> <i class="fa fa-plus"></i> Nouveau</a></h4>
+                    <h4 class="title">La liste des participants <span class="badge">{{$participants->total()}}</span><a href="#" data-toggle="modal" data-target="#participant_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>

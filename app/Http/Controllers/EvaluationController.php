@@ -25,7 +25,7 @@ class EvaluationController extends Controller
             ->select(array('evaluations.*', 'sessions.nom as session',\DB::raw("count(questions.id) as 'questions'")))
             ->groupBy('questions.evaluation_id')
             ->orderBy('evaluations.id', 'DESC')
-            ->get();
+            ->paginate(10);
         return view('evaluations.index', ['evaluations'=>$evaluations]);
     }
 

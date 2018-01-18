@@ -1,16 +1,13 @@
-<form class="allInputsFormValidation" method="post" action="{{url('prestataires')}}">
+<form class="allInputsFormValidation" id="addPrestataireform" method="post" action="{{url('prestataires')}}">
     {{ csrf_field() }}
     <div class="content">
-        @if ($errors->any())
-            @foreach ($errors->all() as $error)
-                <div class="alert alert-danger alert-dismissable" role="alert">
+
+                <div class="prestataire alert alert-danger alert-dismissable" role="alert" style="display: none;">
                     <button type="button" class="close" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-                    <span><strong>Attention !</strong> {{ $error }}</span>
                 </div>
-            @endforeach
-        @endif
+
         <div class="row">
             <div class="col-md-6">
                 <div class="form-group label-floating">
@@ -106,7 +103,7 @@
         <div class="category form-category">
             <star>*</star> Champ obligatoire</div>
         <div class="text-center">
-            <input type="submit" class="btn btn-rose btn-fill btn-wd" value="Sauvegarder">
+            <input type="submit" class="btn btn-rose btn-fill btn-wd " value="Sauvegarder">
         </div>
     </div>
 </form>

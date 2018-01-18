@@ -8,7 +8,6 @@
                     <button type="button" class="close" data-dismiss="alert">
                         <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                     </button>
-                    
                 </div>
             @endforeach
         @endif
@@ -56,13 +55,13 @@
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label">N° de téléphone <star>*</star></label>
-                    <input class="form-control" name="tel" type="text" placeholder="N° de téléphone"  required="required" value="{{ $p->tel }}" />
+                    <input class="form-control" name="tel" type="text" placeholder="N° de téléphone"  required="required" value="{{ $p->tel }}" minlength="10" maxlength="10"/>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label">N° de Fax <star>*</star></label>
-                    <input class="form-control" name="fax" type="text" placeholder="N° de Fax"  required="required" value="{{ $p->fax }}"/>
+                    <input class="form-control" name="fax" type="text" placeholder="N° de Fax"  required="required" value="{{ $p->fax }}" minlength="10" maxlength="10"/>
                 </div>
             </div>
         </div>

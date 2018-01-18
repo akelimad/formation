@@ -131,6 +131,12 @@ $(function() {
     $('#editSession_modal').appendTo("body");
     $('#showSession_modal').appendTo("body");
     $('#showQuestionnaire_modal').appendTo("body");
+    $('#addUser_modal').appendTo("body");
+    $('#editUser_modal').appendTo("body");
+    $('#addRole_modal').appendTo("body");
+    $('#editRole_modal').appendTo("body");
+    $('#addPermission_modal').appendTo("body");
+    $('#editPermission_modal').appendTo("body");
     
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -200,7 +206,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimée !', "L'evaluation a été supprimée avec succès.", 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -239,7 +245,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimé!', 'Le cours a été supprimé avec succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -278,7 +284,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimée!', 'La salle a été supprimée avec succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -317,7 +323,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimé!', 'Le prestataire a été supprimé ave succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -356,7 +362,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimé!', 'Le formateur a été supprimé ave succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -395,7 +401,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimée!', 'La session a été supprimée ave succès.', 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut qu'il ya une liaison avec d'autres tables.", 'error');
                 });
@@ -434,7 +440,7 @@ $(function() {
                 }).done(function(response){
                     swal('Supprimé!', "L'utilisateur a été supprimé ave succès.", 'success');
                     $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
-                    //location.reload(); 
+                    location.reload(); 
                 }).fail(function(){
                     swal('Oops...', "Il ya quelque chose qui ne va pas ! Il se peut que cet utilisateur fait la coordiantion des cours il faut supprimer tout d'abord ses cours!", 'error');
                 });
@@ -524,57 +530,56 @@ $(function() {
 
     
 
-    // //add prestataire in modal
-    // $("#addPrestataireForm").submit(function (e) {
-    //     e.preventDefault();
-    //     var token = $('input[name="_token"]').val();
-    //     var route = 'prestataires'
-    //     $.ajax({
-    //         url: route,
-    //         headers : {'X-CSRF-TOKEN' : token},
-    //         type: 'POST',
-    //         dataType: 'json',
-    //         data: {
-    //             nom: $("input[name='nom']").val(),
-    //             type: $("select#type").val(),
-    //             specialite: $("select#specialite").val(),
-    //             tel: $("input[name='tel']").val(),
-    //             fax: $("input[name='fax']").val(),
-    //             email: $("input[name='email']").val(),
-    //             personne_contacter: $("input[name='personne_contacter']").val(),
-    //             type_entreprise: $("input[name='type_entreprise']").val(),
-    //             qualification: $("input[name='qualification']").val(),
-    //             commentaire: $("textarea[name='commentaire']").val(),
-    //         },
-    //         success: function(data){
-    //             if(data.success == 'true'){
-    //                 $("#editPrestataire_modal").modal('toggle')
-    //                 $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
-    //                     $(this).fadeOut(2000);
-    //                 });
-    //             }
-    //         },
-    //         error: function(data){
-    //             console.log(data);
-    //             $(".prestataire.alert-danger").toggle();
-    //             var errorString = '<ul>';
-    //             $.each(data.responseJSON, function( key, value) {
-    //                 errorString += '<li>' + value + '</li>';
-    //             })
-    //             errorString += '</ul>';
-    //             $(".prestataire.alert-danger").html(errorString);
-    //         }
-
-    //     });
-    // });
+    
     ///********************************************************************************************
     //Add form prestataire
     $("#addPrestataire_modal").on("show.bs.modal", function(e) {
         $.get('prestataires/create' , function( data ) {
             $("#addPrestataire_modal .modal-body").html(data);
-            validate();
+            validate()
+            // $("#addPrestataireform").on('submit', function (e) {
+            //     e.preventDefault()
+            //     var token = $('input[name="_token"]').val();
+            //     var route = 'prestataires'
+            //     $.ajax({
+            //         url: route, 
+            //         headers : {'X-CSRF-TOKEN' : token},
+            //         type: 'POST',
+            //         dataType: 'json',
+            //         data: {
+            //             nom: $("input[name='nom']").val(),
+            //             code: $("input[name='code']").val(),
+            //             type: $("select[name='type']").val(),
+            //             specialite: $("select[name='specialite']").val(),
+            //             tel: $("input[name='tel']").val(),
+            //             fax: $("input[name='fax']").val(),
+            //             email: $("input[name='email']").val(),
+            //             personne_contacter: $("input[name='personne_contacter']").val(),
+            //             type_entreprise: $("input[name='type_entreprise']").val(),
+            //             qualification: $("input[name='qualification']").val(),
+            //             commentaire: $("textarea[name='commentaire']").val(),
+            //         },
+            //         success: function(data){
+            //             $("#addPrestataire_modal").modal('toggle')
+            //             $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
+            //                 $(this).fadeOut(2000);
+            //             });
+            //         },
+            //         error: function(data){
+            //             $(".prestataire.alert-danger").toggle();
+            //             var errorString = '<ul>';
+            //             $.each(data.responseJSON, function( key, value) {
+            //                 errorString += '<li>' + value + '</li>';
+            //             })
+            //             errorString += '</ul>';
+            //             $(".prestataire.alert-danger").html(errorString);
+            //         }
+            //     });
+            // });
         });
     });
+
+    //add prestataire in modal
 
     //show prestataire in modal
     $(".showPrestataire").on("click", function(e) {
@@ -698,6 +703,7 @@ $(function() {
             $("#addSession_modal .modal-body").html(data);
             validate();
             select2();
+            demo.initFormExtendedDatetimepickers();
         });
     });
     //show session in modal
@@ -717,6 +723,7 @@ $(function() {
             $("#editSession_modal .modal-body").html(data);
             validate();
             select2();
+            demo.initFormExtendedDatetimepickers();
         });
     });
     ///********************************************************************************************
@@ -794,7 +801,58 @@ $(function() {
             $("#showQuestionnaire_modal .modal-body").html(data);
         });
     });
-
+    ///********************************************************************************************
+    //user add form
+    $("#addUser_modal" ).on('shown.bs.modal', function(event){
+        $.get('utilisateurs/create' , function( data ) {
+            $("#addUser_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    //show edit form user in modal
+    $(".editUser").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'utilisateurs/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editUser_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //role add form
+    $("#addRole_modal" ).on('shown.bs.modal', function(event){
+        $.get('roles/create' , function( data ) {
+            $("#addRole_modal .modal-body").html(data);
+            validate();
+            //$("input:checkbox[name='permissions']").bootstrapSwitch();
+        });
+    });
+    //show edit form role in modal
+    $(".editRole").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'roles/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editRole_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    ///********************************************************************************************
+    //permissions add form
+    $("#addPermission_modal" ).on('shown.bs.modal', function(event){
+        $.get('permissions/create' , function( data ) {
+            $("#addPermission_modal .modal-body").html(data);
+            validate();
+        });
+    });
+    //show edit form Permissions in modal
+    $(".editPermission").on("click", function(e) {
+        var id= $(this).data('id')
+        var route = 'permissions/'+ id + '/edit'
+        $.get(route , function( data ) {
+            $("#editPermission_modal .modal-body").html(data);
+            validate();
+        });
+    });
 
 
 
