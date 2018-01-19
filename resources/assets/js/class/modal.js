@@ -2,18 +2,21 @@ import $ from 'jquery'
 
 export default class chmModal {
 
-  static show (params, args = {}, options = {}) {
+  static show (params, options = {}) {
+    var modalObject = {}
     params = $.extend({}, {
       type: 'POST'
     }, params)
     // Fire off the request
     var classInstance = this
-    var modalTemplate = this.loading(args.message)
-    if (options.width !== '') {
+    var loadingMessage = ('message' in options) ? options.message : ''
+    var modalTemplate = this.loading(loadingMessage)
+    if (options.width !== '' && window.outerWidth > params.width) {
       modalTemplate.find('.modal-dialog').css('width', options.width)
     }
     modalTemplate.attr('chm-modal-id', null)
     $.ajax(params).done(function (response, textStatus, jqXHR) {
+      modalObject.response = response
       try {
         if (response === undefined) {
           classInstance.destroy(modalTemplate)
@@ -34,18 +37,47 @@ export default class chmModal {
           modalTemplate.find('.panel-footer').remove()
           modalTemplate.removeClass('chm-loading-modal')
           modalTemplate.removeClass('chm-confirm-modal')
-
+          // add footer actions
+          if ('footer' in options) {
+            var label = ('label' in options.footer) ? options.footer.label : 'Valider'
+            var footerBloc = '<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-hidden="true">Fermer</button><button type="submit" class="btn btn-primary btn-sm pull-right">' + label + '</button></div>'
+            if (modalTemplate.find('.panel-footer').length === 0) {
+              modalTemplate.find('.modal-content').append('<div class="panel-footer">' + footerBloc + '</div>')
+            } else {
+              modalTemplate.find('.panel-footer').empty().append(footerBloc)
+            }
+            var formMethod = 'POST'
+            var formClass = 'form-horizontal'
+            var formCallback = ''
+            var formAction = ''
+            if ('form' in options) {
+              if ('class' in options.form) formAction = options.form.class
+              if ('action' in options.form) formMethod = options.form.action
+              if ('class' in options.form) formClass = options.form.class
+              if ('callback' in options.form) formCallback = 'onsubmit="return ' + options.form.callback + '(event)"'
+            }
+            $('.modal-content').wrap('<form method="' + formMethod + '" action="' + formAction + '" role="form" class="' + formClass + '" ' + formCallback + '></div>')
+          }
           if (!$(modalTemplate).find('.modal-title').is(':visible') && !$(modalTemplate).find('.modal-body').is(':visible')) {
             classInstance.destroy(modalTemplate)
+          }
+          // render an empty modal
+          if ('empty_modal' in options && options.empty_modal === true) {
+            modalTemplate.find('.modal-header').remove()
+            modalTemplate.find('.modal-body').remove()
+            modalTemplate.find('.panel-footer').remove()
+            modalTemplate.find('.modal-content').html(response.content).show()
           }
         }
       } catch (e) {
         classInstance.setError(modalTemplate, e.message)
       }
     }).fail(function (jqXHR, textStatus, errorThrown) {
-      classInstance.setError(modalTemplate, jqXHR.statusText)
+      var message = jqXHR.status + ' - ' + jqXHR.statusText
+      classInstance.setError(modalTemplate, message)
     })
-    return modalTemplate
+    modalObject.modal = modalTemplate
+    return modalObject
   }
 
   static confirm (target, title = '', message = '', callable = '', args = {}, params = {}) {
@@ -76,7 +108,7 @@ export default class chmModal {
     }
 
     // applay css
-    if (params.width !== '') {
+    if (params.width !== '' && window.outerWidth > params.width) {
       modal.find('.modal-dialog').css('width', params.width)
     }
     modal.attr('chm-modal-id', 'confirm')
@@ -95,7 +127,8 @@ export default class chmModal {
     }
 
     // add footer actions
-    var footer = '<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-hidden="true">Fermer</button><button type="button" class="btn btn-default btn-sm pull-right" data-dismiss="modal" aria-hidden="true">OK</button></div>'
+    var alertCallback = ('callback' in params) ? 'onclick="return ' + params.callback + '(event)"' : 'data-dismiss="modal" aria-hidden="true" '
+    var footer = '<button type="button" class="btn btn-danger btn-sm" data-dismiss="modal" aria-hidden="true">Fermer</button><button type="button" class="btn btn-default btn-sm pull-right" ' + alertCallback + '>OK</button></div>'
 
     if (modal.find('.panel-footer').length === 0) {
       modal.find('.modal-content').append('<div class="panel-footer">' + footer + '</div>')
@@ -104,7 +137,7 @@ export default class chmModal {
     }
 
     // applay css
-    if (params.width !== '') {
+    if (params.width !== '' && window.outerWidth > params.width) {
       modal.find('.modal-dialog').css('width', params.width)
     }
     modal.attr('chm-modal-id', 'alert')
@@ -114,18 +147,23 @@ export default class chmModal {
   }
 
   static loading (message = '') {
-    var content = (message !== '') ? message : '<i class="fa fa-spinner fa-spin fast-spin"></i>&nbsp;Chargement en cours...'
+    var content = (message !== '') ? message : '<i class="fa fa-circle-o-notch fa-spin fast-spin"></i>&nbsp;Chargement en cours...'
     var tpl = ($('.chm-modal').length > 0) ? $('.chm-modal') : $(this.template())
     tpl.find('.panel-footer').remove()
     tpl.removeClass('chm-confirm-modal')
     tpl.addClass('chm-loading-modal')
     tpl.find('.modal-title').html(content)
     tpl.find('.modal-body').hide()
-    tpl.modal({ backdrop: 'static', keyboard: false })
+    tpl.modal({backdrop: 'static', keyboard: false})
     return tpl
   }
 
   static destroy (instance) {
+    if (instance instanceof window.MouseEvent) {
+      instance = $(instance.target).closest('.chm-modal')
+    } else if (instance === null) {
+      instance = $('.chm-modal')
+    }
     $(instance).find('button.close').trigger('click')
   }
 
@@ -140,7 +178,15 @@ export default class chmModal {
       alert += '<button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button>'
     }
     alert += '<div class="icon"><i class="fa fa-check"></i></div>'
-    alert += '<strong>' + message + '</strong>'
+    if (typeof message === 'object') {
+      alert += '<ul>'
+      $.each(message, function (k, message) {
+        alert += '<li><strong>' + message + '</strong></li>'
+      })
+      alert += '</ul>'
+    } else {
+      alert += '<strong>' + message + '</strong>'
+    }
     alert += '</div>'
     if ($('.chm-modal').find('.modal-notif-block').length === 0) {
       $('.chm-modal').find('.modal-body').prepend('<div class="modal-notif-block"></div>')
@@ -149,6 +195,7 @@ export default class chmModal {
   }
 
   static setError (modal, message) {
+    modal.find('button.close').show()
     modal.find('.modal-title').html('<i class="fa fa-warning"></i>&nbsp;' + message)
     modal.find('.modal-body').hide()
   }

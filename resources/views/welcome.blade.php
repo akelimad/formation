@@ -64,7 +64,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-6">
-            <div class="card" style="min-height: 648px">
+            <div class="card" style="min-height: 448px">
                 <div class="header card-header-text">
                     <h4 class="title">Les participants aux sessions</h4>
                     <!-- <p class="category">New employees on 15th December, 2016</p> -->
@@ -93,13 +93,13 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
-            <div class="card" style="min-height: 648px">
+            <div class="card" style="min-height: 448px">
                 <div class="header card-header-text">
                     <h4 class="title">Les sessions prochaines</h4>
                 </div>
                 <div class="content card-padding hommeBarchart">
                     <div class="chart chart-js-container">
-                        <canvas id="barChart" style="width: 100%" height="300"></canvas>
+                        <canvas id="barChart" style="width: 100%" height="200"></canvas>
                     </div>
                 </div>
             </div>
@@ -114,7 +114,7 @@
             var barChartData = {
                 labels: [
                     @foreach($sessionsPerMonth as $key=>$value)
-                    "{{$key}}",
+                    "{!! $key !!}",
                     @endforeach
                 ],
                 datasets: [{
@@ -136,6 +136,7 @@
                 height:520,
                 options: {
                     responsive: true,
+                    maintainAspectRatio: false,
                     legend: {
                         position: 'top',
                     },

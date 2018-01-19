@@ -1,3 +1,4 @@
+
 @extends('layouts.app')
 
 @section('content')
@@ -5,16 +6,16 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
-                    <h4 class="title">Statistiques: Budgets par formation</h4>
+                <div class="content personnalise">
+                    <h4 class="title">Statistiques: personnalisées</h4>
                     <div class="row">
-                        <div class="">
+                        <div class="col-md-12">
                             <div class="card">
                                 <div class="content">
                                     <form action="" method="get">
                                         <div class="content">
-                                            <div class="col-md-7">
-                                                <h4 class="title">choisissez une session pour voir ses budgets</h4>
+                                            <div class="col-md-6">
+                                                <h5 class="title">Choisissez une session pour voir ses budgets</h5>
                                             </div>
                                             <div class="col-md-3">
                                                 <select class="form-control" name="session" required="">
@@ -24,18 +25,17 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="col-md-2">
-                                                <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> consulter</button>
+                                            <div class="col-md-3">
+                                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Consulter</button>
+                                                <a href="{{url('rapports/personnalise')}}" class="btn btn-success"><i class="fa fa-refresh"></i> Actualiser</a>
                                             </div>
                                             <div class="clearfix"></div>
                                         </div>
                                     </form>
                                     @if(isset($session_budgets) && count($session_budgets)>0)
                                         <div class="chart chart-js-container">
-                                            <canvas id="pieChart"></canvas>
+                                            <canvas id="pieChart" width="200" height="200"></canvas>
                                         </div>
-                                    @else
-                                        <span class="h3 alert-warning">Aucun budget pour cette sessions n'a été trouvé !!!</span>
                                     @endif
                                 </div>
                             </div>
@@ -44,13 +44,12 @@
 
                     <div class="row">
                         <div class="col-md-12">
-                            <h4 class="title">Nombre de formations / an</h4>
                             <div class="card">
                                 <div class="header">
                                 </div>
                                 <div class="content">
                                     <div class="chart chart-js-container">
-                                        <canvas id="lineChart"></canvas>
+                                        <canvas id="lineChart" height="300"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -94,7 +93,8 @@
                         ]
                     },
                     options: {
-                        responsive: true
+                        responsive: true,
+                        maintainAspectRatio: false,
                     }
                 };
                var myPie = new Chart(pieChartCanvas, config); 
@@ -124,9 +124,10 @@
             },
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 title:{
                     display:true,
-                    text:'______'
+                    text:'Nombre de formations par an'
                 },
                 tooltips: {
                     mode: 'index',

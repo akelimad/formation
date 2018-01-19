@@ -10,9 +10,10 @@
                         <button type="button" class="close" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                         </button>
-                        <span><strong><i class="fa fa-check "></i></strong> Le prestataire a été modifié avec suucès</span>
+                        <span><strong><i class="fa fa-check "></i></strong> Le prestataire a été ajouté avec suucès</span>
                     </div>
-                    <h4 class="title">La liste des prestataires <span class="badge">{{$prestataires->total()}}</span><a href="#" data-toggle="modal" data-target="#addPrestataire_modal" class="btn btn-primary pull-right addBtn">  <i class="fa fa-plus"></i> </a></h4>
+                    <h4 class="title">La liste des prestataires <span class="badge">{{$prestataires->total()}}</span><a href="#" data-toggle="modal" data-target="#addPrestataire_modal" class="btn btn-primary pull-right addBtn">  <i class="fa fa-plus"></i> </a>
+                    </h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>

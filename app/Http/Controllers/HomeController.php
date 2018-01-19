@@ -25,6 +25,24 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function getMonthFR($month){
+        switch($month){
+            case 'January'  : return 'Jan'; break;
+            case 'February' : return 'Fév'; break;
+            case 'March'    : return 'Mar'; break;
+            case 'April'    : return 'Avr'; break;
+            case 'May'      : return 'Mai'; break;
+            case 'June'     : return 'Jui'; break;
+            case 'July'     : return 'Jui'; break;
+            case 'August'   : return 'Aoû'; break;
+            case 'September' : return 'Sep'; break;
+            case 'October'  : return 'Oct'; break;
+            case 'November' : return 'Nov'; break;
+            case 'December' : return 'Dec'; break;
+        }
+    }
+
     public function index()
     {
 
@@ -51,10 +69,9 @@ class HomeController extends Controller
         ->whereRaw('YEAR(start) = ?', [date('Y')])
         ->get()
         ->groupBy(function($date) {
-            //return Carbon::parse($date->start)->format('Y'); // grouping by years
-            return Carbon::parse($date->start)->format('F'); // grouping by months
+            return $this->getMonthFR(Carbon::parse($date->start)->format('F')); // grouping by months
         });
-        //sdd($sessionsPerMonthResult);;
+        //dd($sessionsPerMonthResult);;
         $sessionCount = [];
         $sessionsPerMonth = [];
 
@@ -63,8 +80,13 @@ class HomeController extends Controller
         }
 
         for ($m=1; $m<=12; $m++) {
-            $months[]= date('F', mktime(0,0,0,$m, 1, date('Y')));
+            //$months[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
+            $months[]=$this->getMonthFR(date('F', mktime(0,0,0,$m, 1, date('Y'))));
         }
+        //dd($months);
+
+        
+        //dd($months);
 
         foreach($months as $month){
             if(!empty($sessionCount[$month])){

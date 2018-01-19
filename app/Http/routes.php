@@ -142,7 +142,7 @@ Route::get('questionnaire/{id}/{token}/questions', 'QuestionController@questionn
 Route::put('questionnaire/{id}/{token}', 'QuestionController@storeResponses');
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:rapports']], function() {
-    Route::get('rapports/budgetsFormation', 'RapportController@index');
-    Route::get('rapports/formationUtilisateur', 'RapportController@index1');
+    Route::get('rapports/standard', 'RapportController@standard');
+    Route::get('rapports/personnalise', 'RapportController@personnalise');
 });
 

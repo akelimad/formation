@@ -741,7 +741,7 @@ var demo = {
 				right: 'prev,next,today'
 			},
 			defaultDate: today,
-      selectLongPressDelay: 10,
+            selectLongPressDelay: 10,
 			selectable: true,
 			selectHelper: true,
             views: {

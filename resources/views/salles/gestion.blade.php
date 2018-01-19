@@ -10,7 +10,7 @@
                         <form action="" method="get">
                             <div class="content">
                                 <div class="col-md-6">
-                                    <h4 class="title">Selectionnez une salle pour voir ses sessions</h4>
+                                    <h5 class="title">Selectionnez une salle pour voir ses occupations</h5>
                                 </div>
                                 <div class="col-md-4">
                                     <select class="form-control" name="salle" required="">
@@ -31,57 +31,15 @@
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
-                    @if(isset($sessions_salle))
-                        <div class="material-datatables">
-                            <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
-                                <thead>
-                                    <tr>
-                                        <th>Nom de la session</th>
-                                        <th>Cours</th>
-                                        <th>Formateur</th>
-                                        <th>Salle</th>
-                                        <th>Lieu</th>
-                                        <th>Date de début</th>
-                                        <th>Date de fin</th>
-                                        <th>Statut</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($sessions_salle as $session)
-                                    <tr>
-                                        <td> {{ $session->nom }} </td>
-                                        <td> {{ $session->cour->titre }} </td>
-                                        <td> {{ $session->formateur->nom }} </td>
-                                        <td> {{ $session->salle->numero }} </td>
-                                        <td> {{ $session->lieu }} </td>
-                                        <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y')}} </td>
-                                        <td> {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </td>
-                                        <td> {{ $session->statut }} </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>Nom de la session</th>
-                                        <th>Cour</th>
-                                        <th>Formateur</th>
-                                        <th>Salle</th>
-                                        <th>Lieu</th>
-                                        <th>Date de début</th>
-                                        <th>Date de fin</th>
-                                        <th>Statut</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card card-calendar">
+                                <div class="content" class="ps-child">
+                                    <div id="fullCalendar"></div>
+                                </div>
+                            </div>
                         </div>
-                    @else
-                        <div class="alert alert-danger alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> Aucune session à afficher </span>
-                        </div>
-                    @endif
+                    </div>
                 </div>
                 <!-- end content-->
             </div>
@@ -91,4 +49,99 @@
     </div>
 </div>
 
+@endsection
+
+@section('javascript')
+    @if(isset($occupations))
+    <script src="{{ asset('assets/vendors/fr.js')}}"></script>
+    <script>
+        $(function(){
+            var $calendar = $('#fullCalendar');
+            var today = new Date();
+            var y = today.getFullYear();
+            var m = today.getMonth();
+            var d = today.getDate();
+            $calendar.fullCalendar({
+                height: 500,
+                locale: 'fr',
+                viewRender: function(view, element) {
+                    // We make sure that we activate the perfect scrollbar when the view isn't on Month
+                    if (view.name != 'month'){
+                        $(element).find('.fc-scroller').perfectScrollbar();
+                    }
+                },
+                header: {
+                    left: 'title',
+                    center: '',
+                    right: 'prev,next,today'
+                },
+                defaultDate: today,
+                selectLongPressDelay: 10,
+                selectable: true,
+                selectHelper: true,
+                views: {
+                    month: { // name of view
+                        titleFormat: 'MMMM YYYY'
+                        // other view-specific options here
+                    },
+                    week: {
+                        titleFormat: " MMM D YYYY"
+                    },
+                    day: {
+                        titleFormat: 'D MMM, YYYY'
+                    }
+                },
+
+                // select: function(start, end) {
+
+                //     // on select we show the Sweet Alert modal with an input
+                //     swal({
+                //         title: 'Create an Event',
+                //         html: '<div class="form-group">' +
+                //                 '<input class="form-control" placeholder="Event Title" id="input-field">' +
+                //             '</div>',
+                //                 showCancelButton: true,
+                //         confirmButtonClass: 'btn btn-success',
+                //         cancelButtonClass: 'btn btn-danger',
+                //         buttonsStyling: false
+                //     }).then(function(result) {
+
+                //         var eventData;
+                //         event_title = $('#input-field').val();
+
+                //         if (event_title) {
+                //                     eventData = {
+                //                         title: event_title,
+                //                         start: start,
+                //                         end: end
+                //                     };
+                //                     $calendar.fullCalendar('renderEvent', eventData, true); // stick? = true
+                //                 }
+
+                //                  $calendar.fullCalendar('unselect');
+
+                //     },function(dismiss){
+
+                //     });
+                // },
+                // editable: true,
+                eventLimit: true, // allow "more" link when too many events
+
+
+                // color classes: [ event-blue | event-azure | event-green | event-orange | event-red ]
+                events: [
+                    @foreach($occupations as $session)
+                    {
+                        title: '{{ $session->nom }}',
+                        start: '{{ Carbon\Carbon::parse($session->start)->format("Y-m-d")}}',
+                        end  : '{{ Carbon\Carbon::parse($session->end)->format("Y-m-d")}}',
+                        allDay: true,
+                        className: 'event-default',
+                    },
+                    @endforeach
+                ]
+            });
+        })
+    </script>
+    @endif
 @endsection

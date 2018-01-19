@@ -226,10 +226,10 @@ label.star:before {
     color: #e85a1b;
 }
 
-.hommeBarchart .chart-js-container{
+.chart-js-container{
     max-width: 100% !important;
     padding-left: 0px;
-
+    min-height: 300px;
 }
 
 .filter-label{
@@ -270,6 +270,19 @@ select.session {
     border-radius: 50%;
     padding: 0;
     box-shadow: -1px 3px 11px 1px #50403d;
+}
+
+.standard .card, .personnalise .card{
+    box-shadow: 1px 1px 2px 3px rgba(204, 197, 185, 0.5);
+}
+.modal-header {
+    border: 0 none;
+    background: #2579ea;
+    color: white;
+    padding: 8px;
+}
+.fc-unthemed td.fc-today{
+    background: #ec813f;
 }
 
 @media (max-width: 1400px) {

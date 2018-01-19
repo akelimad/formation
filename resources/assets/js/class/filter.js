@@ -15,11 +15,11 @@ export default class chmFilter {
     if ($(target).hasClass('refresh')) {
       target = $(target).closest('[chm-filter]')
     }
-    $(target).empty().html('<i class="fa fa-refresh fa-spin"></i>&nbsp;Chargement en cours...')
+    $(target).empty().html('<i class="fa fa-circle-o-notch fa-spin fast-spin"></i>&nbsp;Chargement en cours...')
     var classInstance = this
     $.ajax({
       type: 'GET',
-      url: 'filter/render',
+      url: window.chmSite.url('filter/render'),
       data: {
         file: fileName,
         route: route

@@ -309,7 +309,7 @@ class SessionController extends Controller
         $selected= $request->statut;
         $selected_start = $request->start;
         $selected_end = $request->end;
-        $sessions = Session::where($criteres)->get();
+        $sessions = Session::where($criteres)->paginate(10);
         //dd($sessions);
         return view('sessions.index', compact('selected','sessions','selected_start', 'selected_end'));
     }

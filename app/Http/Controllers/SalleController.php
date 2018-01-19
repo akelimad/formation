@@ -92,13 +92,20 @@ class SalleController extends Controller
     }
 
     public function gestion(Request $request){
-        $salle = Salle::find($request->salle);
         $now = Carbon::now()->format('Y-m-d h:i:s');
         $selected= $request->salle;
-        $salles = Salle::all();
+        $salles = Salle::select('id', 'numero')->get();
         if($request->salle) {
-            $sessions_salle = Session::where('sessions.start','>=', $now)->where('sessions.salle_id','=', $request->salle)->get();
+            $salle = Salle::find($request->salle);
+            $occupations = Session::with('salle')
+                ->select('id', 'nom','start', 'end')
+                ->where('salle_id', '=', $salle->id)->where('start','>=', $now)
+                ->get();
+            //dd($occupations); 
+            // foreach ($occupations as $occupation) {
+            //     dd($occupation->nom);
+            // }
         }
-        return view('salles.gestion', compact('salles', 'selected','sessions_salle'));
+        return view('salles.gestion', compact('salles', 'selected','occupations'));
     }
 }

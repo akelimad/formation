@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <meta charset="UTF-8">
     <title>Accueil | Plateforme de gestion de formation</title>
-
+    <link rel="website" href="{{ url('/') }}">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' >
     <meta name="viewport" content="width=device-width" >
 
@@ -116,7 +116,7 @@
                                     <a href="{{url('salles/create')}}"> <i class="fa fa-plus"></i> </a>
                                 </li> -->
                                 <li>
-                                    <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Gestion</a>
+                                    <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Occupations</a>
                                 </li>
                             </ul>
                         </div>
@@ -162,10 +162,10 @@
                         <div class="collapse" id="session" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('rapports/budgetsFormation') }}"><i class="fa fa-file-o"></i> Standard</a>
+                                    <a href="{{ url('rapports/standard') }}"><i class="fa fa-file-o"></i> Standard</a>
                                 </li>
                                 <li>
-                                    <a href="{{ url('rapports/formationUtilisateur') }}"><i class="fa fa-file-text-o"></i> Personnalisé</a>
+                                    <a href="{{ url('rapports/personnalise') }}"><i class="fa fa-file-text-o"></i> Personnalisé</a>
                                 </li>
                             </ul>
                         </div>

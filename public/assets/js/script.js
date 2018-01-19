@@ -564,6 +564,7 @@ $(function() {
             //             $(".prestataire.alert-success").fadeTo(2000, 1000).fadeOut(2000, function(){
             //                 $(this).fadeOut(2000);
             //             });
+            //             location.reload();
             //         },
             //         error: function(data){
             //             $(".prestataire.alert-danger").toggle();

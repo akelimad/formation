@@ -8,7 +8,20 @@ use App\Http\Requests;
 
 class RapportController extends Controller
 {
-    public function index(Request $request){
+    public function standard(Request $request)
+    {
+    	$users_cours = \DB::table('cours as c')
+            ->rightJoin('users as u', 'u.id', '=', 'c.user_id')
+            ->select(array('u.name', \DB::raw("count(c.user_id) as 'total'")))
+            ->groupBy('u.id')
+            ->get();
+        return view('rapports.standard', [
+        	'users_cours' => $users_cours
+        ]);
+    }
+
+    public function personnalise(Request $request)
+    {
         $sessions = Session::all();
         $session_id = $request->session;
         $sessions_year = \DB::table('sessions')
@@ -21,26 +34,15 @@ class RapportController extends Controller
             $session = Session::find($session_id);
             $session_budgets = $session->budgets;
             //dd(count($session_budgets));
-            return view('rapports.budget_formation', [
+            return view('rapports.personnalise', [
                 'session_budgets' => $session_budgets,
                 'sessions' => $sessions,
                 'selected' => $session_id,
                 'sessions_year' => $sessions_year,
             ]);
         }else{
-            return view('rapports.budget_formation', ['sessions' => $sessions, 'sessions_year' => $sessions_year]);
+            return view('rapports.personnalise', ['sessions' => $sessions, 'sessions_year' => $sessions_year]);
         }
-    }
-
-    public function index1(){
-    	$users_cours = \DB::table('cours as c')
-            ->rightJoin('users as u', 'u.id', '=', 'c.user_id')
-            ->select(array('u.name', \DB::raw("count(c.user_id) as 'total'")))
-            ->groupBy('u.id')
-            ->get();
-        return view('rapports.formation_utilisateurs', [
-        	'users_cours' => $users_cours
-        ]);
     }
 
 }
