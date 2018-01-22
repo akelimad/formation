@@ -1,12 +1,12 @@
 import $ from 'jquery'
 
-export default class chmPrestataire {
+export default class chmCours {
 
   static create () {
-    window.chmModal.show({type: 'GET', url: window.chmSite.url('prestataires/create')}, {
+    window.chmModal.show({type: 'GET', url: window.chmSite.url('cours/create')}, {
       form: {
         class: 'allInputsFormValidation',
-        callback: 'chmPrestataire.store'
+        callback: 'chmCours.store'
       },
       footer: {
         label: 'Sauvegarder'
@@ -15,10 +15,10 @@ export default class chmPrestataire {
   }
 
   static edit (params) {
-    window.chmModal.show({type: 'GET', url: window.chmSite.url('prestataires/' + params.id + '/edit')}, {
+    window.chmModal.show({type: 'GET', url: window.chmSite.url('cours/' + params.id + '/edit')}, {
       form: {
         class: 'allInputsFormValidation',
-        callback: 'chmPrestataire.store'
+        callback: 'chmCours.store'
       },
       footer: {
         label: 'Mettre à jour'
@@ -27,7 +27,7 @@ export default class chmPrestataire {
   }
 
   static show (params) {
-    window.chmModal.show({type: 'GET', url: window.chmSite.url('prestataires/' + params.id)})
+    window.chmModal.show({type: 'GET', url: window.chmSite.url('cours/' + params.id)})
   }
 
   static store (event) {
@@ -42,7 +42,7 @@ export default class chmPrestataire {
     var ajaxParams = {
       id: id,
       type: 'POST',
-      url: window.chmSite.url('prestataires/store'),
+      url: window.chmSite.url('cours/store'),
       data: data,
       processData: false,
       contentType: false,
@@ -67,7 +67,7 @@ export default class chmPrestataire {
 
   static delete (params) {
     var token = $('input[name="_token"]').val()
-    var object = window.chmModal.show({type: 'DELETE', url: window.chmSite.url('prestataires/' + params.id + '/delete'), data: {'_token': token}}, {
+    var object = window.chmModal.show({type: 'DELETE', url: window.chmSite.url('cours/' + params.id + '/delete'), data: {'_token': token}}, {
       message: '<i class="fa fa-trash"></i>&nbsp;Suppression en cours...'
     })
     object.modal.attr('chm-modal-action', 'reload')

@@ -14,22 +14,46 @@ class FournisseurController extends Controller
     }
 
     public function create(){
+        ob_start();
         $code= substr(str_shuffle(md5(rand(0,100000))), 0, 8);
-        return view('prestataires.create', compact('code'));
+        echo view('prestataires.create', compact('code'));
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un prestataire', 'content' => $content];
     }
 
     public function store(Request $request){
-        $this->validate($request, [
-            'nom'            => 'required|unique:fournisseurs',
-            'type'          => 'required',
-            'specialite'      => 'required',
-            'tel'            => 'required|min:10|max:10',
-            'fax'               => 'required|min:10|max:10',
-            'email'              => 'required',
-            'personne_contacter' => 'required',
-        ]);
+        //dd($request->all());
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'nom'            => 'required',
+                'type'           => 'required',
+                'specialite'      => 'required',
+                'tel'            => 'required|min:10|max:10',
+                'fax'               => 'required|min:10|max:10',
+                'email'              => 'required',
+                'personne_contacter' => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $prestataire = Fournisseur::find($id);
+        } else {
+            $rules = [
+                'nom'            => 'required|unique:fournisseurs',
+                'type'           => 'required',
+                'specialite'      => 'required',
+                'tel'            => 'required|min:10|max:10',
+                'fax'               => 'required|min:10|max:10',
+                'email'              => 'required',
+                'personne_contacter' => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $prestataire = new Fournisseur();
+        }
 
-        $prestataire = new Fournisseur();
+        if ($validator->fails()) {
+            return ["status" => "danger", "message" => $validator->errors()->all()];
+        }
+
         $prestataire->nom=$request->input('nom');
         $prestataire->code=$request->input('code');
         $prestataire->type=$request->input('type');
@@ -42,60 +66,73 @@ class FournisseurController extends Controller
         $prestataire->qualification=$request->input('qualification');
         $prestataire->commentaire=$request->input('commentaire');
         $prestataire->save();
-        // if($prestataire->save()){
-        //     return response()->json(['success'=> true]);
-        // }else{
-        //     return response()->json(['success'=> false]);
-        // }
-        return redirect('prestataires');
+
+        if($prestataire->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
 
     }
 
     public function edit($id){
+        ob_start();
         $p = Fournisseur::find($id);
-        return view('prestataires.edit', ['p' => $p]);
+        echo view('prestataires.edit', ['p' => $p]);
+        $content = ob_get_clean();
+        return ['title' => 'Editer les infos du prestataire', 'content' => $content];
     }
 
     public function show($id){
+        ob_start();
         $prestataire =  Fournisseur::find($id);
-        return view('prestataires.show', compact('prestataire'));
+        echo view('prestataires.show', compact('prestataire'));
+        $content = ob_get_clean();
+        return ['title' => 'Détails du prestataire', 'content' => $content];
     }
 
-    public function update(Request $request, $id){
-        $this->validate($request, [
-            'nom'            => 'required',
-            'type'          => 'required',
-            'specialite'      => 'required',
-            'tel'            => 'required',
-            'fax'               => 'required',
-            'email'              => 'required',
-            'personne_contacter' => 'required',
-        ]);
+    // public function update(Request $request, $id){
+    //     $validator = \Validator::make($request->all(), [
+    //         'nom'            => 'required',
+    //         'type'          => 'required',
+    //         'specialite'      => 'required',
+    //         'tel'            => 'required',
+    //         'fax'               => 'required',
+    //         'email'              => 'required',
+    //         'personne_contacter' => 'required',
+    //     ]);
 
-            $prestataire = Fournisseur::find($id);
-            $prestataire->nom=$request->input('nom');
-            $prestataire->type=$request->input('type');
-            $prestataire->specialite=$request->input('specialite');
-            $prestataire->tel=$request->input('tel');
-            $prestataire->fax=$request->input('fax');
-            $prestataire->email=$request->input('email');
-            $prestataire->personne_contacter=$request->input('personne_contacter');
-            $prestataire->type_entreprise=$request->input('type_entreprise');
-            $prestataire->qualification=$request->input('qualification');
-            $prestataire->commentaire=$request->input('commentaire');
-            $prestataire->save();
-            // if($prestataire->save()){
-            //     return response()->json(['success' => 'true']);
-            // }else{
-            //     return response()->json(['success' => 'false']);
-            // }
-            return redirect('prestataires');
+    //     if ($validator->fails()) {
+    //         return ["status" => "danger", "message" => $validator->errors()->all()];
+    //     }
+
+    //     $prestataire = Fournisseur::find($id);
+    //     $prestataire->nom=$request->input('nom');
+    //     $prestataire->type=$request->input('type');
+    //     $prestataire->specialite=$request->input('specialite');
+    //     $prestataire->tel=$request->input('tel');
+    //     $prestataire->fax=$request->input('fax');
+    //     $prestataire->email=$request->input('email');
+    //     $prestataire->personne_contacter=$request->input('personne_contacter');
+    //     $prestataire->type_entreprise=$request->input('type_entreprise');
+    //     $prestataire->qualification=$request->input('qualification');
+    //     $prestataire->commentaire=$request->input('commentaire');
+    //     $prestataire->save();
+
+    //     if($prestataire->save()) {
+    //         return ["status" => "success", "message" => 'Les informations ont été modifiées avec succès.'];
+    //     } else {
+    //         return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+    //     }
         
-    }
+    // }
 
-    public function destroy($id){
+    public function delete($id){
         $prestataire =  Fournisseur::find($id);
-        $prestataire->delete();
-        return redirect('prestataires');
+        if($prestataire->delete()) {
+            return ['title' => '<i class="fa fa-check-circle"></i>&nbsp;Le prestataire a été bien supprimé.'];
+        } else {
+            return ['title' => '<i class="fa fa-exclamation-triangle"></i>&nbsp;Une erreur est survenue, il se peut que l\'objet a une relation avec d\'autres objets'];
+        }
     }
 }

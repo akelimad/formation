@@ -4450,6 +4450,10 @@ svgo@^0.7.0:
     sax "~1.2.1"
     whet.extend "~0.9.9"
 
+sweetalert2@^7.6.2:
+  version "7.6.2"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-7.6.2.tgz#70ef64fbd384540b9ca246446286fa1308e2a658"
+
 table@^3.7.8:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/table/-/table-3.8.3.tgz#2bbc542f0fda9861a755d3947fefd8b3f513855f"

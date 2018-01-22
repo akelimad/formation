@@ -6,13 +6,8 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <div class="prestataire alert alert-success alert-dismissable" role="alert" style="display: none">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                        </button>
-                        <span><strong><i class="fa fa-check "></i></strong> Le prestataire a été ajouté avec suucès</span>
-                    </div>
-                    <h4 class="title">La liste des prestataires <span class="badge">{{$prestataires->total()}}</span><a href="#" data-toggle="modal" data-target="#addPrestataire_modal" class="btn btn-primary pull-right addBtn">  <i class="fa fa-plus"></i> </a>
+                    <h4 class="title">La liste des prestataires <span class="badge">{{$prestataires->total()}}</span>
+                        <a href="#" onclick="return chmPrestataire.create()" class="btn btn-primary pull-right addBtn">  <i class="fa fa-plus"></i> </a>
                     </h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
@@ -41,10 +36,9 @@
                                     <td> {{ $f->personne_contacter }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <!-- <a href="{{url('prestataires/'.$f->id)}}" class="btn btn-fill btn-default btn-icon "><i class="fa fa-eye"></i></a> -->
-                                        <a href="#" data-toggle="modal" data-target="#showPrestataire_modal" class="btn btn-fill btn-default btn-icon showPrestataire" data-id="{{$f->id}}"><i class="fa fa-eye"></i></a>
-                                        <!-- <a href="{{url('prestataires/'.$f->id.'/edit')}}" class="btn btn-fill btn-warning btn-icon edit"><i class="ti-pencil-alt"></i></a> -->
-                                        <a href="#" data-toggle="modal" data-target="#editPrestataire_modal" class="btn btn-fill btn-warning btn-icon editPrestataire" data-id="{{$f->id}}"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmPrestataire.show({id:{{ $f->id }}})" class="btn btn-fill btn-default btn-icon" ><i class="fa fa-eye"></i></a>
+
+                                        <a href="#" onclick="return chmPrestataire.edit({id:{{ $f->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-prestataire" data-id="{{$f->id}}"><i class="ti-close"></i></a>
                                     </td>
@@ -66,48 +60,6 @@
                     </div>
 
                     {{$prestataires->links()}}
-
-                    <div class="modal fade" id="showPrestataire_modal" tabindex="-1" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Détails du prestataire </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="editPrestataire_modal" tabindex="-1" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Editer les infos du prestataire </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="addPrestataire_modal" tabindex="-1" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Ajouter un prestataire </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- end content-->

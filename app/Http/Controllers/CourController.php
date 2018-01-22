@@ -18,20 +18,41 @@ class CourController extends Controller
     }
 
     public function create(){
+        ob_start();
         $users = User::all();
-        return view('cours.create', ['users' => $users]);
+        echo view('cours.create', ['users' => $users]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un cours', 'content' => $content];
     }
 
     public function store(Request $request){
-        $this->validate($request, [
-            'titre'            => 'required|unique:cours',
-            'coordinateur'     => 'required',
-            'devise'           => 'required',
-            'prix'             => 'required',
-            'duree'            => 'required',
-        ]);
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'titre'            => 'required',
+                'coordinateur'     => 'required',
+                'devise'           => 'required',
+                'prix'             => 'required',
+                'duree'            => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = Cour::find($id);
+        } else {
+            $rules = [
+                'titre'            => 'required|unique:cours',
+                'coordinateur'     => 'required',
+                'devise'           => 'required',
+                'prix'             => 'required',
+                'duree'            => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = new Cour();
+        }
 
-        $cour = new Cour();
+        if ($validator->fails()) {
+            return ["status" => "danger", "message" => $validator->errors()->all()];
+        }
+        
         $cour->titre=$request->input('titre');
         $cour->description=$request->input('description');
         $cour->devise=$request->input('devise');
@@ -39,43 +60,53 @@ class CourController extends Controller
         $cour->duree=$request->input('duree');
         $cour->user_id=$request->input('coordinateur');
         $cour->save();
-        return redirect('cours');
+        if($cour->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
     }
 
     public function show($id){
+        ob_start();
         $cour = \DB::table('cours')
             ->join('users', 'users.id', '=', 'cours.user_id')
             ->select('cours.*', 'users.name as coordinateur')
             ->where('cours.id','=', $id)
             ->first();
-        return view('cours.show', ['c' => $cour]);
+        echo view('cours.show', ['c' => $cour]);
+        $content = ob_get_clean();
+        return ['title' => 'Détails du cours', 'content' => $content];
     }
 
     public function edit($id){
+        ob_start();
         $users = User::all();
         $cour = Cour::find($id);
-        return view('cours.edit', ['c' => $cour, 'users' => $users]);
+        echo view('cours.edit', ['users' => $users, 'c' => $cour]);
+        $content = ob_get_clean();
+        return ['title' => 'Modifier un cours', 'content' => $content];
     }
 
-    public function update(Request $request, $id){
-        $this->validate($request, [
-            'titre'            => 'required',
-            'coordinateur'     => 'required',
-            'devise'          => 'required',
-            'prix'          => 'required',
-            'duree'          => 'required',
-        ]);
+    // public function update(Request $request, $id){
+    //     $this->validate($request, [
+    //         'titre'            => 'required',
+    //         'coordinateur'     => 'required',
+    //         'devise'          => 'required',
+    //         'prix'          => 'required',
+    //         'duree'          => 'required',
+    //     ]);
 
-        $cour = Cour::find($id);
-        $cour->titre=$request->titre;
-        $cour->description=$request->description;
-        $cour->devise=$request->devise;
-        $cour->prix=$request->prix;
-        $cour->duree=$request->duree;
-        $cour->user_id=$request->coordinateur;
-        $cour->save();
-        return redirect('cours');
-    }
+    //     $cour = Cour::find($id);
+    //     $cour->titre=$request->titre;
+    //     $cour->description=$request->description;
+    //     $cour->devise=$request->devise;
+    //     $cour->prix=$request->prix;
+    //     $cour->duree=$request->duree;
+    //     $cour->user_id=$request->coordinateur;
+    //     $cour->save();
+    //     return redirect('cours');
+    // }
 
     public function destroy(Request $request, $id){
         $cour = Cour::find($id);

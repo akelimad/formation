@@ -11,9 +11,9 @@ export default class chmModal {
     var classInstance = this
     var loadingMessage = ('message' in options) ? options.message : ''
     var modalTemplate = this.loading(loadingMessage)
-    if (options.width !== '' && window.outerWidth > params.width) {
-      modalTemplate.find('.modal-dialog').css('width', options.width)
-    }
+    var modalWidth = 680
+    if (options.width !== '' && window.outerWidth > options.width) modalWidth = options.width
+    modalTemplate.find('.modal-dialog').css('width', modalWidth)
     modalTemplate.attr('chm-modal-id', null)
     $.ajax(params).done(function (response, textStatus, jqXHR) {
       modalObject.response = response
@@ -51,8 +51,8 @@ export default class chmModal {
             var formCallback = ''
             var formAction = ''
             if ('form' in options) {
-              if ('class' in options.form) formAction = options.form.class
-              if ('action' in options.form) formMethod = options.form.action
+              if ('action' in options.form) formAction = options.form.action
+              if ('method' in options.form) formMethod = options.form.method
               if ('class' in options.form) formClass = options.form.class
               if ('callback' in options.form) formCallback = 'onsubmit="return ' + options.form.callback + '(event)"'
             }
@@ -154,7 +154,7 @@ export default class chmModal {
     tpl.addClass('chm-loading-modal')
     tpl.find('.modal-title').html(content)
     tpl.find('.modal-body').hide()
-    tpl.modal({backdrop: 'static', keyboard: false})
+    tpl.modal({ backdrop: 'static', keyboard: false })
     return tpl
   }
 

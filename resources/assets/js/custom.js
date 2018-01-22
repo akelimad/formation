@@ -64,7 +64,7 @@ $(document).ready(function () {
 
   // Modal close event
   $('body').on('hidden.bs.modal', '.chm-modal', function () {
-    if ($(this).attr('chm-modal-id') === 'close-delete') {
+    if ($(this).attr('chm-modal-action') === 'reload') {
       window.location.reload()
     } else {
       $(this).data('bs.modal', null)
