@@ -12,7 +12,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right addBtn" data-toggle="modal" data-target="#addSalle_modal"> <i class="fa fa-plus"></i>  </a>
+                            <a href="#" class="btn btn-primary pull-right addBtn" onclick="return chmSalle.create()"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
@@ -47,8 +47,10 @@
                                     <td> {{ $salle->disposition }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" data-toggle="modal" data-target="#showSalle_modal" class="btn btn-fill btn-default btn-icon showSalle" data-id="{{$salle->id}}"><i class="fa fa-eye"></i></a>
-                                        <a href="#" data-toggle="modal" data-target="#editSalle_modal" class="btn btn-fill btn-warning btn-icon editSalle" data-id="{{$salle->id}}"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
+
+                                        <a href="#" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -67,48 +69,6 @@
                         </table>
                     </div>
                     {{ $salles->links() }}
-
-                    <div class="modal fade" id="showSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Détails de la salle </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="editSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Editer la salle </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="addSalle_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Ajouter une salle </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- end content-->
             </div>

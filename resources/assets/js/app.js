@@ -12,6 +12,7 @@ import chmModal from './class/modal'
 import chmFilter from './class/filter'
 import chmPrestataire from './class/prestataire'
 import chmCours from './class/cours'
+import chmSalle from './class/salle'
 // import swal from 'sweetalert2'
 
 // Store modules in window
@@ -22,6 +23,7 @@ window.chmModal = chmModal
 window.chmFilter = chmFilter
 window.chmPrestataire = chmPrestataire
 window.chmCours = chmCours
+window.chmSalle = chmSalle
 
 // Standart jQuery script
 import './custom'

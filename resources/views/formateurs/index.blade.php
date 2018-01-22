@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content"> 
-                    <h4 class="title">La liste des formateurs <span class="badge">{{$formateurs->total()}}</span> <a href="#" data-toggle="modal" data-target="#addFormateur_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
+                    <h4 class="title">La liste des formateurs <span class="badge">{{$formateurs->total()}}</span> <a href="#" onclick="return chmFormateur.create()" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -32,8 +32,10 @@
                                     <td> {{ $formateur->rating ? $formateur->rating .'%' : '0%' }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" data-id="{{$formateur->id}}" data-toggle="modal" data-target="#showFormateur_modal" class="btn btn-fill btn-default btn-icon showFormateur"><i class="fa fa-eye"></i></a>
-                                        <a href="#" data-id="{{$formateur->id}}"  data-toggle="modal" data-target="#editFormateur_modal" class="btn btn-fill btn-warning btn-icon editFormateur"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
+
+                                        <a href="#" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -54,47 +56,6 @@
 
                     {{ $formateurs->links() }}
 
-                    <div class="modal fade" id="showFormateur_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Détails du formateur </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="editFormateur_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Editer le formateur </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="addFormateur_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Ajouter un formateur </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- end content-->
             </div>

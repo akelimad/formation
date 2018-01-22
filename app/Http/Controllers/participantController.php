@@ -14,24 +14,49 @@ class ParticipantController extends Controller
     }
 
     public function create(){
-        return view('participants.create');
+        ob_start();
+        echo view('participants.create');
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un participant', 'content' => $content];
     }
 
     public function store(Request $request){
-        $participant = new Participant();
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'nom'            => 'required',
+                'email'            => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = Participant::find($id);
+        } else {
+            $rules = [
+                'nom'            => 'required|unique',
+                'email'            => 'required|unique',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = new Participant();
+        }
+        if ($validator->fails()) {
+            return ["status" => "danger", "message" => $validator->errors()->all()];
+        }
+        
         $participant->nom=$request->input('nom');
         $participant->email=$request->input('email');
         $participant->save();
-        return redirect('participants');
+        if($cour->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
 
     }
 
     public function edit(){
-        
-    }
-
-    public function update(){
-        
+        ob_start();
+        echo view('participants.edit');
+        $content = ob_get_clean();
+        return ['title' => 'Modifier un participant', 'content' => $content];
     }
 
     public function destroy(Request $request, $id){

@@ -68,7 +68,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     // Route::resource('sessions', 'SessionController');
     Route::get('participants', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
-    Route::post('participants', 'ParticipantController@store');
+    Route::post('participants/store', 'ParticipantController@store');
     Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
 
     Route::get('budgets', 'BudgetController@index');
@@ -96,10 +96,10 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {
     Route::get('formateurs', 'FormateurController@index');
     Route::get('formateurs/create', 'FormateurController@create');
-    Route::post('formateurs', 'FormateurController@store');
+    Route::post('formateurs/store', 'FormateurController@store');
     Route::get('formateurs/{id}', 'FormateurController@show');
     Route::get('formateurs/{id}/edit', 'FormateurController@edit');
-    Route::put('formateurs/{id}', 'FormateurController@update');
+    // Route::put('formateurs/{id}', 'FormateurController@update');
     Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
     //Route::resource('formateurs', 'FormateurController');
     Route::get('formateurs/s/gestion', 'FormateurController@gestion');
@@ -109,9 +109,10 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], f
     Route::get('salles', 'SalleController@index');
     Route::get('salles/create', 'SalleController@create');
     Route::post('salles', 'SalleController@store');
+    // Route::post('salles', 'SalleController@store');
     Route::get('salles/{id}', 'SalleController@show');
     Route::get('salles/{id}/edit', 'SalleController@edit');
-    Route::put('salles/{id}', 'SalleController@update');
+    // Route::put('salles/{id}', 'SalleController@update');
     Route::delete('salles/{id}/delete', 'SalleController@destroy');
     //Route::resource('salles', 'SalleController');
     Route::get('salles/s/gestion', 'SalleController@gestion');

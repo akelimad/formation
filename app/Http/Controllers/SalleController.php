@@ -16,18 +16,34 @@ class SalleController extends Controller
     }
 
     public function create(){
-        return view('salles.create');
+        ob_start();
+        echo view('salles.create');
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter une salle', 'content' => $content];
     }
 
     public function store(Request $request){
-        $this->validate($request, [
-            'numero'            => 'required|unique:salles',
-            'capacite'          => 'required',
-            'photo'              => 'max:2000',
-            'equipements'        => 'required',
-        ]);
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'numero'            => 'required',
+                'capacite'          => 'required',
+                'photo'              => 'max:2000',
+                'equipements'        => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = Salle::find($id);
+        } else {
+            $rules = [
+                'numero'            => 'required|unique:salles',
+                'capacite'          => 'required',
+                'photo'              => 'max:2000',
+                'equipements'        => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $cour = new Salle();
+        }
 
-        $salle = new Salle();
         $salle->numero=$request->input('numero');
         $salle->capacite=$request->input('capacite');
         $salle->equipements=$request->input('equipements');
@@ -42,45 +58,55 @@ class SalleController extends Controller
         }
         $salle->disposition= $request->input('disposition');
         $salle->save();
-        return redirect('salles');
+        if($salle->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
 
     }
 
     public function show($id){
+        ob_start();
         $salle =  Salle::find($id);
-        return view('salles.show', ['s' => $salle]);
+        echo view('salles.show', ['s' => $salle]);
+        $content = ob_get_clean();
+        return ['title' => 'Détails de la salle', 'content' => $content];
     }
 
     public function edit($id){
+        ob_start();
         $salle = Salle::find($id);
-        return view('salles.edit', ['s' => $salle]);
+        echo view('salles.edit', ['s' => $salle]);
+        $content = ob_get_clean();
+        return ['title' => 'Modifier une salle', 'content' => $content];
     }
 
-    public function update(Request $request, $id){
-        $this->validate($request, [
-            'numero'            => 'required',
-            'capacite'          => 'required',
-            'photo'              => 'max:2000',
-            'equipements'        => 'required',
-        ]);
+    // public function update(Request $request, $id){
+    //     $this->validate($request, [
+    //         'numero'            => 'required',
+    //         'capacite'          => 'required',
+    //         'photo'              => 'max:2000',
+    //         'equipements'        => 'required',
+    //     ]);
 
-        $salle = Salle::find($id);
-        $salle->numero=$request->input('numero');
-        $salle->capacite=$request->input('capacite');
-        $salle->equipements=$request->input('equipements');
-        if($file = $request->hasFile('photo')) {
-            $file = $request->file('photo') ;
+    //     $salle = Salle::find($id);
+    //     $salle->numero=$request->input('numero');
+    //     $salle->capacite=$request->input('capacite');
+    //     $salle->equipements=$request->input('equipements');
+    //     if($file = $request->hasFile('photo')) {
+    //         $file = $request->file('photo') ;
             
-            $fileName = time()."_".$file->getClientOriginalName() ;
-            $destinationPath = public_path('/sallePhotos') ;
+    //         $fileName = time()."_".$file->getClientOriginalName() ;
+    //         $destinationPath = public_path('/sallePhotos') ;
 
-            $file->move($destinationPath,$fileName);
-            $salle->photo = $fileName ;
-        }
-        $salle->disposition= $request->input('disposition');
-        $salle->save();
-        return redirect('salles');
-    }
+    //         $file->move($destinationPath,$fileName);
+    //         $salle->photo = $fileName ;
+    //     }
+    //     $salle->disposition= $request->input('disposition');
+    //     $salle->save();
+    //     return redirect('salles');
+    // }
 
     public function destroy($id){
         $salle = Salle::find($id);
