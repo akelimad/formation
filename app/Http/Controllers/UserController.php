@@ -27,28 +27,61 @@ class UserController extends Controller
     }
 
     public function createUser(){
+        ob_start();
         $roles = Role::all();
-        return view('users.create', ['roles'=> $roles]);
+        echo view('users.create', ['roles'=> $roles]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un utilisateur', 'content' => $content];
     }
 
     public function storeUser(Request $request){
-        $this->validate($request, [
-            'name' => 'required|max:255',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
-        ]);
-        $user = new User();
-        $user->name= $request->name;
-        $user->email= $request->email;
-        $user->password= bcrypt($request->password);
-        $user->save();
-        // Give each new user the role selected
-        $role = $request->role;
-        $user->attachRole( $role );
-        return redirect("utilisateurs");
+        $id = $request->input('id', false);
+        if($id) {
+            $user = User::find($id);
+            $user->name = $request->name;
+            $user->email = $request->email;
+            if(!empty($request->password) || !empty($request->password_confirmation)){
+                $rules = [
+                    'password' => 'required|min:6|confirmed',
+                ];
+                $validator = \Validator::make($request->all(), $rules);
+                if ($validator->fails()) {
+                    return ["status" => "danger", "message" => $validator->errors()->all()];
+                }
+                $user->password = bcrypt($request->password);
+            }
+            $user->detachRoles( $user->roles );
+            $user->attachRole( $request->role );
+            $user->save();
+        } else {
+            $rules = [
+                'name' => 'required|max:255',
+                'email' => 'required|email|max:255|unique:users',
+                'password' => 'required|min:6|confirmed',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return ["status" => "danger", "message" => $validator->errors()->all()];
+            }
+            $user = new User();
+            $user->name= $request->name;
+            $user->email= $request->email;
+            $user->password= bcrypt($request->password);
+            $user->save();
+            // Give each new user the role selected
+            $role = $request->role;
+            $user->attachRole( $role );
+        }
+        if($user->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
+
     }
 
     public function editUser($id){
+        ob_start();
         $user = User::find($id);
         $roles_ids = [];
         if($user->roles){
@@ -57,7 +90,9 @@ class UserController extends Controller
             }
         }
         $roles = Role::all();
-        return view('users.edit', compact('user', 'roles','roles_ids'));
+        echo view('users.edit', compact('user', 'roles','roles_ids'));
+        $content = ob_get_clean();
+        return ['title' => 'Modifier un utilisateur', 'content' => $content];
     }
     public function updateUser(Request $request, $id){
         $user = User::find($id);

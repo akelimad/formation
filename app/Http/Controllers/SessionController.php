@@ -24,98 +24,189 @@ class SessionController extends Controller
     }
 
     public function create(){
+        ob_start();
         $cours = Cour::all();
         $formateurs = Formateur::all();
         $salles = Salle::all();
         $participants = Participant::all();
-        return view('sessions.create', [
+        echo view('sessions.create', [
             'cours'=> $cours,
             'formateurs'=> $formateurs,
             'salles'=> $salles,
             'participants'=> $participants,
         ]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter une session', 'content' => $content];
     }
 
-    public function store(SessionRequest $request){
+    public function store(Request $request){
         $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
         $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
-        $validator = Validator::make($request->all(), [
-            'nom'            => 'required|unique:sessions',
-            'cour'           => 'required',
-            'formateur'      => 'required',
-            'lieu'           => 'required',
-            'methode'        => 'required',
-            'statut'         => 'required',
-            'salle'          => 'required',
-            'participants'   => 'required',
-        ]);
-        $messages = $validator->errors();
+        $id = $request->input('id', false);
+        if($id) {
+            $validator = Validator::make($request->all(), [
+                'nom'            => 'required',
+                'cour'           => 'required',
+                'formateur'      => 'required',
+                'lieu'           => 'required',
+                'methode'        => 'required',
+                'statut'         => 'required',
+                'salle'          => 'required',
+            ]);
+            $messages = $validator->errors();
+            
+            $now = Carbon::now()->format('Y-m-d h:i');
+            if($request->statut == "Terminé" && $end > $now){
+                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            }
+            if($start > $end ) {
+                $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
+            }
 
-        $salle_occupee = \DB::table('sessions')
-        ->select('start')
-        ->where([
-            'salle_id'=>$request->salle,
-            'start'=>$start,
-            'end'=>$end,
-        ])->get();
+            $prevus = [];
+            $presents = [];
+            $p_prevus = Participant_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
+            $p_presents = Participant_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
+            foreach ($p_prevus as $p) {
+                $prevus[] = $p->participant_id;
+            }
+            foreach ($p_presents as $p) {
+                $presents[] = $p->participant_id;
+            }
 
-        $formateur_occupe = \DB::table('sessions')
-        ->select('formateur_id')
-        ->where([
-            'formateur_id'=>$request->formateur,
-            'start'=>$start,
-            'end'=>$end,
-        ])->get();
+            if(count($messages)>0){
+                return ["status" => "danger", "message" => $messages];
+            }else{
+                $session = Session::find($id);
+                $session->nom=$request->input('nom');
+                $session->description=$request->input('description');
+                $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
+                $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
+                $session->lieu=$request->input('lieu');
+                $session->methode=$request->input('methode');
+                $session->cour_id=$request->input('cour');
+                $session->salle_id=$request->input('salle');
+                $session->formateur_id=$request->input('formateur');
+                $session->statut=$request->input('statut');
+                $session->save();
 
-        
-        $now = Carbon::now()->format('Y-m-d h:i');
-        if($salle_occupee) {
-            $messages->add('salle', 'La salle est reservée pour ces horaires!');
-        }
-        if($formateur_occupe) {
-            $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
-        }
-        if($request->statut == "Terminé" && $request->end > $now) {
-            $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
-        }
-
-        //dd($formateur_occupe);
-
-        if(count($messages)>0){ 
-            return redirect('sessions/create')->withErrors($messages)->withInput();
-        }else{
-            $session = new Session();
-            $session->nom=$request->input('nom');
-            $session->description=$request->input('description');
-            $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
-            $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
-            $session->lieu=$request->input('lieu');
-            $session->methode=$request->input('methode');
-            $session->cour_id=$request->input('cour');
-            $session->salle_id=$request->input('salle');
-            $session->formateur_id=$request->input('formateur');
-            $session->statut=$request->input('statut');
-            $session->save();
-
-            $session_id = $session->id;
-            $participants=array();
-            $participants= $request->participants;
-            if($participants){
-                foreach ($participants as $par) {
-                    $sess_participants= new Participant_sessions();
-                    $sess_participants->session_id = $session_id;
-                    $sess_participants->participant_id = $par;
-                    $sess_participants->prevu = 1;
-                    $sess_participants->present = 1;
-                    $sess_participants->save();
+                $session_id = $session->id;
+                $participants=array();
+                $participants= $request->participants;
+                $sess_par= $session->participants;
+                foreach ($sess_par as $s_p) {
+                    $sp_ids[] = $s_p->id;
+                }
+                //dd($sp_ids);
+                if($participants){
+                    foreach ($participants as $par) {
+                        if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
+                            $sess_participants= new Participant_sessions();
+                            $sess_participants->session_id = $session_id;
+                            $sess_participants->participant_id = $par;
+                            $sess_participants->prevu = 0;
+                            $sess_participants->present = 1;
+                            $sess_participants->save();  
+                        }else{
+                            \DB::table('participant_session')
+                            ->where(['session_id' => $session_id,'participant_id' =>$par])
+                            ->update(['present'=>1]);
+                        }
+                    }
+                }
+                if(!empty($presents) && !empty($request->participants)){
+                    $nouveau_presents=array_diff($presents, $request->participants); 
+                    foreach ($nouveau_presents as $nv) {
+                        \DB::table('participant_session')
+                        ->where(['session_id' => $session_id,'participant_id' =>$nv])
+                        ->update(['present'=>0]);
+                    }
+                }
+                if($session->save()) {
+                    return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+                } else {
+                    return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
                 }
             }
-            return redirect('sessions');
+        }else{
+            $validator = Validator::make($request->all(), [
+                'nom'            => 'required|unique:sessions',
+                'cour'           => 'required',
+                'formateur'      => 'required',
+                'lieu'           => 'required',
+                'methode'        => 'required',
+                'statut'         => 'required',
+                'salle'          => 'required',
+                'participants'   => 'required',
+            ]);
+            $messages = $validator->errors();
+            $salle_occupee = \DB::table('sessions')->select('start')
+            ->where('salle_id', '=', $request->salle)
+            ->whereBetween('start', [$start, $end])
+            ->get();
+
+            $formateur_occupe = \DB::table('sessions')->select('start')
+            ->where('formateur_id', '=', $request->formateur)
+            ->whereBetween('start', [$start, $end])
+            ->get();
+            $now = Carbon::now()->format('Y-m-d h:i');
+
+            if($salle_occupee) {
+                $messages->add('salle', 'La salle est reservée pour ces horaires!');
+            }
+            if($formateur_occupe) {
+                $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
+            }
+            if($request->statut == "Terminé" && $request->end > $now) {
+                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            }
+            if($start > $end ) {
+                $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
+            }
+
+            //dd($formateur_occupe);
+
+            if(count($messages)>0){ 
+                return ["status" => "danger", "message" => $messages];
+            }else{
+                $session = new Session();
+                $session->nom=$request->input('nom');
+                $session->description=$request->input('description');
+                $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
+                $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
+                $session->lieu=$request->input('lieu');
+                $session->methode=$request->input('methode');
+                $session->cour_id=$request->input('cour');
+                $session->salle_id=$request->input('salle');
+                $session->formateur_id=$request->input('formateur');
+                $session->statut=$request->input('statut');
+                $session->save();
+
+                $session_id = $session->id;
+                $participants=array();
+                $participants= $request->participants;
+                if($participants){
+                    foreach ($participants as $par) {
+                        $sess_participants= new Participant_sessions();
+                        $sess_participants->session_id = $session_id;
+                        $sess_participants->participant_id = $par;
+                        $sess_participants->prevu = 1;
+                        $sess_participants->present = 1;
+                        $sess_participants->save();
+                    }
+                }
+                if($session->save()) {
+                    return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+                } else {
+                    return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+                }
+            }
         }
 
     }
 
     public function show($id){
+        ob_start();
         $session = Session::find($id);
         $p_presents = \DB::table('participant_session')
             ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
@@ -124,10 +215,13 @@ class SessionController extends Controller
             ->where('participant_session.session_id','=',$session->id)
             ->where('participant_session.present','=',1)
             ->get();
-        return view('sessions.show', ['s' => $session, 'p_presents' => $p_presents]);
+        echo view('sessions.show', ['s' => $session, 'p_presents' => $p_presents]);
+        $content = ob_get_clean();
+        return ['title' => 'Détails de la session', 'content' => $content];
     }
 
     public function edit($id){
+        ob_start();
         $cours = Cour::all();
         $formateurs = Formateur::all();
         $salles = Salle::all();
@@ -146,9 +240,7 @@ class SessionController extends Controller
             $presents[] = $p->participant_id;
         }
 
-        //dd($presents);
-
-        return view('sessions.edit', [
+        echo view('sessions.edit', [
             'cours'=> $cours,
             'formateurs'=> $formateurs,
             'salles'=> $salles,
@@ -157,6 +249,8 @@ class SessionController extends Controller
             'prevus_ids'=> $prevus,
             'present_ids'=> $presents,
         ]);
+        $content = ob_get_clean();
+        return ['title' => 'Modifier la session', 'content' => $content];
     }
 
     public function update(SessionRequest $request, $id){
@@ -172,27 +266,8 @@ class SessionController extends Controller
             'salle'          => 'required',
         ]);
         $messages = $validator->errors();
-
-        // $salle_occupee = \DB::table('sessions')
-        // ->select('start')
-        // ->where([
-        //     'salle_id'=>$request->salle,
-        //     'start'=>$start,
-        //     'end'=>$end,
-        // ])->get();
-
-        // $formateur_occupe = \DB::table('sessions')
-        // ->select('formateur_id')
-        // ->where([
-        //     'formateur_id'=>$request->formateur,
-        //     'start'=>$start,
-        //     'end'=>$end,
-        // ])->get();
         
         $now = Carbon::now()->format('Y-m-d h:i');
-        // if($salle_occupee) {
-        //     $messages->add('salle', 'La salle est reservée pour ces horaires!');
-        // }
         if($request->statut == "Terminé" && $request->end > $now){
             $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
         }

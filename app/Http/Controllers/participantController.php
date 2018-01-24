@@ -25,17 +25,17 @@ class ParticipantController extends Controller
         if($id) {
             $rules = [
                 'nom'            => 'required',
-                'email'            => 'required',
+                'email'          => 'required',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $cour = Participant::find($id);
+            $participant = Participant::find($id);
         } else {
             $rules = [
-                'nom'            => 'required|unique',
-                'email'            => 'required|unique',
+                'nom'            => 'required',
+                'email'          => 'required|unique:participants',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $cour = new Participant();
+            $participant = new Participant();
         }
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
@@ -44,7 +44,7 @@ class ParticipantController extends Controller
         $participant->nom=$request->input('nom');
         $participant->email=$request->input('email');
         $participant->save();
-        if($cour->save()) {
+        if($participant->save()) {
             return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
         } else {
             return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
@@ -52,16 +52,17 @@ class ParticipantController extends Controller
 
     }
 
-    public function edit(){
+    public function edit($id){
         ob_start();
-        echo view('participants.edit');
+        $participant = Participant::find($id);
+        echo view('participants.edit', ['p'=> $participant]);
         $content = ob_get_clean();
         return ['title' => 'Modifier un participant', 'content' => $content];
     }
 
     public function destroy(Request $request, $id){
-        $cour = Participant::find($id);
-        $cour->delete();
+        $participant = Participant::find($id);
+        $participant->delete();
         return redirect('participants');
     }
 

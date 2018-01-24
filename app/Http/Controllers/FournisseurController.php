@@ -26,25 +26,25 @@ class FournisseurController extends Controller
         $id = $request->input('id', false);
         if($id) {
             $rules = [
-                'nom'            => 'required',
+                'nom'            => 'required|alpha',
                 'type'           => 'required',
                 'specialite'      => 'required',
-                'tel'            => 'required|min:10|max:10',
-                'fax'               => 'required|min:10|max:10',
+                'tel'             => 'required|regex:/(06)[0-9]{8}/',
+                'fax'               => 'required|regex:/(05)[0-9]{8}/',
                 'email'              => 'required',
-                'personne_contacter' => 'required',
+                'personne_contacter' => 'required|alpha',
             ];
             $validator = \Validator::make($request->all(), $rules);
             $prestataire = Fournisseur::find($id);
         } else {
             $rules = [
-                'nom'            => 'required|unique:fournisseurs',
+                'nom'            => 'required|unique:fournisseurs|alpha',
                 'type'           => 'required',
                 'specialite'      => 'required',
-                'tel'            => 'required|min:10|max:10',
-                'fax'               => 'required|min:10|max:10',
+                'tel'             => 'required|regex:/(06)[0-9]{8}/',
+                'fax'               => 'required|regex:/(05)[0-9]{8}/',
                 'email'              => 'required',
-                'personne_contacter' => 'required',
+                'personne_contacter' => 'required|alpha',
             ];
             $validator = \Validator::make($request->all(), $rules);
             $prestataire = new Fournisseur();

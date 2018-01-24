@@ -12,7 +12,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right addBtn" data-toggle="modal" data-target="#addBudget_modal"> <i class="fa fa-plus"></i>  </a>
+                            <a href="#" class="btn btn-primary pull-right addBtn" onclick="return chmBudget.create()"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
@@ -42,8 +42,10 @@
                                         <td>  </td>
                                         <td class="text-right">
                                             {{ csrf_field() }}
-                                            <a href="#" class="btn btn-fill btn-default btn-icon showBudget" data-toggle="modal" data-target="#showBudget_modal" data-id="{{$session->id}}"><i class="fa fa-eye"></i></a>
-                                            <a href="#" class="btn btn-fill btn-warning btn-icon editBudget" title="Editer les budgets" data-toggle="modal" data-target="#editBudget_modal" data-id="{{$session->id}}" title="Ajouter un budget"><i class="ti-pencil-alt"></i></a>
+                                            <a href="#" class="btn btn-fill btn-default btn-icon" onclick="return chmBudget.show({id:{{ $session->id }}})"><i class="fa fa-eye"></i></a>
+
+                                            <a href="#" class="btn btn-fill btn-warning btn-icon" title="Editer les budgets"  onclick="return chmBudget.edit({id:{{ $session->id }}})"><i class="ti-pencil-alt"></i></a>
+
                                             <a href="#" class="btn btn-fill btn-danger btn-icon delete-budget" data-id="{{$session->id}}"><i class="ti-close"></i></a>
                                         </td>
                                         @foreach($session->budgets as $budget)
@@ -74,46 +76,6 @@
                     </div>
 
                     {!! $sessions->links() !!}
-
-                    <div class="modal fade" id="addBudget_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter les budgets de la session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="editBudget_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Editer les budgets de la session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="showBudget_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Détails des budgets de la session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- end content-->

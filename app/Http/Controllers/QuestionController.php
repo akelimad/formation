@@ -28,51 +28,81 @@ class QuestionController extends Controller
     }
 
     public function show($id){
+        ob_start();
         $q = Question::where('evaluation_id', $id)->get();
-        return view('questionnaires.show',['questions' => $q ]);
+        echo view('questionnaires.show',['questions' => $q ]);
+        $content = ob_get_clean();
+        return ['title' => 'Le questionnaire', 'content' => $content];
     }
 
-    public function create(){ 
+    public function create($eid){ 
+        ob_start();
         $evaluations= Evaluation::select('id', 'nom')->get();
-        return view('questionnaires.create', compact('evaluations'));
+        echo view('questionnaires.create', compact('evaluations', 'eid'));
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un questionnaire', 'content' => $content];
     }
 
     public function store(Request $request){
-        //dd($request->all());
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'evaluation'    => 'required',
+                'questions'     => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $e = Evaluation::find($id);
+            foreach ($e->questions as $q) {
+                $q->delete();
+            }
+        } else {
+            $rules = [
+                'evaluation'    => 'required',
+                'questions'     => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+        }
+
         foreach ($request->questions as $q) {
             $question = new Question();
             $question->evaluation_id=$request->evaluation;
             $question->titre=$q;
             $question->save();
         }
-        //$url=url('questionnaire/'.$request->evaluation);
-        return redirect('evaluations')
-        ->with('survey_add',"Le questionnaire a bien été ajouté. vous pouvez le consulter");
+        if($question->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
+        
     }
 
     public function edit($id){
+        ob_start();
         $evaluation = Evaluation::find($id);
         $first_question = $evaluation->questions->first();
         $eval_questions = $evaluation->questions;
-        return view('questionnaires.edit', compact('eval_questions','evaluation','first_question'));
+        echo view('questionnaires.edit', compact('eval_questions','evaluation','first_question'));
+        $content = ob_get_clean();
+        return ['title' => 'Modifier le questionnaire', 'content' => $content];
     }
 
-    public function update(Request $request, $id){
-        $e = Evaluation::find($id);
-        foreach ($e->questions as $q) {
-            $q->delete();
-        }
+    // public function update(Request $request, $id){
+    //     $e = Evaluation::find($id);
+    //     foreach ($e->questions as $q) {
+    //         $q->delete();
+    //     }
 
-        foreach ($request->questions as $qst) {
-            $question = new Question();
-            $question->evaluation_id=$request->evaluation;
-            $question->titre=$qst;
-            $question->save();
-        }
-        //$url=url('questionnaire/'.$request->evaluation);
-        return redirect('evaluations')
-        ->with('survey_add',"Le questionnaire a bien été modifié. vous pouvez le consulter ");
-    }
+    //     foreach ($request->questions as $qst) {
+    //         $question = new Question();
+    //         $question->evaluation_id=$request->evaluation;
+    //         $question->titre=$qst;
+    //         $question->save();
+    //     }
+    //     //$url=url('questionnaire/'.$request->evaluation);
+    //     return redirect('evaluations')
+    //     ->with('survey_add',"Le questionnaire a bien été modifié. vous pouvez le consulter ");
+    // }
 
     public function destroy($id){
         $e = Evaluation::find($id);

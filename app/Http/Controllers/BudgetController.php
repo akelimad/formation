@@ -23,12 +23,38 @@ class BudgetController extends Controller
         return view('budgets.index', ['sessions'=>$sessions]);
     }
 
-    public function create(){
+    public function create($sid){
+        ob_start();
         $sessions = Session::all();
-        return view('budgets.create', ['sessions'=> $sessions]);
+        echo view('budgets.create', ['sessions'=> $sessions, 'sid' => $sid]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un budget', 'content' => $content];
     }
 
     public function store(Request $request){
+        $id = $request->input('id', false);
+        if($id) {
+            $rules = [
+                'session'    => 'required',
+                'budget'     => 'required',
+                'prevu'      => 'required',
+                'realise'    => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+            $s = Session::find($id);
+            foreach ($s->budgets as $b) {
+                $b->delete();
+            }
+        } else {
+            $rules = [
+                'session'    => 'required',
+                'budget'     => 'required',
+                'prevu'      => 'required',
+                'realise'    => 'required',
+            ];
+            $validator = \Validator::make($request->all(), $rules);
+        }
+
         foreach ($request->budgets as $b) {
             $budget = new Budget();
             $budget->session_id=$request->input('session');
@@ -39,41 +65,51 @@ class BudgetController extends Controller
 
             $budget->save();
         }
-        return redirect('budgets');
+        if($budget->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
 
     }
 
     public function show($id){
+        ob_start();
         $session = Session::find($id);
         $sess_budgets = $session->budgets;
-        return view('budgets.show', compact('sess_budgets', 'session'));
+        echo view('budgets.show', compact('sess_budgets', 'session'));
+        $content = ob_get_clean();
+        return ['title' => 'Détails du budget', 'content' => $content];
     }
 
     public function edit($id){
+        ob_start();
         $session = Session::find($id);
         $sess_budgets = $session->budgets;
         $first_budget = $session->budgets->first();
-        return view('budgets.edit', compact('sess_budgets', 'session','first_budget'));
+        echo view('budgets.edit', compact('sess_budgets', 'session','first_budget'));
+        $content = ob_get_clean();
+        return ['title' => 'Modifier un budget', 'content' => $content];
     }
 
-    public function update(Request $request, $id){
-        $s = Session::find($id);
-        foreach ($s->budgets as $b) {
-            $b->delete();
-        }
-        //dd($request->budgets);
-        foreach ($request->budgets as $budget) {
-            //dd($budget['budget']);
-            $bud = new Budget();
-            $bud->session_id=$request->session;
-            $bud->budget = $budget['budget'];
-            $bud->prevu  = $budget['prevu'];
-            $bud->realise= $budget['realise'];
-            $bud->ajustement= $budget['ajustement'];
-            $bud->save();
-        }
-        return redirect('budgets');
-    }
+    // public function update(Request $request, $id){
+    //     $s = Session::find($id);
+    //     foreach ($s->budgets as $b) {
+    //         $b->delete();
+    //     }
+    //     //dd($request->budgets);
+    //     foreach ($request->budgets as $budget) {
+    //         //dd($budget['budget']);
+    //         $bud = new Budget();
+    //         $bud->session_id=$request->session;
+    //         $bud->budget = $budget['budget'];
+    //         $bud->prevu  = $budget['prevu'];
+    //         $bud->realise= $budget['realise'];
+    //         $bud->ajustement= $budget['ajustement'];
+    //         $bud->save();
+    //     }
+    //     return redirect('budgets');
+    // }
 
     public function destroy($id){
         $s = Session::find($id);

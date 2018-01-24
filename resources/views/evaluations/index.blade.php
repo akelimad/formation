@@ -68,7 +68,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" data-toggle="modal" data-target="#addEvaluation_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a>
+                            <a href="#" onclick="return chmEvaluation.create()" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
@@ -100,12 +100,19 @@
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="{{ url('evaluations/'.$evaluation->id.'/'.$evaluation->type) }}" class="btn btn-fill btn-default btn-icon stats" title="statistiques de reponses" data-toggle="tooltip"><i class="fa fa-bar-chart"></i></a>
+
                                         <a href="@if(!$evaluation->envoye_le) {{ url('evaluations/'.$evaluation->id.'/sendMail') }}@else#@endif" class="btn btn-fill btn-success btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Le mail est déjà envoyé':'Envoyer un email aux participants'}}" data-toggle="tooltip" {{$evaluation->envoye_le ? 'disabled':''}}><i class="fa fa-envelope"></i></a>
+
                                         <a href="@if($evaluation->envoye_le){{ url('evaluations/'.$evaluation->id.'/remembreMail') }}@else#@endif" class="btn btn-fill btn-warning btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Rappeler les participants qui n\'ont pas repondu':'Le questionnaire pas encore envoyé' }}" data-toggle="tooltip" {{$evaluation->envoye_le ? '':'disabled'}}><i class="fa fa-bell-o"></i></a>
-                                        <a href="#" class="btn btn-fill btn-default btn-icon showQuestionnaire" title="voir le questionnaire" data-toggle="modal" data-target="#showQuestionnaire_modal" data-id="{{$evaluation->id}}"> <i class="fa fa-eye"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon addQuestionaire" data-toggle="modal" data-target="#addQuestionnaire_modal" data-id="{{$evaluation->id}}" title="{{$evaluation->questions ? 'Le questionnaire est déjà ajouté':'Ajouter un questionnaire'}}" {{$evaluation->questions ? 'disabled':''}}> <i class="fa fa-question-circle-o"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon editQuestionnaire" data-toggle="modal" data-target="#editQuestionnaire_modal" data-id="{{$evaluation->id}}" title="{{$evaluation->envoye_le ? 'Le questionnaire est déjà envoyé':'Editer le questionnaire'}}" {{$evaluation->envoye_le ? 'disabled':''}} > <i class="ti-pencil-alt"></i> </a>
-                                        <a href="#" class="btn btn-fill btn-warning btn-icon editEvaluation" title="Editer l'evaluation" data-toggle="modal" data-target="#editEvaluation_modal" data-id="{{$evaluation->id}}"><i class="ti-pencil-alt"></i></a>
+
+                                        <a href="#" class="btn btn-fill btn-default btn-icon" title="voir le questionnaire" onclick="return chmQuestion.show({id:{{ $evaluation->id }}})"> <i class="fa fa-eye"></i> </a>
+
+                                        <a href="#" class="btn btn-fill btn-info btn-icon" onclick="return chmQuestion.create({eid: {{ $evaluation->id }} })" title="{{$evaluation->questions ? 'Le questionnaire est déjà ajouté':'Ajouter un questionnaire'}}" {{$evaluation->questions ? 'disabled':''}}> <i class="fa fa-question-circle-o"></i> </a>
+
+                                        <a href="#" class="btn btn-fill btn-info btn-icon" onclick="return chmQuestion.edit({id:{{ $evaluation->id }}})" title="{{$evaluation->envoye_le ? 'Le questionnaire est déjà envoyé':'Editer le questionnaire'}}" {{$evaluation->envoye_le ? 'disabled':''}} > <i class="ti-pencil-alt"></i> </a>
+
+                                        <a href="#" class="btn btn-fill btn-warning btn-icon" title="Editer l'evaluation" onclick="return chmEvaluation.edit({id:{{ $evaluation->id }}})"><i class="ti-pencil-alt"></i></a>
+
                                         <a href="#" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" title="Supprimer l'evaluation" data-toggle="tooltip"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -125,72 +132,6 @@
                         </table>
                     </div>
                     {{ $evaluations->links() }}
-
-                    <div class="modal fade" id="addEvaluation_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter une evaluation</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="editEvaluation_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Editer une evaluation</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="addQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter les questions</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="editQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Editer le questionnaire </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="showQuestionnaire_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Le questionnaire de l'évaluation test session </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- end content-->

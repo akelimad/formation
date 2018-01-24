@@ -1,4 +1,3 @@
-
 <input type="hidden" name="id" value="{{ (isset($c->id)) ? $c->id : null }}">
 {{ csrf_field() }}
 <div class="content">

@@ -35,9 +35,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
     Route::put('utilisateurs/permissions/{id}', 'UserController@updatePermission');
     Route::get('utilisateurs/droits-acces', 'UserController@rolePermissions');
     Route::get('utilisateurs/create', 'UserController@createUser');
-    Route::post('utilisateurs', 'UserController@storeUser');
     Route::get('utilisateurs/{id}/edit', 'UserController@editUser');
-    Route::put('utilisateurs/{id}', 'UserController@updateUser');
+    Route::post('utilisateurs/store', 'UserController@storeUser');
+    // Route::put('utilisateurs/{id}', 'UserController@updateUser');
 
 });
 
@@ -60,23 +60,25 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::get('sessions', 'SessionController@index');
     Route::get('sessions/create', 'SessionController@create');
     Route::get('sessions/{id}', 'SessionController@show');
-    Route::post('sessions', 'SessionController@store');
+    Route::post('sessions/store', 'SessionController@store');
     Route::get('sessions/{id}/edit', 'SessionController@edit');
-    Route::put('sessions/{id}', 'SessionController@update');
+    // Route::put('sessions/{id}', 'SessionController@update');
     Route::delete('sessions/{id}/delete', 'SessionController@destroy');
     Route::get('sessions/filter/search', 'SessionController@filterSessions');
     // Route::resource('sessions', 'SessionController');
     Route::get('participants', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
+    Route::get('participants/create', 'ParticipantController@create');
     Route::post('participants/store', 'ParticipantController@store');
+    Route::get('participants/{id}/edit', 'ParticipantController@edit');
     Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
 
     Route::get('budgets', 'BudgetController@index');
-    Route::get('budgets/create', 'BudgetController@create');
-    Route::post('budgets', 'BudgetController@store');
+    Route::get('budgets/{sid}/create', 'BudgetController@create');
+    Route::post('budgets/store', 'BudgetController@store');
     Route::get('budgetsSession/{id}', 'BudgetController@show');
     Route::get('budgetsSession/{id}/edit', 'BudgetController@edit');
-    Route::put('budgetsSession/{id}', 'BudgetController@update');
+    // Route::put('budgetsSession/{id}', 'BudgetController@update');
     Route::delete('budgetsSession/{id}/delete', 'BudgetController@destroy');
 
 });
@@ -108,7 +110,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], function() {
     Route::get('salles', 'SalleController@index');
     Route::get('salles/create', 'SalleController@create');
-    Route::post('salles', 'SalleController@store');
+    Route::post('salles/store', 'SalleController@store');
     // Route::post('salles', 'SalleController@store');
     Route::get('salles/{id}', 'SalleController@show');
     Route::get('salles/{id}/edit', 'SalleController@edit');
@@ -121,9 +123,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], f
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations']], function() {
     Route::get('evaluations', 'EvaluationController@index');
     Route::get('evaluations/create', 'EvaluationController@create');
-    Route::post('evaluations', 'EvaluationController@store');
+    Route::post('evaluations/store', 'EvaluationController@store');
     Route::get('evaluations/{id}/edit', 'EvaluationController@edit');
-    Route::put('evaluations/{id}', 'EvaluationController@update');
+    // Route::put('evaluations/{id}', 'EvaluationController@update');
     Route::delete('evaluations/{id}/delete', 'EvaluationController@destroy');
     //Route::resource('evaluations', 'EvaluationController');
     
@@ -133,11 +135,11 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     Route::get('evaluations/{id}/{type}/{nom}', 'EvaluationController@participantEvaluation');
 
     Route::get('questions', 'QuestionController@index');
-    Route::get('questions/create', 'QuestionController@create');
-    Route::post('questions', 'QuestionController@store');
-    Route::get('questionnaire/{id}', 'QuestionController@show');
-    Route::get('questionnaire/{id}/edit', 'QuestionController@edit');
-    Route::put('questionnaire/{id}', 'QuestionController@update');
+    Route::get('questionnaires/{eid}/create', 'QuestionController@create');
+    Route::post('questionnaires/store', 'QuestionController@store');
+    Route::get('questionnaires/{id}', 'QuestionController@show');
+    Route::get('questionnaires/{id}/edit', 'QuestionController@edit');
+    // Route::put('questionnaires/{id}', 'QuestionController@update');
     Route::delete('questionnaire/{id}/delete', 'QuestionController@destroy');
 });
 

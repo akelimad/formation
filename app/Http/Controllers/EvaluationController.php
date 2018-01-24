@@ -23,37 +23,60 @@ class EvaluationController extends Controller
             ->join('sessions', 'sessions.id', '=', 'evaluations.session_id')
             ->leftJoin('questions', 'questions.evaluation_id', '=', 'evaluations.id')
             ->select(array('evaluations.*', 'sessions.nom as session',\DB::raw("count(questions.id) as 'questions'")))
-            ->groupBy('questions.evaluation_id')
+            ->groupBy('evaluations.id')
             ->orderBy('evaluations.id', 'DESC')
             ->paginate(10);
+        //dd($evaluations);
         return view('evaluations.index', ['evaluations'=>$evaluations]);
     }
 
     public function create(){
+        ob_start();
         $sessions = Session::where('statut', '=', 'Terminé')->get();
-        return view('evaluations.create', ['sessions'=> $sessions]);
+        echo view('evaluations.create', ['sessions'=> $sessions]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter une evaluation', 'content' => $content];
     }
 
     public function store(Request $request){
-        $validator = Validator::make($request->all(), [
-            'nom'            => 'required|unique:evaluations',
-            'type'           => 'required',
-            'session'        => 'required',
-        ]);
-        $messages = $validator->errors();
-        $evaluations = Evaluation::where(['session_id' =>$request->session, 'type'=> $request->type])->get();
-        if(count($evaluations) > 0){
-            $messages->add('eval_exist', 'Il ya déjà une evaluation créée avec ces critères !');
-        }
-        if(count($messages)>0){ 
-            return redirect('evaluations/create')->withErrors($messages)->withInput();
-        }else{
-            $evaluation = new Evaluation();
-            $evaluation->nom=$request->input('nom');
-            $evaluation->type=$request->input('type');
-            $evaluation->session_id=$request->input('session');
+        $id = $request->input('id', false);
+        if($id) {
+            $validator = Validator::make($request->all(), [
+                'nom'            => 'required',
+                'type'           => 'required',
+                'session'        => 'required',
+            ]);
+            $evaluation = Evaluation::find($id);
+            $evaluation->nom=$request->nom;
+            $evaluation->type=$request->type;
+            $evaluation->session_id=$request->session;
             $evaluation->save();
-            return redirect('evaluations');
+        } else {
+            $validator = Validator::make($request->all(), [
+                'nom'            => 'required|unique:evaluations',
+                'type'           => 'required',
+                'session'        => 'required',
+            ]);
+            $messages = $validator->errors();
+            $evaluations = Evaluation::where(['session_id' =>$request->session, 'type'=> $request->type])->get();
+            if(count($evaluations) > 0){
+                $messages->add('eval_exist', 'Il ya déjà une evaluation créée avec ces critères !');
+            }
+            if(count($messages)>0){ 
+                return ["status" => "danger", "message" => $messages];
+            }else{
+                $evaluation = new Evaluation();
+                $evaluation->nom=$request->input('nom');
+                $evaluation->type=$request->input('type');
+                $evaluation->session_id=$request->input('session');
+                $evaluation->save();
+            }
+        }
+
+        if($evaluation->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
         }
 
     }
@@ -130,10 +153,12 @@ class EvaluationController extends Controller
     }
 
     public function edit($id){
+        ob_start();
         $evaluation = Evaluation::find($id);
-        //dd($evaluation->questions);
         $sessions = Session::where('statut', '=', 'Terminé')->get();
-        return view('evaluations.edit', ['e'=> $evaluation, 'sessions' => $sessions]);
+        echo view('evaluations.edit', ['e'=> $evaluation, 'sessions' => $sessions]);
+        $content = ob_get_clean();
+        return ['title' => 'Modifier un cours', 'content' => $content];
     }
 
     public function update(Request $request, $id){
@@ -147,7 +172,11 @@ class EvaluationController extends Controller
         $evaluation->type=$request->type;
         $evaluation->session_id=$request->session;
         $evaluation->save();
-        return redirect('evaluations');
+        if($evaluation->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
     }
 
     public function destroy(Request $request, $id){

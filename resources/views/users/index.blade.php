@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des utilisateurs <span class="badge">{{$users->total()}}</span> <a href="#" data-toggle="modal" data-target="#addUser_modal" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
+                    <h4 class="title">La liste des utilisateurs <span class="badge">{{$users->total()}}</span> <a href="#" onclick="return chmUser.create()" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -38,7 +38,8 @@
                                     </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" data-toggle="modal" data-id="{{$user->id}}" data-target="#editUser_modal" class="btn btn-fill btn-warning btn-icon editUser"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -58,34 +59,6 @@
                     </div>
 
                     {{ $users->links() }}
-
-                    <div class="modal fade" id="editUser_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Editer les infos de l'utlisateur </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="modal fade" id="addUser_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center"> Ajouter un utilisateurs </h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- end content-->

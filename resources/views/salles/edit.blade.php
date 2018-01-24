@@ -1,5 +1,4 @@
-<input type="hidden" name="id" value="{{ (isset($c->id)) ? $c->id : null }}">
-<input type="hidden" name="_method" value="PUT">
+<input type="hidden" name="id" value="{{ (isset($s->id)) ? $s->id : null }}">
 {{ csrf_field() }}
 <div class="content">
     <div class="row">

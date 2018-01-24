@@ -133,8 +133,8 @@
                     @foreach($occupations as $session)
                     {
                         title: '{{ $session->nom }}',
-                        start: '{{ Carbon\Carbon::parse($session->start)->format("Y-m-d")}}',
-                        end  : '{{ Carbon\Carbon::parse($session->end)->format("Y-m-d")}}',
+                        start: '{{ $session->start }}',
+                        end  : '{{ Carbon\Carbon::parse($session->end)->addDays(1) }}',
                         allDay: true,
                         className: 'event-default',
                     },

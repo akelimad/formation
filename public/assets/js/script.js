@@ -38,7 +38,7 @@ $(function() {
 
     //to get evaluation that you clicked on to attach question selected by default
     $("#questionnaire_modal" ).on('shown.bs.modal', function(event){
-        //$('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
+        $('#evaluationsList option[value="'+ $(event.relatedTarget).data('id') +'"]').prop('selected', true)
     });
 
     //to get session that you clicked on to attach budget selected by default
@@ -47,7 +47,6 @@ $(function() {
     });
 
     function addLine(){
-        // Add new Line for budget
         $(".addLine").click(function(event){
             event.preventDefault()
             var copy = $('#addLine-wrap').find(".form-group:first").clone()
@@ -66,40 +65,10 @@ $(function() {
         });
     }
 
-
-    // // Add new Line
-    // $(".addLine").click(function(event){
-    //     event.preventDefault()
-    //     var copy = $('#questions-wrap').find(".form-group:first").clone()
-    //     copy.find('input').val('')
-    //     copy.find('button').toggleClass('addLine deleteLine')
-    //     copy.find('button>i').toggleClass('fa-plus fa-minus')
-    //     var uid = uuidv4()
-    //     $.each(copy.find('input'), function(){
-    //         var name = $(this).attr('name')
-    //         $(this).attr('name', name.replace('[0]', '['+uid+']'))
-    //     })
-    //     $('#questions-wrap').append(copy)
-    // })
-    // $('#questions-wrap').on('click', '.deleteLine', function(){
-    //     $(this).closest('.form-group').remove();
-    // });
-
-
-
     function uuidv4() {
         return ([1e7]+-1e3).replace(/[018]/g, c =>
             (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
         )
-    }
-
-
-    function select2(){
-        $('.js-example-basic-multiple').select2({
-            multiple: true,
-            width: "100%",
-            'placeholder':'Selectionnez',
-        });
     }
 
 

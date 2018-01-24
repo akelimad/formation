@@ -56,9 +56,9 @@
                             <h4 class="title">La liste des sessions <span class="badge">{{$sessions->total()}}</span> </h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="#" data-toggle="modal" data-target="#addSession_modal" class="btn btn-primary pull-right "> <i class="fa fa-plus"></i> Session </a>
-                            <a href="#" class="btn btn-primary pull-right " data-toggle="modal" data-target="#participant_modal"> <i class="fa fa-plus"></i> Participant </a>
-                            <a href="#" class="btn btn-primary pull-right " data-toggle="modal" data-target="#formateur_modal"> <i class="fa fa-plus"></i> Formateur </a>
+                            <a href="#" onclick="return chmSession.create()" class="btn btn-primary pull-right "> <i class="fa fa-plus"></i> Session </a>
+                            <a href="#" class="btn btn-primary pull-right " onclick="return chmParticipant.create()"> <i class="fa fa-plus"></i> Participant </a>
+                            <a href="#" class="btn btn-primary pull-right " onclick="return chmFormateur.create()"> <i class="fa fa-plus"></i> Formateur </a>
                         </div>
                     </div>
                     
@@ -92,9 +92,10 @@
                                     <td> {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
-                                        <a href="#" data-toggle="modal" data-target="#showSession_modal" class="btn btn-fill btn-default btn-icon showSession" title="Afficher les détails" data-id="{{$session->id}}"><i class="fa fa-eye"></i></a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon addBudget" data-toggle="modal" data-target="#addBudget_modal" data-id="{{$session->id}}" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
-                                        <a href="#" data-toggle="modal" data-target="#editSession_modal" class="btn btn-fill btn-warning btn-icon editSession" title="Modifier" data-id="{{$session->id}}"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails"><i class="fa fa-eye"></i></a>
+                                        <a href="#" class="btn btn-fill btn-info btn-icon" onclick="return chmBudget.create({sid: {{ $session->id }} })" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
+                                        <a href="#" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" title="Modifier" ><i class="ti-pencil-alt"></i></a>
+
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
@@ -117,92 +118,6 @@
                     </div>
 
                     {{ $sessions->links() }}
-
-                    <!-- formateurs modal -->
-                    <div class="modal fade" id="formateur_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter un formateur</h3>
-                                </div>
-                                <div class="modal-body">
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- participant modal -->
-                    <div class="modal fade" id="participant_modal" aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter un participant</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- budgets modal -->
-                    <div class="modal fade" id="addBudget_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter les budgets de la session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- add session form modal -->
-                    <div class="modal fade" id="addSession_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Ajouter une session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="editSession_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Editer une session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="showSession_modal"  aria-labelledby="gridSystemModalLabel" role="dialog">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <a href="#" data-dismiss="modal" class="class pull-right"><span class="fa fa-close"></span></a>
-                                    <h3 class="modal-title text-center">Détails de la session</h3>
-                                </div>
-                                <div class="modal-body">
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
                 </div>
                 <!-- end content-->

@@ -11,9 +11,11 @@ export default class chmModal {
     var classInstance = this
     var loadingMessage = ('message' in options) ? options.message : ''
     var modalTemplate = this.loading(loadingMessage)
-    var modalWidth = 680
+
+    var modalWidth = 600
     if (options.width !== '' && window.outerWidth > options.width) modalWidth = options.width
     modalTemplate.find('.modal-dialog').css('width', modalWidth)
+
     modalTemplate.attr('chm-modal-id', null)
     $.ajax(params).done(function (response, textStatus, jqXHR) {
       modalObject.response = response
@@ -173,11 +175,25 @@ export default class chmModal {
 
   static showAlertMessage (type, message, dismissible = true) {
     if (type === 'error') type = 'danger'
+    var icon = ''
+    switch (type) {
+      case 'danger':
+        icon = 'fa fa-times-circle'
+        break
+      case 'info':
+        icon = 'fa fa-info-circle'
+        break
+      case 'warning':
+        icon = 'fa fa-warning'
+        break
+      default:
+        icon = 'fa fa-check'
+    }
     var alert = '<div class="chm-alerts alert alert-' + type + ' alert-white rounded mb-10">'
     if (dismissible === true) {
       alert += '<button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button>'
     }
-    alert += '<div class="icon"><i class="fa fa-check"></i></div>'
+    alert += '<div class="icon"><i class="' + icon + '"></i></div>'
     if (typeof message === 'object') {
       alert += '<ul>'
       $.each(message, function (k, message) {

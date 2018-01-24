@@ -32,7 +32,7 @@ class SalleController extends Controller
                 'equipements'        => 'required',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $cour = Salle::find($id);
+            $salle = Salle::find($id);
         } else {
             $rules = [
                 'numero'            => 'required|unique:salles',
@@ -41,7 +41,7 @@ class SalleController extends Controller
                 'equipements'        => 'required',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $cour = new Salle();
+            $salle = new Salle();
         }
 
         $salle->numero=$request->input('numero');

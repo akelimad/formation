@@ -34,7 +34,7 @@
                                         {{ csrf_field() }}
                                         <a href="#" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
 
-                                        <a href="#" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmFormateur.edit({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}"><i class="ti-close"></i></a>
                                     </td>

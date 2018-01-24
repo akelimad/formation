@@ -1,10 +1,10 @@
 <div class="">
     @if(count($questions)>0)
-        @foreach($questions as $question)
+        @foreach($questions as $key => $question)
             <div class="form-group">
                 <div class="row">
                     <div class="col-md-8">
-                        <p>{{$question->titre}}</p>
+                        <p>{{$key +1 }} <i class="fa fa-caret-right"></i>  {{$question->titre}}</p>
                         <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                     </div>
                     <div class="col-md-4">
@@ -27,7 +27,7 @@
         </div>
     @else
         <div class="form-group">
-            <h4> Cette evaluation n'a pas encore de questionnaire !  <a href="{{ url('evaluations') }}" class="btn btn-primary"> <i class="fa fa-long-arrow-left"></i> Retour</a></h4>
+            <h4> Cette evaluation n'a pas encore de questionnaire !  </h4>
         </div>
     @endif
 </div>

@@ -15,11 +15,11 @@
                         </div>
                         <div class="row">
                             @if(count($questions)>0)
-                                @foreach($questions as $question)
+                                @foreach($questions as $key => $question)
                                     <div class="form-group">
                                         <div class="row">
                                             <div class="col-md-8">
-                                                <p>{{$question->titre}}</p>
+                                                <p>{{$key +1 }} <i class="fa fa-caret-right"></i> {{$question->titre}}</p>
                                                 <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                                             </div>
                                             <div class="col-md-4">

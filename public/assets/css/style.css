@@ -1,4 +1,7 @@
 /*custom style css*/
+.modal-content h4{
+    font-weight: normal;
+}
 .alert-dismissable .close, .alert-dismissible .close{
     right: 0;
 }

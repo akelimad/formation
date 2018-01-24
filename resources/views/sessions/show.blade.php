@@ -66,7 +66,7 @@
         <div class="form-group label-floating participants">
             <label class="control-label">Participants présents</label>
             @foreach ($p_presents as $par)
-                <span class="badge">{{$par->nom}}</span>
+                <span class="badge" title="{{$par->email}}">{{$par->nom}}</span>
             @endforeach
         </div>
     </div>

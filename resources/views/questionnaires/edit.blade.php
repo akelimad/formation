@@ -1,6 +1,6 @@
-<form  class="allInputsFormValidation form-horizontal" action="{{ url('questionnaire/'.$evaluation->id) }}" method="post">
-    <input type="hidden" name="_method" value="PUT">
-    {{ csrf_field() }}
+<input type="hidden" name="id" value="{{ (isset($evaluation->id)) ? $evaluation->id : null }}">
+{{ csrf_field() }}
+<div class="row">
     <div class="form-group">
         <label class="col-md-2 control-label">Evaluation</label>
         <div class="col-md-8">
@@ -22,9 +22,31 @@
             </div>
         @endforeach
     </div>
-    <div class="form-group">
-        <div class="text-center">
-            <button type="submit" class="btn btn-rose btn-fill btn-wd">Sauvegarder</button>
-        </div>
-    </div>
-</form>
+</div>
+
+<script>
+    $(function(){
+        function uuidv4() {
+            return ([1e7]+-1e3).replace(/[018]/g, c =>
+                (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16)
+            )
+        }
+        $(".addLine").click(function(event){
+            event.preventDefault()
+            var copy = $('#addLine-wrap').find(".form-group:first").clone()
+            copy.find('input').val('')
+            copy.find('button').toggleClass('addLine deleteLine')
+            copy.find('button>i').toggleClass('fa-plus fa-minus')
+            var uid = uuidv4()
+            $.each(copy.find('input'), function(){
+                var name = $(this).attr('name')
+                $(this).attr('name', name.replace('[0]', '['+uid+']'))
+            })
+            $('#addLine-wrap').append(copy)
+        })
+        $('#addLine-wrap').on('click', '.deleteLine', function(){
+            $(this).closest('.form-group').remove();
+        });
+
+    })
+</script>

@@ -49,7 +49,7 @@
                                         {{ csrf_field() }}
                                         <a href="#" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
 
-                                        <a href="#" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="#" onclick="return chmSalle.edit({id:{{ $salle->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
                                         <a href="#" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
                                     </td>
@@ -67,7 +67,7 @@
                                 </tr>
                             </tfoot>
                         </table>
-                    </div>
+                    </div> 
                     {{ $salles->links() }}
                 </div>
                 <!-- end content-->

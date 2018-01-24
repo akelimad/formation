@@ -13,7 +13,13 @@ import chmFilter from './class/filter'
 import chmPrestataire from './class/prestataire'
 import chmCours from './class/cours'
 import chmSalle from './class/salle'
-// import swal from 'sweetalert2'
+import chmFormateur from './class/formateur'
+import chmParticipant from './class/participant'
+import chmBudget from './class/budget'
+import chmEvaluation from './class/evaluation'
+import chmQuestion from './class/question'
+import chmSession from './class/session'
+import chmUser from './class/user'
 
 // Store modules in window
 window.chmSite = chmSite
@@ -24,6 +30,13 @@ window.chmFilter = chmFilter
 window.chmPrestataire = chmPrestataire
 window.chmCours = chmCours
 window.chmSalle = chmSalle
+window.chmFormateur = chmFormateur
+window.chmParticipant = chmParticipant
+window.chmBudget = chmBudget
+window.chmEvaluation = chmEvaluation
+window.chmQuestion = chmQuestion
+window.chmSession = chmSession
+window.chmUser = chmUser
 
 // Standart jQuery script
 import './custom'
