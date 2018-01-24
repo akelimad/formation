@@ -53,7 +53,7 @@
         <div class="col-md-12">
             <div class="form-group label-floating">
                 <label class="control-label"> &nbsp; </label>
-                <a href="{{url('/cvs/'.$f->cv)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le C.V </a>
+                <a href="{{asset('cvs/'.$f->cv)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le C.V </a>
             </div>
         </div>
     @endif   

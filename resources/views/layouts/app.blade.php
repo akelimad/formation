@@ -5,8 +5,9 @@
     <link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}" >
     <meta http-equiv="X-UA-Compatible" content="IE=edge" >
     <meta charset="UTF-8">
-    <title>Accueil | Plateforme de gestion de formation</title>
+    <title>@yield('pageTitle') | Plateforme de gestion de formation</title>
     <link rel="website" href="{{ url('/') }}">
+    <base href="{{ url('/') }}">
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' name='viewport' >
     <meta name="viewport" content="width=device-width" >
 
@@ -43,7 +44,7 @@
                 </a>
             </div>
             <div class="logo logo-mini">
-                <a href="#" class="simple-text">
+                <a href="javascript:void(0)" class="simple-text">
                     A
                 </a>
             </div>
@@ -242,7 +243,7 @@
                                 <li><a href="{{ url('/register') }}">Register</a></li>
                             @else
                                 <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
                                         {{ Auth::user()->name }} :
                                         @foreach(Auth::user()->roles as $role)
                                             {{$role->name}}
@@ -269,7 +270,7 @@
                         <script>
                             document.write(new Date().getFullYear())
                         </script>
-                        <a href="#">Admin</a>
+                        <a href="javascript:void(0)">Admin</a>
                     </p>
                 </div>
             </footer>

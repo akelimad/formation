@@ -6,10 +6,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content"> 
-                    <h4 class="title">La liste des formateurs <span class="badge">{{$formateurs->total()}}</span> <a href="#" onclick="return chmFormateur.create()" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
+                    <h4 class="title">La liste des formateurs <span class="badge">{{$formateurs->total()}}</span> <a href="javascript:void(0)" onclick="return chmFormateur.create()" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter""> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
+                    if(count($formateurs)>0)
                     <div class="material-datatables">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -32,11 +33,11 @@
                                     <td> {{ $formateur->rating ? $formateur->rating .'%' : '0%' }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
 
-                                        <a href="#" onclick="return chmFormateur.edit({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmFormateur.edit({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -53,6 +54,11 @@
                             </tfoot>
                         </table>
                     </div>
+                    @else
+                        <div class="alert alert-info mt20">
+                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
+                        </div>
+                    @endif
 
                     {{ $formateurs->links() }}
 

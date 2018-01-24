@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Sessions')
 @section('content') 
 <div class="container-fluid">
     <div class="row">
@@ -18,7 +18,7 @@
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group label-floating">
-                                        <label class="control-label">Date début</label>
+                                        <label class="control-label">Date fin</label>
                                         <input type="search" name="end" class="form-control datetimepicker" data-date-format="DD/MM/YYYY HH:mm" placeholder="Date fin" value="{{isset($selected_end) ? $selected_end: ''}}">
                                     </div>
                                 </div>
@@ -56,15 +56,16 @@
                             <h4 class="title">La liste des sessions <span class="badge">{{$sessions->total()}}</span> </h4>
                         </div>
                         <div class="col-md-6">
-                            <a href="#" onclick="return chmSession.create()" class="btn btn-primary pull-right "> <i class="fa fa-plus"></i> Session </a>
-                            <a href="#" class="btn btn-primary pull-right " onclick="return chmParticipant.create()"> <i class="fa fa-plus"></i> Participant </a>
-                            <a href="#" class="btn btn-primary pull-right " onclick="return chmFormateur.create()"> <i class="fa fa-plus"></i> Formateur </a>
+                            <a href="javascript:void(0)"  onclick="return chmSession.create()" class="btn btn-primary pull-right " > <i class="fa fa-plus"></i> Session </a>
+                            <a href="javascript:void(0)"  class="btn btn-primary pull-right " onclick="return chmParticipant.create()"> <i class="fa fa-plus"></i> Participant </a>
+                            <a href="javascript:void(0)"  class="btn btn-primary pull-right " onclick="return chmFormateur.create()"> <i class="fa fa-plus"></i> Formateur </a>
                         </div>
                     </div>
                     
                     <div class="toolbar">
                         
                     </div>
+                    @if(count($sessions)>0)
                     <div class="material-datatables">
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -92,11 +93,12 @@
                                     <td> {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </td>
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
-                                        <a href="#" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails"><i class="fa fa-eye"></i></a>
-                                        <a href="#" class="btn btn-fill btn-info btn-icon" onclick="return chmBudget.create({sid: {{ $session->id }} })" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
-                                        <a href="#" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" title="Modifier" ><i class="ti-pencil-alt"></i></a>
+                                        {{ csrf_field() }}
+                                        <a href="javascript:void(0)" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails"><i class="fa fa-eye"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if(count($session->budgets)>0) return chmBudget.edit({id: {{ $session->id }} }) @else return chmBudget.create({sid: {{ $session->id }} }) @endif" title="Ajouter un budget"><i class="fa fa-usd"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" title="Modifier" ><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -116,6 +118,11 @@
                             </tfoot>
                         </table>
                     </div>
+                    @else
+                        <div class="alert alert-info mt20">
+                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
+                        </div>
+                    @endif
 
                     {{ $sessions->links() }}
 

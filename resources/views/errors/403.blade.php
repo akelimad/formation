@@ -11,7 +11,7 @@
             }
 
             body {
-                background: url({{url('assets/img/403-error.jpg')}}) no-repeat center;
+                background: url({{asset('assets/img/403-error.jpg')}}) no-repeat center;
                 margin: 0;
                 padding: 0;
                 width: 100%;

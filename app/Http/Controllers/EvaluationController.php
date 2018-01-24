@@ -35,7 +35,7 @@ class EvaluationController extends Controller
         $sessions = Session::where('statut', '=', 'Terminé')->get();
         echo view('evaluations.create', ['sessions'=> $sessions]);
         $content = ob_get_clean();
-        return ['title' => 'Ajouter une evaluation', 'content' => $content];
+        return ['title' => 'Ajouter une évaluation', 'content' => $content];
     }
 
     public function store(Request $request){
@@ -148,7 +148,7 @@ class EvaluationController extends Controller
                 'selected' => $selected
             ]);
         }else{
-            return redirect()->back()->with('no_response', "il n'ya aucune réponse sur cette evaluations !!!");
+            return redirect()->back()->with('no_response', "il n'ya aucune réponse sur cette évaluations !!!");
         }
     }
 
@@ -158,7 +158,7 @@ class EvaluationController extends Controller
         $sessions = Session::where('statut', '=', 'Terminé')->get();
         echo view('evaluations.edit', ['e'=> $evaluation, 'sessions' => $sessions]);
         $content = ob_get_clean();
-        return ['title' => 'Modifier un cours', 'content' => $content];
+        return ['title' => "Modifier l'évaluation", 'content' => $content];
     }
 
     public function update(Request $request, $id){
@@ -224,7 +224,7 @@ class EvaluationController extends Controller
                     }
                     $evaluation->envoye_le= $now;
                     $evaluation->save();
-                    return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
+                    return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }
                 if($evaluation->type == "a-froid" and $diff->m >=3){ // 3mois
                     foreach($part_presents as $p){
@@ -247,10 +247,10 @@ class EvaluationController extends Controller
                     return redirect()->back()->with('under_3month', "Attendez, les 3 mois pas encore depassés. ca fait maintenant juste ".$diff->m." mois et ".$diff->d." jours !!!");
                 }
             }else{
-                return redirect()->back()->with('no_participants', 'cette evaluation est liée à une session dont aucun participant ne fait partie.');
+                return redirect()->back()->with('no_participants', 'cet évaluation est liée à une session dont aucun participant ne fait partie.');
             }
         }else{
-            return redirect()->back()->with('no_survey', "Aucun questionnaire n'a été crée pour cette evaluation. vous ne pouvez pas envoyer un email aux participants !!!");
+            return redirect()->back()->with('no_survey', "Aucun questionnaire n'a été crée pour cet évaluation. vous ne pouvez pas envoyer un email aux participants !!!");
         }
 
     }
@@ -296,13 +296,13 @@ class EvaluationController extends Controller
                     'evaluation_type' => $eval_type
                 ]
                 , function ($m) use($p){
-                    $m->to($p->email, $p->nom)->subject('Rappel evaluation à chaud');
+                    $m->to($p->email, $p->nom)->subject('Rappel évaluation à chaud');
             });
         }
         $now = new DateTime();
         $evaluation->rappele_le= $now;
         $evaluation->save();
-        return redirect()->back()->with('remembre_mails_sent', 'un email contenant le lien du questionnaire de cette evaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom.' sur laquelle ils n\'ont pas repondu');
+        return redirect()->back()->with('remembre_mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom.' sur laquelle ils n\'ont pas repondu');
     }
 
 

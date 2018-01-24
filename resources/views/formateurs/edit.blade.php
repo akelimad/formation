@@ -7,7 +7,7 @@
                 <label class="control-label">Nom complet
                     <star>*</star>
                 </label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}" required="required"/>
+                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}"  readonly=""/>
             </div>
         </div>
         <div class="col-md-6">
@@ -67,7 +67,7 @@
             <div class="col-md-6">
                 <div class="form-group label-floating">
                     <label class="control-label"> &nbsp; </label>
-                    <a href="{{url('/cvs/'.$f->cv)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le C.V </a>
+                    <a href="{{asset('cvs/'.$f->cv)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le C.V </a>
                 </div>
             </div>
         @endif   

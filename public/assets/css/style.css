@@ -43,6 +43,9 @@ select.input-sm{
 .mb40{
     margin-bottom: 40px;
 }
+.mt20{
+    margin-top: 20px;
+}
 
 /*start rating*/
 div.stars {
@@ -212,6 +215,14 @@ label.star:before {
 
 .sessionsFilter{
     margin-bottom: 1em;
+}
+.toolbar{
+    margin-bottom: 1em;
+    overflow: auto;
+}
+.material-datatables .table > thead > tr > th{
+    background: #364150; 
+    color: white;
 }
 .table > tbody > tr > td{
     padding: 5px 8px;

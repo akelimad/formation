@@ -57,6 +57,11 @@ class AuthController extends Controller
         ]);
     }
 
+    protected function getFailedLoginMessage()
+    {
+        return 'Les coordonées que vous savez saisi sont incorrectes ! Réessayez';
+    }
+
     public function showRegistrationForm() {
         $roles = Role::all();
         return view('auth.register', ['roles'=> $roles]);

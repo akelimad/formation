@@ -1,5 +1,5 @@
 @extends('layouts.basic')
-
+@section('pageTitle', 'Questionnaires')
 @section('content')
 <div class="container-fluid">
     <div class="row">

@@ -1,12 +1,12 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Users')
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des utilisateurs <span class="badge">{{$users->total()}}</span> <a href="#" onclick="return chmUser.create()" class="btn btn-primary pull-right addBtn"> <i class="fa fa-plus"></i>  </a></h4>
+                    <h4 class="title">La liste des utilisateurs <span class="badge">{{$users->total()}}</span> <a href="javascript:void(0)" onclick="return chmUser.create()" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter""> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
@@ -38,9 +38,9 @@
                                     </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

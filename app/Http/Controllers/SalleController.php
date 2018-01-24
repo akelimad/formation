@@ -24,24 +24,26 @@ class SalleController extends Controller
 
     public function store(Request $request){
         $id = $request->input('id', false);
+        $rules = [
+            'numero'            => 'required|unique:salles',
+            'capacite'          => 'required',
+            'photo'              => 'max:2000',
+            'equipements'        => 'required|alpha_num',
+        ];
         if($id) {
             $rules = [
-                'numero'            => 'required',
                 'capacite'          => 'required',
                 'photo'              => 'max:2000',
-                'equipements'        => 'required',
+                'equipements'        => 'required|alpha_num',
             ];
             $validator = \Validator::make($request->all(), $rules);
             $salle = Salle::find($id);
         } else {
-            $rules = [
-                'numero'            => 'required|unique:salles',
-                'capacite'          => 'required',
-                'photo'              => 'max:2000',
-                'equipements'        => 'required',
-            ];
             $validator = \Validator::make($request->all(), $rules);
             $salle = new Salle();
+        }
+        if ($validator->fails()) {
+            return ["status" => "danger", "message" => $validator->errors()->all()];
         }
 
         $salle->numero=$request->input('numero');

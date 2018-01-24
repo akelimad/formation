@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Nom<star>*</star> </label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Titre"  value="{{$s->nom}}" />
+                <input class="form-control" name="nom" type="text" placeholder="Titre"  value="{{$s->nom}}" readonly=""/>
             </div>
         </div>
         <div class="col-md-6">
@@ -91,7 +91,7 @@
                 <label class="control-label">Participants prévus</label>
                 @foreach ($s->participants as $par)
                     @if(in_array($par->id, $prevus_ids))
-                    <span class="badge">{{$par->nom}}</span>
+                    <span class="badge" title="{{$par->email}}">{{$par->nom}}</span>
                     @endif
                 @endforeach
             </div>
@@ -100,7 +100,7 @@
                
                 <select class="js-example-basic-multiple form-control" name="participants[]" multiple="multiple" required="required">
                     @foreach ($participants as $p)
-                        <option value="{{$p->id}}" @if (in_array($p->id, $present_ids)) selected @endif > {{$p->nom}} </option>
+                        <option value="{{$p->id}}" title="{{$p->email}}" @if (in_array($p->id, $present_ids)) selected @endif > {{$p->nom}} </option>
                     @endforeach
                 </select>
             </div>

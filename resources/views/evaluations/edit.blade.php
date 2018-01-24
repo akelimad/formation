@@ -5,7 +5,7 @@
         <div class="col-md-12">
             <div class="form-group label-floating">
                 <label class="control-label">Nom <star>*</star></label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" required="required"  />
+                <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" required="required"  readonly=""/>
             </div>
         </div>
     </div>

@@ -19,8 +19,8 @@ class Asset
     if (! self::$json) {
       self::$json = json_decode(file_get_contents(public_path().'/assets/dynamic/assets.json'));
     }
-
-    return self::$json->{$parts[0]}->{$parts[1]};
+    $path = ltrim(self::$json->{$parts[0]}->{$parts[1]}, '/');
+    return asset($path);
   }
 
   public static function isLocal()

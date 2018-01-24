@@ -89,7 +89,7 @@
                 <label class="control-label">Participants <star>*</star></label>
                 <select class="js-example-basic-multiple form-control" name="participants[]" multiple="multiple" required="required">
                     @foreach ($participants as $p)
-                        <option value="{{$p->id}}">{{$p->nom}}</option>
+                        <option value="{{$p->id}}" title="{{$p->email}}">{{$p->nom}}</option>
                     @endforeach
                 </select>
             </div>

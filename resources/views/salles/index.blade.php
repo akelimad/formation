@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Salles')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -12,13 +12,14 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="#" class="btn btn-primary pull-right addBtn" onclick="return chmSalle.create()"> <i class="fa fa-plus"></i>  </a>
+                            <a href="javascript:void(0)" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter"" onclick="return chmSalle.create()"> <i class="fa fa-plus"></i>  </a>
                         </div>
                     </div>
                     
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
+                    @if(count($salles)>0)
                     <div class="material-datatables">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -39,19 +40,19 @@
                                     <td> {{ $salle->equipements }} </td>
                                     <td> 
                                         @if($salle->photo)
-                                            <img src="{{url('sallePhotos/'.$salle->photo)}}" width="60" alt="" height="20"> 
+                                            <img src="{{asset('sallePhotos/'.$salle->photo)}}" width="60" alt="" height="20">
                                         @else
-                                            <img src="{{url('assets/img/missing-photo.png')}}" width="30" height="20" alt=""> 
+                                            <img src="{{asset('assets/img/missing-photo.png')}}" width="30" height="20" alt=""> 
                                         @endif
                                     </td>
                                     <td> {{ $salle->disposition }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="#" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmSalle.show({id:{{ $salle->id }}})" class="btn btn-fill btn-default btn-icon"><i class="fa fa-eye"></i></a>
 
-                                        <a href="#" onclick="return chmSalle.edit({id:{{ $salle->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmSalle.edit({id:{{ $salle->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="#" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-salle" data-id="{{$salle->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -68,6 +69,12 @@
                             </tfoot>
                         </table>
                     </div> 
+                    @else
+                        <div class="alert alert-info mt20">
+                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
+                        </div>
+                    @endif
+                    
                     {{ $salles->links() }}
                 </div>
                 <!-- end content-->

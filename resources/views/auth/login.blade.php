@@ -16,7 +16,7 @@
                                             <button type="button" class="close" data-dismiss="alert">
                                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                                             </button>
-                                            <span><strong>Error !</strong> {{ $error }}</span>
+                                            <span><strong>Erreur !</strong> {{ $error }}</span>
                                         </div>
                                     @endforeach
                                 @endif
@@ -42,8 +42,9 @@
 
                                         <div class="form-group">
                                             <div class="col-md-6 col-md-offset-4">
-                                                <label class="checkbox">
+                                                <label class="checkbox-wrap">
                                                     <input type="checkbox" name="remember" data-toggle="checkbox"> Se souvenir de moi
+                                                    <span class="checkmark"></span>
                                                 </label>
                                             </div>
                                         </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Gestion')
 @section('content')
 <div class="container-fluid">
     <div class="row">

@@ -1,4 +1,4 @@
-<div class="">
+<div class="content">
     @if(count($questions)>0)
         @foreach($questions as $key => $question)
             <div class="form-group">

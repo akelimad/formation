@@ -27,9 +27,9 @@
             <div class="form-group label-floating">
                 <label class="control-label">Photo</label>
                 @if($s->photo)
-                    <img src="{{url('sallePhotos/'.$s->photo)}}" alt="" class="img-responsive">
+                    <img src="{{asset('sallePhotos/'.$s->photo)}}" alt="" class="img-responsive">
                 @else
-                    <img src="{{url('assets/img/missing-photo.png')}}" alt="" class="img-responsive">
+                    <img src="{{asset('assets/img/missing-photo.png')}}" alt="" class="img-responsive">
                 @endif
             </div>
         </div>

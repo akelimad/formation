@@ -1,6 +1,6 @@
 
 @extends('layouts.app')
-
+@section('pageTitle', 'Rapports')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -35,6 +35,10 @@
                                     @if(isset($session_budgets) && count($session_budgets)>0)
                                         <div class="chart chart-js-container">
                                             <canvas id="pieChart" width="200" height="200"></canvas>
+                                        </div>
+                                    @elseif(isset($session_budgets) && count($session_budgets)<=0)
+                                        <div class="alert alert-info">
+                                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i>  certte session n'a pas de budgets</span>
                                         </div>
                                     @endif
                                 </div>

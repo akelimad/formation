@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Numéro<star>*</star></label>
-                <input class="form-control" name="numero" type="number" required="required" placeholder="Numero" value="{{$s->numero}}" />
+                <input class="form-control" name="numero" type="number"  placeholder="Numero" value="{{$s->numero}}" readonly=""/>
             </div>
         </div>
         <div class="col-md-6">
@@ -26,7 +26,7 @@
             <div class="form-group label-floating">
                 <label class="control-label">Photo</label>
                 <input type="file" name="photo" class="form-control" accept="image/*" />
-                <img src="{{url('sallePhotos/'.$s->photo)}}" width="60" alt="">
+                <img src="{{asset('sallePhotos/'.$s->photo)}}" width="60" alt="">
             </div>
         </div>
     </div>

@@ -366,25 +366,40 @@ class SessionController extends Controller
     }
 
     public function filterSessions(Request $request){
-        $criteres = [];
-        if ( !empty($request->start and empty($request->end)) ) {
+        if(!empty($request->start)){
             $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
-            $criteres= ['start' => $start];
-        }else if( !empty($request->end and empty($request->start)) ){
+        }
+        if(!empty($request->end)){
             $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
-            $criteres= ['end' => $end];
-        }else if( !empty($request->start and !empty($request->end)) ){
-            $start = Carbon::createFromFormat('d/m/Y H:i', $request->start)->toDateTimeString();
-            $end = Carbon::createFromFormat('d/m/Y H:i', $request->end)->toDateTimeString();
-            $criteres= ['start' => $start, 'end'=> $end]; //empty($request->start && empty($request->end))
-        }else if( !empty($request->statut) ){
-            $criteres= ['statut' => $request->statut];
+        }
+        $criteres = [];
+        $sessions = Session::paginate(10);
+        if ( !empty($start) ) {
+            $sessions = Session::where('start', '>=', $start)->paginate(10);
+        } 
+        if( !empty($end) ){
+            $sessions = Session::where('end', '<=', $end)->paginate(10);
+        }
+        if( !empty($start) and !empty($end)){
+            $sessions = Session::whereBetween('start', [$start, $end])->paginate(10);
+        }
+        if( !empty($request->statut) ){
+            $sessions = Session::where(['statut' => $request->statut])->paginate(10);
+        }
+        if ( !empty($start) and !empty($request->statut) ) {
+            $sessions = Session::where('start', '>=', $start)->where(['statut' => $request->statut])->paginate(10);
+        }
+        if ( !empty($end) and !empty($request->statut) ) {
+            $sessions = Session::where('start', '<=', $end)->where(['statut' => $request->statut])->paginate(10);
+        }
+        if( !empty($start) and !empty($end) and !empty($request->statut) ){
+            $sessions = Session::where(['statut' => $request->statut])->whereBetween('start', [$start, $end])->paginate(10);
         }
         
         $selected= $request->statut;
         $selected_start = $request->start;
         $selected_end = $request->end;
-        $sessions = Session::where($criteres)->paginate(10);
+        //$sessions = Session::where($criteres)->paginate(10);
         //dd($sessions);
         return view('sessions.index', compact('selected','sessions','selected_start', 'selected_end'));
     }
