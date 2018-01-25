@@ -49,6 +49,8 @@ class SessionController extends Controller
                 'cour'           => 'required',
                 'formateur'      => 'required',
                 'lieu'           => 'required',
+                'start'          => 'required | date_format:"d/m/Y H:i"',
+                'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
                 'methode'        => 'required',
                 'statut'         => 'required',
                 'salle'          => 'required',
@@ -133,6 +135,8 @@ class SessionController extends Controller
                 'nom'            => 'required|unique:sessions',
                 'cour'           => 'required',
                 'formateur'      => 'required',
+                'start'          => 'required | date_format:"d/m/Y H:i"',
+                'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
                 'lieu'           => 'required',
                 'methode'        => 'required',
                 'statut'         => 'required',
@@ -160,9 +164,9 @@ class SessionController extends Controller
             if($request->statut == "Terminé" && $request->end > $now) {
                 $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
             }
-            if($start > $end ) {
-                $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
-            }
+            // if($start > $end ) {
+            //     $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
+            // }
 
             //dd($formateur_occupe);
 

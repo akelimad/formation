@@ -39,13 +39,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="label-control">Date de début <star>*</star> </label>
-                <input type="text" name="start" data-date-format="DD/MM/YYYY HH:mm" class="form-control datepicker" required="required" value="{{ Carbon\Carbon::parse($s->start)->format('d/m/Y H:i') }}" />
+                <input type="text" name="start" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required" value="{{ Carbon\Carbon::parse($s->start)->format('d/m/Y H:i') }}" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="label-control">Date de fin <star>*</star> </label>
-                <input type="text" name="end" data-date-format="DD/MM/YYYY HH:mm" class="form-control datepicker" required="required" value="{{ Carbon\Carbon::parse($s->end)->format('d/m/Y H:i') }}" />
+                <input type="text" name="end" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required" value="{{ Carbon\Carbon::parse($s->end)->format('d/m/Y H:i') }}" />
             </div>
         </div>
     </div>

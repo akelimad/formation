@@ -21,7 +21,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> consulter</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Consulter</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -62,6 +62,9 @@
             var m = today.getMonth();
             var d = today.getDate();
             $calendar.fullCalendar({
+                buttonText: {
+                    today: "Aujourd'hui"
+                },
                 height: 500,
                 locale: 'fr',
                 viewRender: function(view, element) {
@@ -73,7 +76,7 @@
                 header: {
                     left: 'title',
                     center: '',
-                    right: 'prev,next,today'
+                    right: "prev,next,today"
                 },
                 defaultDate: today,
                 selectLongPressDelay: 10,

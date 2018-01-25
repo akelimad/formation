@@ -13,7 +13,7 @@
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Cours<star>*</star> </label>
-                        <select class="form-control" name="cour" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="required">
+                        <select class="select2 form-control" name="cour"  required="required">
                             @foreach ($cours as $cour)
                                 <option value="{{ $cour->id }}" {{$cour->id == old('cour') ? 'selected': ''}} > {{ $cour->titre }} </option>
                             @endforeach
@@ -23,7 +23,7 @@
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Formateur<star>*</star> </label>
-                        <select class="form-control" name="formateur" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="">
+                        <select class="form-control" name="formateur"  required="">
                             @foreach ($formateurs as $formateur)
                                 <option value="{{ $formateur->id }}" {{$formateur->id == old('formateur') ? 'selected': ''}} > {{ $formateur->nom }} </option>
                             @endforeach
@@ -37,13 +37,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label class="label-control">Date de début <star>*</star></label>
-                <input type="text" name="start" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required" value="{{ old('start') }}"/>
+                <input type="text" name="start" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required"/>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label class="label-control">Date de fin <star>*</star> </label>
-                <input type="text" name="end" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required" value="{{ old('end') }}"/>
+                <input type="text" name="end" data-date-format="DD/MM/YYYY HH:mm" class="form-control datetimepicker" required="required" />
             </div>
         </div>
     </div>
@@ -59,23 +59,23 @@
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Methode <star>*</star></label>
-                        <select class="form-control" name="methode" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="required">
+                        <select class="selectpicker  form-control" name="methode" required="required">
                             <option disabled selected>-- select --</option>
-                            <option value="Salle de classe" {{old('methode') == 'Salle de classe' ? 'selected':''}} >Salle de classe</option>
-                            <option value="Autoformation" {{old('methode') == 'Autoformation' ? 'selected':''}} >Autoformation</option>
-                            <option value="WebEx" {{old('methode') == 'WebEx' ? 'selected':''}} >WebEx</option>
+                            <option value="Salle de classe" selected="">Salle de classe</option>
+                            <option value="Autoformation">Autoformation</option>
+                            <option value="WebEx">WebEx</option>
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Statut <star>*</star></label>
-                        <select class="form-control" name="statut" data-style="btn btn-primary btn-round" title="Select" data-size="7" required="required">
+                        <select class="form-control" name="statut"  required="required">
                             <option disabled selected>-- select --</option>
-                            <option value="Aprobation en attente" {{old('statut') == 'Aprobation en attente' ? 'selected':''}}>Aprobation en attente</option>
-                            <option value="Programmé" {{old('statut') == 'Programmé' ? 'selected':''}}>Programmé</option>
-                            <option value="Terminé" {{old('statut') == 'Terminé' ? 'selected':''}}>Terminé</option>
-                            <option value="Annulé" {{old('statut') == 'Annulé' ? 'selected':''}}>Annulé</option>
+                            <option value="Aprobation en attente" >Aprobation en attente</option>
+                            <option value="Programmé" selected="">Programmé</option>
+                            <option value="Terminé" >Terminé</option>
+                            <option value="Annulé" >Annulé</option>
                         </select>
                     </div>
                 </div>
@@ -123,6 +123,10 @@
             width: "100%",
             'placeholder':'Selectionnez',
         });
+        // $('.select2').select2({
+        //     width: "100%",
+        //     'placeholder':'Selectionnez',
+        // });
         demo.initFormExtendedDatetimepickers();
     })
 </script>

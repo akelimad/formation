@@ -1,4 +1,22 @@
 /*custom style css*/
+.spinner-wp{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: #171513db;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 9999999;
+    margin: 0;
+    color: #2a9ed8;
+}
+.spinner-wp i{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
 .modal-content h4{
     font-weight: normal;
 }
@@ -240,7 +258,7 @@ label.star:before {
     color: #e85a1b;
 }
 
-.chart-js-container{
+.home .chart-js-container, .standard .chart-js-container{
     max-width: 100% !important;
     padding-left: 0px;
     min-height: 300px;
@@ -291,7 +309,7 @@ select.session {
 }
 .modal-header {
     border: 0 none;
-    background: #2579ea;
+    background: #eb5e28;
     color: white;
     padding: 8px;
 }

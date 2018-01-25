@@ -10,7 +10,7 @@
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
-                    if(count($formateurs)>0)
+                    @if(count($formateurs)>0)
                     <div class="material-datatables">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>

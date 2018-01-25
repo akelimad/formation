@@ -22,7 +22,7 @@ class EvaluationController extends Controller
         $evaluations = \DB::table('evaluations')
             ->join('sessions', 'sessions.id', '=', 'evaluations.session_id')
             ->leftJoin('questions', 'questions.evaluation_id', '=', 'evaluations.id')
-            ->select(array('evaluations.*', 'sessions.nom as session',\DB::raw("count(questions.id) as 'questions'")))
+            ->select(array('evaluations.*', 'sessions.nom as session',\DB::raw("count(questions.id) as 'questionsCount'")))
             ->groupBy('evaluations.id')
             ->orderBy('evaluations.id', 'DESC')
             ->paginate(10);
@@ -53,7 +53,7 @@ class EvaluationController extends Controller
             $evaluation->save();
         } else {
             $validator = Validator::make($request->all(), [
-                'nom'            => 'required|unique:evaluations',
+                'nom'            => 'required',
                 'type'           => 'required',
                 'session'        => 'required',
             ]);
@@ -226,8 +226,9 @@ class EvaluationController extends Controller
                     $evaluation->save();
                     return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }
-                if($evaluation->type == "a-froid" and $diff->m >=3){ // 3mois
-                    foreach($part_presents as $p){
+                if($evaluation->type == "a-froid" and $diff->m <=3){ // 3mois
+                    foreach($part_presents as $part){
+                        $p = Participant::find($part->participant_id);
                         $sent = Mail::send('emails.send-to-participants', 
                             [
                                 'session' => $session->nom, 

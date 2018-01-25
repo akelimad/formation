@@ -298,7 +298,8 @@ var demo = {
                 clear: 'fa fa-trash',
                 close: 'fa fa-remove',
                 inline: true
-            }
+            },
+            //minDate: new Date(),
          });
 
          $('.datepicker').datetimepicker({

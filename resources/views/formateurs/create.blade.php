@@ -30,7 +30,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Tel <star>*</star></label>
-                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" value="{{old('tel')}}"/>
+                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="(06)[0-9]{8}" />
             </div>
         </div>
     </div>

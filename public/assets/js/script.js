@@ -1,5 +1,8 @@
-
+$(window).on('load', function() {
+    $('.spinner-wp').fadeOut()
+});
 $(function() {
+
 
     var baseUrl =  $("base").attr("href")
 

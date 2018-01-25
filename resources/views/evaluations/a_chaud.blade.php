@@ -62,7 +62,7 @@
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-8">
                             <div class="card">
                                 <div class="header">
                                     <h4 class="title">les reponses par chaque questions</h4>

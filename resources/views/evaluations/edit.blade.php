@@ -1,11 +1,11 @@
 <input type="hidden" name="id" value="{{ (isset($e->id)) ? $e->id : null }}">
 {{ csrf_field() }}
-<div class="content">
+<div class="">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group label-floating">
                 <label class="control-label">Nom <star>*</star></label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" required="required"  readonly=""/>
+                <input class="form-control" name="nom" type="text" required="true" placeholder="Titre" value="{{$e->nom}}" required="required" />
             </div>
         </div>
     </div>

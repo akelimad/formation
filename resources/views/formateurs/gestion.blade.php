@@ -21,7 +21,7 @@
                                     </select>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> consulter</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Consulter</button>
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -74,8 +74,8 @@
                                 </tfoot>
                             </table>
                         </div>
-                    @else
-                        <div class="alert alert-danger alert-dismissable" role="alert">
+                    @elseif(isset($sessions_formateur) && count($sessions_formateur)<= 0)
+                        <div class="alert alert-info alert-dismissable" role="alert">
                             <button type="button" class="close" data-dismiss="alert">
                                 <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
                             </button>

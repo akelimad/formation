@@ -32,6 +32,9 @@
     <link href="{{ App\Asset::path('app.css') }}" rel="stylesheet">
 </head>
 <body id="app-layout">
+    <div class="spinner-wp">
+        <i class="fa fa-gear fa-spin fa-5x" aria-hidden="true"></i>
+    </div>
     <div class="wrapper">
         <div class="sidebar" data-background-color="brown" data-active-color="danger">
         <!--

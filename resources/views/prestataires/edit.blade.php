@@ -46,13 +46,13 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">N° de téléphone <star>*</star></label>
-                <input class="form-control" name="tel" type="text" placeholder="N° de téléphone"  required="required" value="{{ $p->tel }}" minlength="10" maxlength="10"/>
+                <input class="form-control" name="tel" type="text" placeholder="N° de téléphone"  required="required" value="{{ $p->tel }}" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">N° de Fax <star>*</star></label>
-                <input class="form-control" name="fax" type="text" placeholder="N° de Fax"  required="required" value="{{ $p->fax }}" minlength="10" maxlength="10"/>
+                <input class="form-control" name="fax" type="text" placeholder="N° de Fax"  required="required" value="{{ $p->fax }}" />
             </div>
         </div>
     </div>

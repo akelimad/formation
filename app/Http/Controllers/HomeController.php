@@ -71,23 +71,14 @@ class HomeController extends Controller
         ->groupBy(function($date) {
             return $this->getMonthFR(Carbon::parse($date->start)->format('F')); // grouping by months
         });
-        //dd($sessionsPerMonthResult);;
         $sessionCount = [];
         $sessionsPerMonth = [];
-
         foreach ($sessionsPerMonthResult as $key => $value) {
             $sessionCount[$key] = count($value);
         }
-
         for ($m=1; $m<=12; $m++) {
-            //$months[] = date('F', mktime(0,0,0,$m, 1, date('Y')));
             $months[]=$this->getMonthFR(date('F', mktime(0,0,0,$m, 1, date('Y'))));
         }
-        //dd($months);
-
-        
-        //dd($months);
-
         foreach($months as $month){
             if(!empty($sessionCount[$month])){
                 $sessionsPerMonth[$month] = $sessionCount[$month];    
@@ -95,7 +86,6 @@ class HomeController extends Controller
                 $sessionsPerMonth[$month] = 0;    
             }
         }
-        //dd($sessionsPerMonth);
         
         return view('welcome', [
             'participants'=> $participants,

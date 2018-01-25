@@ -106,9 +106,9 @@
 
                                         <a href="@if($evaluation->envoye_le){{ url('evaluations/'.$evaluation->id.'/remembreMail') }}@else javascript:void(0) @endif" class="btn btn-fill btn-warning btn-icon sendMail" title="{{$evaluation->envoye_le ? 'Rappeler les participants qui n\'ont pas repondu':'Le questionnaire pas encore envoyé' }}" data-toggle="tooltip" {{$evaluation->envoye_le ? '':'disabled'}}><i class="fa fa-bell-o"></i></a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" title="voir le questionnaire" onclick="return chmQuestion.show({id:{{ $evaluation->id }}})"> <i class="fa fa-eye"></i> </a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" title="voir le questionnaire, si l'icon est desactivée c'est parce qu'il n'est pas encore ajouté" onclick="@if($evaluation->questionsCount >0) return chmQuestion.show({id:{{ $evaluation->id }}}) @endif" {{$evaluation->questionsCount <=0 ? 'disabled':''}}> <i class="fa fa-eye"></i> </a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if(count($evaluation->questions)>0) return chmQuestion.edit({id: {{ $evaluation->id }} }) @else return chmQuestion.create({eid: {{ $evaluation->id }} }) @endif"> <i class="fa fa-question-circle-o"></i> </a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if($evaluation->questionsCount >0) return chmQuestion.edit({id: {{ $evaluation->id }} }) @else return chmQuestion.create({eid: {{ $evaluation->id }} }) @endif" title="Ajouter ou modifier le questionnaire"> <i class="fa fa-question-circle-o"></i> </a>
 
                                         <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" title="Editer l'evaluation" onclick="return chmEvaluation.edit({id:{{ $evaluation->id }}})"><i class="ti-pencil-alt"></i></a>
 
