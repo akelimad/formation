@@ -11,7 +11,7 @@
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
                     <div class="material-datatables">
-                        <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
+                        <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>
                                     <th>Nom</th>
@@ -27,8 +27,9 @@
                                     <td> {{ $role->display_name ? $role->display_name : '---' }} </td>
                                     <td> {{ $role->description ? $role->description : '---' }} </td>
                                     <td class="text-right">
+                                        {{ csrf_field() }}
                                         <a href="javascript:void(0)" data-toggle="modal" data-target="#editRole_modal" class="btn btn-fill btn-warning btn-icon editRole" data-id="{{$role->id}}"><i class="ti-pencil-alt"></i></a>
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon remove"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-role" data-id="{{$role->id}}"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

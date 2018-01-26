@@ -28,7 +28,8 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
     Route::post('utilisateurs/roles', 'UserController@storeRole');
     Route::get('utilisateurs/roles/{id}/edit', 'UserController@editRole');
     Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
-    Route::get('utilisateurs/permissions', 'UserController@permissions');
+    Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
+    Route::delete('utilisateurs/roles/{id}/delete', 'UserController@deleteRole');
     Route::get('utilisateurs/permissions/create', 'UserController@createPermission');
     Route::post('utilisateurs/permissions', 'UserController@storePermission');
     Route::get('utilisateurs/permissions/{id}/edit', 'UserController@editPermission');

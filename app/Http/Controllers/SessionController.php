@@ -7,14 +7,15 @@ use Illuminate\Http\Request;
 use App\Http\Requests\SessionRequest;
 use App\Session;
 use App\Reponse;
-use App\Participant_sessions;
+use App\User_sessions;
 use App\Formateur;
 use App\Salle;
 use App\Participant;
+use App\User;
 use App\Cour; 
 use App\Http\Requests;
 use Carbon\Carbon; 
-
+use Mail;
 
 class SessionController extends Controller
 {
@@ -28,7 +29,9 @@ class SessionController extends Controller
         $cours = Cour::all();
         $formateurs = Formateur::all();
         $salles = Salle::all();
-        $participants = Participant::all();
+        $participants = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'user');
+        })->get();
         echo view('sessions.create', [
             'cours'=> $cours,
             'formateurs'=> $formateurs,
@@ -61,14 +64,14 @@ class SessionController extends Controller
             if($request->statut == "Terminé" && $end > $now){
                 $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
             }
-            if($start > $end ) {
-                $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
-            }
+            // if($start > $end ) {
+            //     $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
+            // }
 
             $prevus = [];
             $presents = [];
-            $p_prevus = Participant_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
-            $p_presents = Participant_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
+            $p_prevus = User_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
+            $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
             foreach ($p_prevus as $p) {
                 $prevus[] = $p->participant_id;
             }
@@ -103,7 +106,7 @@ class SessionController extends Controller
                 if($participants){
                     foreach ($participants as $par) {
                         if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
-                            $sess_participants= new Participant_sessions();
+                            $sess_participants= new User_sessions();
                             $sess_participants->session_id = $session_id;
                             $sess_participants->participant_id = $par;
                             $sess_participants->prevu = 0;
@@ -144,31 +147,53 @@ class SessionController extends Controller
                 'participants'   => 'required',
             ]);
             $messages = $validator->errors();
-            $salle_occupee = \DB::table('sessions')->select('start')
-            ->where('salle_id', '=', $request->salle)
-            ->whereBetween('start', [$start, $end])
-            ->get();
+            $salle_occupee = Session::where('salle_id', $request->salle)
+            ->where(function ($query) use ($start, $end) {
+                $query->where(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('start', '<', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '<=', $start)
+                       ->where('end', '>', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('end', '>', $start)
+                       ->where('end', '<=', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('end', '<=', $end);
+                });
+            })->count();
 
-            $formateur_occupe = \DB::table('sessions')->select('start')
-            ->where('formateur_id', '=', $request->formateur)
-            ->whereBetween('start', [$start, $end])
-            ->get();
+            $formateur_occupe = Session::where('formateur_id', $request->formateur)
+            ->where(function ($query) use ($start, $end) {
+                $query->where(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('start', '<', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '<=', $start)
+                       ->where('end', '>', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('end', '>', $start)
+                       ->where('end', '<=', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('end', '<=', $end);
+                });
+            })->count();
+
             $now = Carbon::now()->format('Y-m-d h:i');
 
-            if($salle_occupee) {
+            if($salle_occupee>0) {
                 $messages->add('salle', 'La salle est reservée pour ces horaires!');
             }
-            if($formateur_occupe) {
+            if($formateur_occupe>0) {
                 $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
             }
             if($request->statut == "Terminé" && $request->end > $now) {
                 $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
             }
-            // if($start > $end ) {
-            //     $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
-            // }
 
-            //dd($formateur_occupe);
+            
 
             if(count($messages)>0){ 
                 return ["status" => "danger", "message" => $messages];
@@ -191,14 +216,26 @@ class SessionController extends Controller
                 $participants= $request->participants;
                 if($participants){
                     foreach ($participants as $par) {
-                        $sess_participants= new Participant_sessions();
+                        $sess_participants= new User_sessions();
                         $sess_participants->session_id = $session_id;
-                        $sess_participants->participant_id = $par;
+                        $sess_participants->user_id = $par;
                         $sess_participants->prevu = 1;
                         $sess_participants->present = 1;
                         $sess_participants->save();
+                        $p = Participant::find($par);
+                        $sent = Mail::send('emails.register_session', 
+                            [
+                                'session' => $session->nom, 
+                                'participant'=>$p->nom, 
+                                'email'=>$p->email, 
+                                'password'=> bcrypt($p->email), 
+                            ]
+                            , function ($m) use($p){
+                                $m->to($p->email, $p->nom)->subject("Confirmation d'inscription");
+                        });
                     }
                 }
+
                 if($session->save()) {
                     return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
                 } else {
@@ -234,8 +271,8 @@ class SessionController extends Controller
 
         $prevus = [];
         $presents = [];
-        $p_prevus = Participant_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
-        $p_presents = Participant_sessions::where(['session_id'=> $id, 'present'=>1])->get();
+        $p_prevus = User_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
+        $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->get();
         //dd($p_presents);
         foreach ($p_prevus as $p) {
             $prevus[] = $p->participant_id;
@@ -257,87 +294,87 @@ class SessionController extends Controller
         return ['title' => 'Modifier la session', 'content' => $content];
     }
 
-    public function update(SessionRequest $request, $id){
-        $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
-        $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
-        $validator = Validator::make($request->all(), [
-            'nom'            => 'required',
-            'cour'           => 'required',
-            'formateur'      => 'required',
-            'lieu'           => 'required',
-            'methode'        => 'required',
-            'statut'         => 'required',
-            'salle'          => 'required',
-        ]);
-        $messages = $validator->errors();
+    // public function update(SessionRequest $request, $id){
+    //     $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
+    //     $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
+    //     $validator = Validator::make($request->all(), [
+    //         'nom'            => 'required',
+    //         'cour'           => 'required',
+    //         'formateur'      => 'required',
+    //         'lieu'           => 'required',
+    //         'methode'        => 'required',
+    //         'statut'         => 'required',
+    //         'salle'          => 'required',
+    //     ]);
+    //     $messages = $validator->errors();
         
-        $now = Carbon::now()->format('Y-m-d h:i');
-        if($request->statut == "Terminé" && $request->end > $now){
-            $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
-        }
+    //     $now = Carbon::now()->format('Y-m-d h:i');
+    //     if($request->statut == "Terminé" && $request->end > $now){
+    //         $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+    //     }
 
-        $prevus = [];
-        $presents = [];
-        $p_prevus = Participant_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
-        $p_presents = Participant_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
-        foreach ($p_prevus as $p) {
-            $prevus[] = $p->participant_id;
-        }
-        foreach ($p_presents as $p) {
-            $presents[] = $p->participant_id;
-        }
+    //     $prevus = [];
+    //     $presents = [];
+    //     $p_prevus = User_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
+    //     $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
+    //     foreach ($p_prevus as $p) {
+    //         $prevus[] = $p->participant_id;
+    //     }
+    //     foreach ($p_presents as $p) {
+    //         $presents[] = $p->participant_id;
+    //     }
 
-        if(count($messages)>0){
-            return redirect('sessions/'.$id.'/edit')->withErrors($messages)->withInput();
-        }else{
-            $session = Session::find($id);
-            $session->nom=$request->input('nom');
-            $session->description=$request->input('description');
-            $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
-            $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
-            $session->lieu=$request->input('lieu');
-            $session->methode=$request->input('methode');
-            $session->cour_id=$request->input('cour');
-            $session->salle_id=$request->input('salle');
-            $session->formateur_id=$request->input('formateur');
-            $session->statut=$request->input('statut');
-            $session->save();
+    //     if(count($messages)>0){
+    //         return redirect('sessions/'.$id.'/edit')->withErrors($messages)->withInput();
+    //     }else{
+    //         $session = Session::find($id);
+    //         $session->nom=$request->input('nom');
+    //         $session->description=$request->input('description');
+    //         $session->start=Carbon::createFromFormat('d/m/Y H:i', $request->start);
+    //         $session->end=Carbon::createFromFormat('d/m/Y H:i', $request->end);
+    //         $session->lieu=$request->input('lieu');
+    //         $session->methode=$request->input('methode');
+    //         $session->cour_id=$request->input('cour');
+    //         $session->salle_id=$request->input('salle');
+    //         $session->formateur_id=$request->input('formateur');
+    //         $session->statut=$request->input('statut');
+    //         $session->save();
 
-            $session_id = $session->id;
-            $participants=array();
-            $participants= $request->participants;
-            $sess_par= $session->participants;
-            foreach ($sess_par as $s_p) {
-                $sp_ids[] = $s_p->id;
-            }
-            //dd($sp_ids);
-            if($participants){
-                foreach ($participants as $par) {
-                    if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
-                        $sess_participants= new Participant_sessions();
-                        $sess_participants->session_id = $session_id;
-                        $sess_participants->participant_id = $par;
-                        $sess_participants->prevu = 0;
-                        $sess_participants->present = 1;
-                        $sess_participants->save();  
-                    }else{
-                        \DB::table('participant_session')
-                        ->where(['session_id' => $session_id,'participant_id' =>$par])
-                        ->update(['present'=>1]);
-                    }
-                }
-            }
-            if(!empty($presents) && !empty($request->participants)){
-                $nouveau_presents=array_diff($presents, $request->participants); 
-                foreach ($nouveau_presents as $nv) {
-                    \DB::table('participant_session')
-                    ->where(['session_id' => $session_id,'participant_id' =>$nv])
-                    ->update(['present'=>0]);
-                }
-            }
-            return redirect('sessions');
-        }
-    }
+    //         $session_id = $session->id;
+    //         $participants=array();
+    //         $participants= $request->participants;
+    //         $sess_par= $session->participants;
+    //         foreach ($sess_par as $s_p) {
+    //             $sp_ids[] = $s_p->id;
+    //         }
+    //         //dd($sp_ids);
+    //         if($participants){
+    //             foreach ($participants as $par) {
+    //                 if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
+    //                     $sess_participants= new User_sessions();
+    //                     $sess_participants->session_id = $session_id;
+    //                     $sess_participants->participant_id = $par;
+    //                     $sess_participants->prevu = 0;
+    //                     $sess_participants->present = 1;
+    //                     $sess_participants->save();  
+    //                 }else{
+    //                     \DB::table('participant_session')
+    //                     ->where(['session_id' => $session_id,'participant_id' =>$par])
+    //                     ->update(['present'=>1]);
+    //                 }
+    //             }
+    //         }
+    //         if(!empty($presents) && !empty($request->participants)){
+    //             $nouveau_presents=array_diff($presents, $request->participants); 
+    //             foreach ($nouveau_presents as $nv) {
+    //                 \DB::table('participant_session')
+    //                 ->where(['session_id' => $session_id,'participant_id' =>$nv])
+    //                 ->update(['present'=>0]);
+    //             }
+    //         }
+    //         return redirect('sessions');
+    //     }
+    // }
 
     public function destroy($id){
         $session = Session::find($id);
@@ -358,7 +395,7 @@ class SessionController extends Controller
                 $evaluation->delete();
             }  
         }
-        //$parts_sess = Participant_sessions::where(['session_id'=> $session->id])->get();
+        //$parts_sess = User_sessions::where(['session_id'=> $session->id])->get();
         // if($session->participants){
         //     foreach($session->participants as $part_sess){
         //         $part_sess->detach();

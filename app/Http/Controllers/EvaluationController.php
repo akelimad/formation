@@ -210,7 +210,7 @@ class EvaluationController extends Controller
                 if($evaluation->type == "a-chaud"){
                     foreach($part_presents as $part){
                         $p = Participant::find($part->participant_id);
-                        $sent = Mail::send('emails.send-to-participants', 
+                        $sent = Mail::send('emails.send_survey', 
                             [
                                 'session' => $session->nom, 
                                 'participant'=>$p->nom, 
@@ -229,7 +229,7 @@ class EvaluationController extends Controller
                 if($evaluation->type == "a-froid" and $diff->m <=3){ // 3mois
                     foreach($part_presents as $part){
                         $p = Participant::find($part->participant_id);
-                        $sent = Mail::send('emails.send-to-participants', 
+                        $sent = Mail::send('emails.send_survey', 
                             [
                                 'session' => $session->nom, 
                                 'participant'=>$p->nom, 
@@ -288,7 +288,7 @@ class EvaluationController extends Controller
         $participants_nn_repondus =array_diff($p_session, $p_repondus);
         foreach ($participants_nn_repondus as $participant) {
             $p = Participant::find($participant);
-            $sent = Mail::send('emails.send-to-participants', 
+            $sent = Mail::send('emails.send_survey', 
                 [
                     'session' => $session->nom, 
                     'participant'=>$p->nom, 

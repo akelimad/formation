@@ -48,7 +48,7 @@
                     <div class="row">
                         <div class="col-xs-4">
                             <div class="icon-big icon-success text-center">
-                                DHS
+                                DH
                             </div>
                         </div>
                         <div class="col-xs-8">
@@ -162,10 +162,10 @@
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Le nombre se sessions'
+                                labelString: 'Le nombre de sessions'
                             },
                             ticks:{
-                                stepSize : 1,
+                                //stepSize : 10,
                             }
                         }]
                     }

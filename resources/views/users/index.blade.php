@@ -38,9 +38,9 @@
                                     </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="javascript:void(0)" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon" data-toggle="tooltip" title="Modifier"><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

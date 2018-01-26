@@ -27,8 +27,8 @@
                                     <td> {{ $participant->email }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="javascript:void(0)" onclick="return chmParticipant.edit({id:{{ $participant->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-participant" data-id="{{$participant->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" data-toggle="tooltip" title="Modifier" onclick="return chmParticipant.edit({id:{{ $participant->id }}})" class="btn btn-fill btn-warning btn-icon"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-participant" data-id="{{$participant->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

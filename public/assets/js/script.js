@@ -442,10 +442,49 @@ $(function() {
         }); 
     });
 
+    //delete role 
+    $(".table").on('click', '.delete-role',function () {
+        var id= $(this).data('id');
+        var token = $('input[name="_token"]').val();
+        var url = baseUrl+'/utilisateurs/roles/'+id+'/delete';
+        var $tr = $(this).closest('tr');
+        swal({
+            title: 'Etes-vous sûr ?',
+            text: "Vous ne serez pas en mesure de rétablir ceci!",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Oui, supprimer !',
+            cancelButtonText: 'Annuler',
+            showLoaderOnConfirm: true,
+            preConfirm: function() {
+            return new Promise(function(resolve) {
+                $.ajax({
+                    type: 'POST',
+                    url:  url,
+                    data: {
+                        "id": id,
+                        "_method": 'DELETE',
+                        "_token": token,
+                    },
+                }).done(function(response){
+                    swal('Supprimé!', "Le rôle a été supprimés ave succès.", 'success');
+                    $tr.find('td').fadeOut(1000,function(){ $tr.remove(); });
+                    location.reload(); 
+                }).fail(function(){
+                    swal('Oops...', "Il ya quelque chose qui ne va pas ! il se peut que ce participant a une session en cours", 'error');
+                });
+            });
+            },
+            allowOutsideClick: false     
+        }); 
+    });
+
     ///********************************************************************************************
     //role add form
     $("#addRole_modal" ).on('shown.bs.modal', function(event){
-        $.get('roles/create' , function( data ) {
+        $.get('utilisateurs/roles/create' , function( data ) {
             $("#addRole_modal .modal-body").html(data);
             validate();
             //$("input:checkbox[name='permissions']").bootstrapSwitch();
@@ -454,7 +493,7 @@ $(function() {
     //show edit form role in modal
     $(".editRole").on("click", function(e) {
         var id= $(this).data('id')
-        var route = 'roles/'+ id + '/edit'
+        var route = 'utilisateurs/roles/'+ id + '/edit'
         $.get(route , function( data ) {
             $("#editRole_modal .modal-body").html(data);
             validate();
@@ -463,7 +502,7 @@ $(function() {
     ///********************************************************************************************
     //permissions add form
     $("#addPermission_modal" ).on('shown.bs.modal', function(event){
-        $.get('permissions/create' , function( data ) {
+        $.get('utilisateurs/permissions/create' , function( data ) {
             $("#addPermission_modal .modal-body").html(data);
             validate();
         });
@@ -471,7 +510,7 @@ $(function() {
     //show edit form Permissions in modal
     $(".editPermission").on("click", function(e) {
         var id= $(this).data('id')
-        var route = 'permissions/'+ id + '/edit'
+        var route = 'utilisateurs/permissions/'+ id + '/edit'
         $.get(route , function( data ) {
             $("#editPermission_modal .modal-body").html(data);
             validate();

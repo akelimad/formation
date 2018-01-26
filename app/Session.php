@@ -25,7 +25,7 @@ class Session extends Model
      */
     public function participants()
     {
-        return $this->belongsToMany('App\Participant');
+        return $this->belongsToMany('App\User');
     }
 
     public function evaluations(){

@@ -94,11 +94,11 @@
                                     <td> {{ $session->statut }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="javascript:void(0)" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails"><i class="fa fa-eye"></i></a>
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if(count($session->budgets)>0) return chmBudget.edit({id: {{ $session->id }} }) @else return chmBudget.create({sid: {{ $session->id }} }) @endif" title="Ajouter ou modifier le budget"><i class="fa fa-usd"></i></a>
-                                        <a href="javascript:void(0)" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" title="Modifier" ><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if(count($session->budgets)>0) return chmBudget.edit({id: {{ $session->id }} }) @else return chmBudget.create({sid: {{ $session->id }} }) @endif" data-toggle="tooltip" title="Ajouter ou modifier le budget"><i class="fa fa-usd"></i></a>
+                                        <a href="javascript:void(0)" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" data-toggle="tooltip" title="Modifier" ><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" title="Supprimer"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

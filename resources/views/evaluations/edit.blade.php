@@ -1,6 +1,6 @@
 <input type="hidden" name="id" value="{{ (isset($e->id)) ? $e->id : null }}">
 {{ csrf_field() }}
-<div class="">
+<div class="content">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group label-floating">

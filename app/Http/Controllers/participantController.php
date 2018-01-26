@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Participant;
+use App\Role;
+use App\User;
 use App\Http\Requests;
 
 class ParticipantController extends Controller
 {
+    public function rand_string( $length ) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return substr(str_shuffle($chars),0,$length);
+    }
+
     public function index(){
         $participants = Participant::orderBy('id', 'desc')->paginate(10);
         return view('participants.index', ['participants'=>$participants]);
@@ -28,22 +35,24 @@ class ParticipantController extends Controller
                 'email'          => 'required',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $participant = Participant::find($id);
+            $participant = User::find($id);
         } else {
             $rules = [
                 'nom'            => 'required',
-                'email'          => 'required|unique:participants',
+                'email'          => 'required|unique:users',
             ];
             $validator = \Validator::make($request->all(), $rules);
-            $participant = new Participant();
+            $participant = new User();
         }
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }
         
-        $participant->nom=$request->input('nom');
+        $participant->name=$request->input('nom');
         $participant->email=$request->input('email');
+        $participant->password= bcrypt($this->rand_string(8));
         $participant->save();
+        $participant->attachRole(2);
         if($participant->save()) {
             return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
         } else {

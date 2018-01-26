@@ -13,7 +13,7 @@
                         </div>
                         
                         <div class="col-md-4">
-                            <a href="javascript:void(0)" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter"" onclick="return chmBudget.create()"> <i class="fa fa-plus"></i>  </a>
+                            
                         </div>
                     </div>
                     
@@ -43,11 +43,11 @@
                                         <td>  </td>
                                         <td class="text-right">
                                             {{ csrf_field() }}
-                                            <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmBudget.show({id:{{ $session->id }}})"><i class="fa fa-eye"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmBudget.show({id:{{ $session->id }}})" data-toggle="tooltip" title="Voir"><i class="fa fa-eye"></i></a>
 
-                                            <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" title="Editer les budgets"  onclick="return chmBudget.edit({id:{{ $session->id }}})"><i class="ti-pencil-alt"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" title="Modifier"  onclick="return chmBudget.edit({id:{{ $session->id }}})" data-toggle="tooltip"><i class="ti-pencil-alt"></i></a>
 
-                                            <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-budget" data-id="{{$session->id}}"><i class="ti-close"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-budget" data-toggle="tooltip" title="Supprimer" data-id="{{$session->id}}"><i class="ti-close"></i></a>
                                         </td>
                                         @foreach($session->budgets as $budget)
                                         <tr class="no-border-bottom">
@@ -65,7 +65,7 @@
                             </tbody>
                             <tfoot>
                                 <tr>
-                                    <th></th>
+                                    <th>Session</th>
                                     <th>Budget</th>
                                     <th>Prevu</th>
                                     <th>Realisé</th>

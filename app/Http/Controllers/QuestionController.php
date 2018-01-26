@@ -141,7 +141,7 @@ class QuestionController extends Controller
         $t->status = 1;
         $t->save();
 
-        $sent = Mail::send('emails.confirm_participant', 
+        $sent = Mail::send('emails.success_survey', 
             [
                 'participant'=>$participant_nom, 
                 'eval_type'=>$eval_type 

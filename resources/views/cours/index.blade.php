@@ -42,11 +42,11 @@
                                     <td> {{ $cour->prix }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmCours.show({id:{{ $cour->id }}})"><i class="fa fa-eye"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmCours.show({id:{{ $cour->id }}})" data-toggle="tooltip" title="Voir"><i class="fa fa-eye"></i></a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" onclick="return chmCours.edit({id:{{ $cour->id }}})"><i class="ti-pencil-alt"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" onclick="return chmCours.edit({id:{{ $cour->id }}})" data-toggle="tooltip" title="Editer"><i class="ti-pencil-alt"></i></a>
 
-                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-cours" data-id="{{$cour->id}}"><i class="ti-close"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-cours" data-id="{{$cour->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
                                     </td>
                                 </tr>
                                 @endforeach

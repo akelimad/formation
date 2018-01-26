@@ -159,6 +159,11 @@ class UserController extends Controller
         }
         return redirect('utilisateurs/roles');
     }
+    public function deleteRole(Request $request, $id){
+        $role = Role::find($id);
+        $role->delete();
+        return redirect('utilisateurs/roles');
+    }
 
     public function permissions(){
         $permissions = Permission::paginate(10);
