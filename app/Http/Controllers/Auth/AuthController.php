@@ -88,4 +88,15 @@ class AuthController extends Controller
         return $user;
     }
 
+    public function authenticated()
+    {
+        if(\Auth::check()) {
+            if(\Auth::user()->hasRole('user')) {
+                return redirect('/espace-collaborateurs');
+            } else {
+                return redirect('/');
+            }
+        }    
+    }
+
 }

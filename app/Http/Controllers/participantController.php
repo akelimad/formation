@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Participant;
 use App\Role;
+use App\Session;
 use App\User;
 use App\Http\Requests;
 
@@ -73,6 +74,16 @@ class ParticipantController extends Controller
         $participant = Participant::find($id);
         $participant->delete();
         return redirect('participants');
+    }
+
+    public function espaceCollaborateurs(){
+        $sessions = Session::all();
+        return view('participants.espaceCollaborateurs', compact('sessions'));
+    }
+
+    public function detailsSession($id){
+        $session = Session::find($id);
+        return view('participants.detailsSession');
     }
 
     

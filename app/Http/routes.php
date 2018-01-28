@@ -73,6 +73,8 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::post('participants/store', 'ParticipantController@store');
     Route::get('participants/{id}/edit', 'ParticipantController@edit');
     Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
+    Route::get('espace-collaborateurs', 'ParticipantController@espaceCollaborateurs');
+    Route::get('espace-collaborateurs/formation/{id}', 'ParticipantController@detailsSession');
 
     Route::get('budgets', 'BudgetController@index');
     Route::get('budgets/{sid}/create', 'BudgetController@create');
