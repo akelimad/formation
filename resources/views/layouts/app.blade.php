@@ -42,9 +42,21 @@
             Tip 2: you can change the color of the active button using the data-active-color="primary | info | success | warning | danger"
         -->
             <div class="logo">
+                @role('admin')
                 <a href="{{ url('/') }}" class="simple-text">
                     Espace Admin
                 </a>
+                @endrole
+                @role('user')
+                <a href="{{ url('/') }}" class="simple-text">
+                    Espace utilisateur
+                </a>
+                @endrole
+                @role('collaborateur')
+                <a href="{{ url('/espace-collaborateurs') }}" class="simple-text">
+                    Espace Collaborateur
+                </a>
+                @endrole
             </div>
             <div class="logo logo-mini">
                 <a href="javascript:void(0)" class="simple-text">
@@ -53,13 +65,15 @@
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
-
+                    @role(['admin', 'user'])
                     <li class="{{ Request::path() == '/' ? 'active' : '' }}" >
                         <a href="{{url('/')}}">
                             <i class="fa fa-tachometer"></i>
                             <p>Tableau de board</p>
                         </a>
                     </li>
+                    @endrole
+
                     @permission('prestataires')
                     <li class="{{ Request::is('prestataires*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#prestataires" class="collapsed" aria-expanded="false">
@@ -255,7 +269,7 @@
                                     </a>
 
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i>Logout</a></li>
+                                        <li><a href="{{ url('/logout') }}"><i class="fa fa-btn fa-sign-out"></i> Déconnexion</a></li>
                                     </ul>
                                 </li>
                             @endif

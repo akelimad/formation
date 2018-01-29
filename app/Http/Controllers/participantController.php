@@ -3,21 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Participant;
+use App\User;
 use App\Role;
 use App\Session;
-use App\User;
+use App\User_sessions;
+use App\Cour;
 use App\Http\Requests;
 
 class ParticipantController extends Controller
 {
-    public function rand_string( $length ) {
-        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        return substr(str_shuffle($chars),0,$length);
-    }
 
     public function index(){
-        $participants = Participant::orderBy('id', 'desc')->paginate(10);
+        $participants = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'collaborateur');
+        })->paginate(10);
         return view('participants.index', ['participants'=>$participants]);
     }
 
@@ -51,9 +50,10 @@ class ParticipantController extends Controller
         
         $participant->name=$request->input('nom');
         $participant->email=$request->input('email');
-        $participant->password= bcrypt($this->rand_string(8));
+        $participant->password= bcrypt("default");
         $participant->save();
-        $participant->attachRole(2);
+        $role = Role::where('name','=','collaborateur')->first();
+        $participant->attachRole($role->id);
         if($participant->save()) {
             return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
         } else {
@@ -77,8 +77,29 @@ class ParticipantController extends Controller
     }
 
     public function espaceCollaborateurs(){
-        $sessions = Session::all();
+        $participant_id = \Auth::user()->id;
+        $sessions = \DB::table('sessions')
+            ->join('participant_session', 'participant_session.session_id', '=', 'sessions.id')
+            ->join('cours', 'cours.id', '=', 'sessions.cour_id')
+            ->select('sessions.*','cours.*')
+            ->where('participant_session.user_id', '=', $participant_id)
+            ->paginate(10);
+        //dd($sessions);
         return view('participants.espaceCollaborateurs', compact('sessions'));
+    }
+    public function searchCours(Request $request){
+        $cours = $request->cours;
+        $participant_id = \Auth::user()->id;
+        $sessions = \DB::table('sessions')
+            ->join('participant_session', 'participant_session.session_id', '=', 'sessions.id')
+            ->join('cours', 'cours.id', '=', 'sessions.cour_id')
+            ->select('sessions.*','cours.*')
+            ->where('participant_session.user_id', '=', $participant_id)
+            ->where('cours.titre', 'like', $cours)
+            ->paginate(10);
+        //dd($sessions);
+
+        return view('participants.espaceCollaborateurs', compact('sessions', 'cours'));
     }
 
     public function detailsSession($id){

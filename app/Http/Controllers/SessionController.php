@@ -10,7 +10,7 @@ use App\Reponse;
 use App\User_sessions;
 use App\Formateur;
 use App\Salle;
-use App\Participant;
+// use App\Participant;
 use App\User;
 use App\Cour; 
 use App\Http\Requests;
@@ -19,6 +19,11 @@ use Mail;
 
 class SessionController extends Controller
 {
+    public function rand_string( $length ) {
+        $chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return substr(str_shuffle($chars),0,$length);
+    }
+
     public function index(){
         $sessions = Session::orderBy('id', 'desc')->paginate(10);
         return view('sessions.index', ['sessions'=>$sessions]);
@@ -30,7 +35,7 @@ class SessionController extends Controller
         $formateurs = Formateur::all();
         $salles = Salle::all();
         $participants = User::whereHas('roles', function ($query) {
-            $query->where('name', '=', 'user');
+            $query->where('name', '=', 'collaborateur');
         })->get();
         echo view('sessions.create', [
             'cours'=> $cours,
@@ -192,9 +197,6 @@ class SessionController extends Controller
             if($request->statut == "Terminé" && $request->end > $now) {
                 $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
             }
-
-            
-
             if(count($messages)>0){ 
                 return ["status" => "danger", "message" => $messages];
             }else{
@@ -222,13 +224,16 @@ class SessionController extends Controller
                         $sess_participants->prevu = 1;
                         $sess_participants->present = 1;
                         $sess_participants->save();
-                        $p = Participant::find($par);
+                        $p = User::find($par);
+                        $password = $this->rand_string(8);
+                        $p->password = bcrypt($password);
+                        $p->save();
                         $sent = Mail::send('emails.register_session', 
                             [
                                 'session' => $session->nom, 
-                                'participant'=>$p->nom, 
+                                'participant'=>$p->name, 
                                 'email'=>$p->email, 
-                                'password'=> bcrypt($p->email), 
+                                'password'=> $password, 
                             ]
                             , function ($m) use($p){
                                 $m->to($p->email, $p->nom)->subject("Confirmation d'inscription");

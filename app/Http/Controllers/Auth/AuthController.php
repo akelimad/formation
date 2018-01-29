@@ -91,7 +91,7 @@ class AuthController extends Controller
     public function authenticated()
     {
         if(\Auth::check()) {
-            if(\Auth::user()->hasRole('user')) {
+            if(\Auth::user()->hasRole('collaborateur')) {
                 return redirect('/espace-collaborateurs');
             } else {
                 return redirect('/');

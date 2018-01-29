@@ -40,15 +40,19 @@ class UserController extends Controller
             $user = User::find($id);
             $user->name = $request->name;
             $user->email = $request->email;
+            $rules=[
+                'name' => 'required|max:255',
+                'email' => 'unique:users,email,'.$user->id
+            ];
             if(!empty($request->password) || !empty($request->password_confirmation)){
                 $rules = [
                     'password' => 'required|min:6|confirmed',
                 ];
-                $validator = \Validator::make($request->all(), $rules);
-                if ($validator->fails()) {
-                    return ["status" => "danger", "message" => $validator->errors()->all()];
-                }
                 $user->password = bcrypt($request->password);
+            }
+            $validator = \Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                return ["status" => "danger", "message" => $validator->errors()->all()];
             }
             $user->detachRoles( $user->roles );
             $user->attachRole( $request->role );
@@ -94,21 +98,21 @@ class UserController extends Controller
         $content = ob_get_clean();
         return ['title' => 'Modifier un utilisateur', 'content' => $content];
     }
-    public function updateUser(Request $request, $id){
-        $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        if(!empty($request->password) || !empty($request->password_confirmation)){
-            $this->validate($request, [
-                'password' => 'required|min:6|confirmed',
-            ]);
-            $user->password = bcrypt($request->password);
-        }
-        $user->detachRoles( $user->roles );
-        $user->attachRole( $request->role );
-        $user->save();
-        return redirect('utilisateurs');
-    }
+    // public function updateUser(Request $request, $id){
+    //     $user = User::find($id);
+    //     $user->name = $request->name;
+    //     $user->email = $request->email;
+    //     if(!empty($request->password) || !empty($request->password_confirmation)){
+    //         $this->validate($request, [
+    //             'password' => 'required|min:6|confirmed',
+    //         ]);
+    //         $user->password = bcrypt($request->password);
+    //     }
+    //     $user->detachRoles( $user->roles );
+    //     $user->attachRole( $request->role );
+    //     $user->save();
+    //     return redirect('utilisateurs');
+    // }
 
     public function destroyUser(Request $request, $id){
         $user = User::find($id);
@@ -121,44 +125,72 @@ class UserController extends Controller
         return view('users/roles.index' , ['roles' => $roles]);
     }
     public function createRole(){
+        ob_start();
         $permissions = Permission::all();
-        return view('users/roles.create', ['permissions' => $permissions]);
+        echo view('users/roles.create', ['permissions' => $permissions]);
+        $content = ob_get_clean();
+        return ['title' => 'Ajouter un rôle', 'content' => $content];
     }
     public function storeRole(Request $request){
-        $role = new Role();
-        $role->name = $request->name;
-        $role->display_name = $request->display_name;
-        $role->description = $request->description;
-        $role->save();
-        $role->perms()->detach($request->permissions);
-        $role->attachPermissions($request->permissions);
-        return redirect('utilisateurs/roles');
+        $id = $request->input('id', false);
+        if($id){
+            $role = Role::find($id);
+            $role->name = $request->name;
+            $role->display_name = $request->display_name;
+            $role->description = $request->description;
+            $role->save();
+            $role_perms = [];
+            foreach ($role->perms()->get() as $perm) {
+                $role_perms[] = $perm->id;
+            }
+            
+            $role->perms()->detach($role_perms);
+            $role->perms()->attach($request->permissions);
+            
+        }else{
+            $role = new Role();
+            $role->name = $request->name;
+            $role->display_name = $request->display_name;
+            $role->description = $request->description;
+            $role->save();
+            // $role->perms()->detach($request->permissions);
+            $role->attachPermissions($request->permissions);
+        }
+        if($role->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
+
     }
     public function editRole($id){
+        ob_start();
         $role = Role::find($id);
         $role_perms = [];
         foreach ($role->perms()->get() as $perm) {
             $role_perms[] = $perm->id;
         }
         $permissions = Permission::all();
-        return view('users/roles.edit' , ['role' => $role, 'permissions' => $permissions,'role_perms' => $role_perms]);
+        echo view('users/roles.edit' , ['role' => $role, 'permissions' => $permissions,'role_perms' => $role_perms]);
+        $content = ob_get_clean();
+        return ['title' => 'Editer le rôle', 'content' => $content];
     }
-    public function updateRole(Request $request, $id){
-        $role = Role::find($id);
-        $role->name = $request->name;
-        $role->display_name = $request->display_name;
-        $role->description = $request->description;
-        $role->save();
-        $role_perms = [];
-        foreach ($role->perms()->get() as $perm) {
-            $role_perms[] = $perm->id;
-        }
-        if($request->permissions){
-            $role->perms()->detach($role_perms);
-            $role->perms()->attach($request->permissions);
-        }
-        return redirect('utilisateurs/roles');
-    }
+    // public function updateRole(Request $request, $id){
+    //     $role = Role::find($id);
+    //     $role->name = $request->name;
+    //     $role->display_name = $request->display_name;
+    //     $role->description = $request->description;
+    //     $role->save();
+    //     $role_perms = [];
+    //     foreach ($role->perms()->get() as $perm) {
+    //         $role_perms[] = $perm->id;
+    //     }
+    //     if($request->permissions){
+    //         $role->perms()->detach($role_perms);
+    //         $role->perms()->attach($request->permissions);
+    //     }
+    //     return redirect('utilisateurs/roles');
+    // }
     public function deleteRole(Request $request, $id){
         $role = Role::find($id);
         $role->delete();

@@ -16,7 +16,7 @@
 // });
 
 Route::auth();
-Route::group(['prefix' => '/', 'middleware' => ['auth']], function() {
+Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:admin|user']], function() {
     Route::get('/', 'HomeController@index');
 });
 
@@ -27,8 +27,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
     Route::get('utilisateurs/roles/create', 'UserController@createRole');
     Route::post('utilisateurs/roles', 'UserController@storeRole');
     Route::get('utilisateurs/roles/{id}/edit', 'UserController@editRole');
-    Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
-    Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
+    // Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
     Route::delete('utilisateurs/roles/{id}/delete', 'UserController@deleteRole');
     Route::get('utilisateurs/permissions/create', 'UserController@createPermission');
     Route::post('utilisateurs/permissions', 'UserController@storePermission');
@@ -73,8 +72,6 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::post('participants/store', 'ParticipantController@store');
     Route::get('participants/{id}/edit', 'ParticipantController@edit');
     Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
-    Route::get('espace-collaborateurs', 'ParticipantController@espaceCollaborateurs');
-    Route::get('espace-collaborateurs/formation/{id}', 'ParticipantController@detailsSession');
 
     Route::get('budgets', 'BudgetController@index');
     Route::get('budgets/{sid}/create', 'BudgetController@create');
@@ -84,6 +81,12 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     // Route::put('budgetsSession/{id}', 'BudgetController@update');
     Route::delete('budgetsSession/{id}/delete', 'BudgetController@destroy');
 
+});
+
+Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:collaborateur']], function() {
+    Route::get('espace-collaborateurs', 'ParticipantController@espaceCollaborateurs');
+    Route::get('espace-collaborateurs/search', 'ParticipantController@searchCours');
+    Route::get('espace-collaborateurs/formation/{id}', 'ParticipantController@detailsSession');
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires']], function() {

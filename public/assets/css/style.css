@@ -1,4 +1,50 @@
 /*custom style css*/
+.search-cours{
+    width: 25%;
+    -webkit-transition: all 1s ease-in-out;
+   -moz-transition: all 1s ease-in-out;
+   -ms-transition: all 1s ease-in-out;
+   transition: all 1s ease-in-out;
+}
+.search-cours:focus{
+    width: 100%;
+    border: 1px solid #55a5b9
+}
+.panel{
+    background: none;
+}
+.panel .panel-heading{
+    font-size: 18px;
+}
+.comment{
+    padding: 10px;
+    background: #ececec;
+    position: relative;
+}
+.comment:before{
+    position: absolute;
+    content: "";
+    border-bottom: 18px solid transparent;
+    border-left: 18px solid transparent;
+    border-right: 18px solid #ececec;
+    border-top: 18px solid transparent;
+    display: inline-block;
+    left: -35px;
+    top: 15px;
+}
+.nav-tabs {
+    border-bottom: 1px solid #ddd;
+}
+.nav-tabs > li.active :before{
+    border-bottom: none;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+    color: #555;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-bottom-color: transparent;
+    cursor: default;
+}
 .spinner-wp{
     position: absolute;
     height: 100%;
@@ -155,7 +201,7 @@ label.star:before {
 
 /* When the checkbox is checked, add a blue background */
 .checkbox-wrap input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color: #eb5e28;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
