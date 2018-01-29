@@ -58,6 +58,15 @@ class CourController extends Controller
         $cour->devise=$request->input('devise');
         $cour->prix=$request->input('prix');
         $cour->duree=$request->input('duree');
+        if($file = $request->hasFile('photo')) {
+            $file = $request->file('photo') ;
+            
+            $fileName = time()."_".$file->getClientOriginalName();
+            $destinationPath = public_path('/coursPhotos') ;
+
+            $file->move($destinationPath,$fileName);
+            $cour->photo = $fileName ;
+        }
         $cour->user_id=$request->input('coordinateur');
         $cour->save();
         if($cour->save()) {

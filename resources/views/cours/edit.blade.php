@@ -47,6 +47,15 @@
         </div>
     </div>
     <div class="row">
+        <div class="col-md-6">
+            <div class="form-group label-floating">
+                <label class="control-label">Photo</label>
+                <input type="file" name="photo" class="form-control" accept="image/*" />
+                <img src="{{asset('coursPhotos/'.$c->photo)}}" width="60" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-12">
             <div class="form-group label-floating">
                 <label class="control-label">Description</label>
