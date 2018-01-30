@@ -6,7 +6,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Nom complet <star>*</star> </label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$p->nom}}" readonly=""/>
+                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$p->nom}}" />
             </div>
         </div>
         <div class="col-md-6">

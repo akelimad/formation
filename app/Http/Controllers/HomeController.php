@@ -46,10 +46,10 @@ class HomeController extends Controller
     public function index()
     {
 
-        $participants = \DB::table('participant_session')
-            ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
-            ->join('participants', 'participants.id', '=', 'participant_session.user_id')
-            ->select('participants.*', 'sessions.nom as session', 'sessions.start as start', 'sessions.end as end')
+        $participants = \DB::table('session_user')
+            ->join('sessions', 'sessions.id', '=', 'session_user.session_id')
+            ->join('users', 'users.id', '=', 'session_user.user_id')
+            ->select('users.*', 'sessions.nom as session', 'sessions.start as start', 'sessions.end as end')
             ->take(10)->get();
         $now = Carbon::now()->format('Y-m-d h:i');
         $sessions = Session::where('start','>', $now)->take(10)->get();

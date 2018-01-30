@@ -17,7 +17,7 @@
                                     <div class="chart chart-js-container">
                                         <ul class="list-unstyled">
                                             @foreach($participants_repondus as $p)
-                                                <badge class="badge">{{$p->nom}}</badge>
+                                                <badge class="badge">{{$p->name}}</badge>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -51,12 +51,15 @@
                                     <select class="selectpicker" name="participant" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($participants_repondus as $p)
-                                            <option value="{{ $p->id }}" @if ($selected == $p->id) selected='selected' @endif > {{ $p->nom }} </option>
+                                            <option value="{{ $p->id }}" @if ($selected == $p->id) selected='selected' @endif > {{ $p->name }} </option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-4">
-                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> consulter</button>
+                                    <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Consulter</button>
+                                    <a href="{{ url('evaluations/'.$eval_id.'/'.$eval_type) }}" class="btn btn-primary">
+                                        <i class="fa fa-refresh"></i> Actualiser
+                                    </a>
                                 </div>
                             </div>
                         </form>

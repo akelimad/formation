@@ -76,12 +76,12 @@ class SessionController extends Controller
             $prevus = [];
             $presents = [];
             $p_prevus = User_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
-            $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
+            $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('user_id')->get();
             foreach ($p_prevus as $p) {
-                $prevus[] = $p->participant_id;
+                $prevus[] = $p->user_id;
             }
             foreach ($p_presents as $p) {
-                $presents[] = $p->participant_id;
+                $presents[] = $p->user_id;
             }
 
             if(count($messages)>0){
@@ -113,13 +113,27 @@ class SessionController extends Controller
                         if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
                             $sess_participants= new User_sessions();
                             $sess_participants->session_id = $session_id;
-                            $sess_participants->participant_id = $par;
+                            $sess_participants->user_id = $par;
                             $sess_participants->prevu = 0;
                             $sess_participants->present = 1;
-                            $sess_participants->save();  
+                            $sess_participants->save();
+                            $p = User::find($par);
+                            $password = $this->rand_string(8);
+                            $p->password = bcrypt($password);
+                            $p->save();
+                            $sent = Mail::send('emails.register_session', 
+                                [
+                                    'session' => $session->nom, 
+                                    'participant'=>$p->name, 
+                                    'email'=>$p->email, 
+                                    'password'=> $password, 
+                                ]
+                                , function ($m) use($p){
+                                    $m->to($p->email, $p->name)->subject("Confirmation d'inscription");
+                            });  
                         }else{
-                            \DB::table('participant_session')
-                            ->where(['session_id' => $session_id,'participant_id' =>$par])
+                            \DB::table('session_user')
+                            ->where(['session_id' => $session_id,'user_id' =>$par])
                             ->update(['present'=>1]);
                         }
                     }
@@ -127,8 +141,8 @@ class SessionController extends Controller
                 if(!empty($presents) && !empty($request->participants)){
                     $nouveau_presents=array_diff($presents, $request->participants); 
                     foreach ($nouveau_presents as $nv) {
-                        \DB::table('participant_session')
-                        ->where(['session_id' => $session_id,'participant_id' =>$nv])
+                        \DB::table('session_user')
+                        ->where(['session_id' => $session_id,'user_id' =>$nv])
                         ->update(['present'=>0]);
                     }
                 }
@@ -236,7 +250,7 @@ class SessionController extends Controller
                                 'password'=> $password, 
                             ]
                             , function ($m) use($p){
-                                $m->to($p->email, $p->nom)->subject("Confirmation d'inscription");
+                                $m->to($p->email, $p->name)->subject("Confirmation d'inscription");
                         });
                     }
                 }
@@ -253,15 +267,16 @@ class SessionController extends Controller
 
     public function show($id){
         ob_start();
-        $session = Session::find($id);
-        $p_presents = \DB::table('participant_session')
-            ->join('sessions', 'sessions.id', '=', 'participant_session.session_id')
-            ->join('participants', 'participants.id', '=', 'participant_session.participant_id')
-            ->select('participants.*')
-            ->where('participant_session.session_id','=',$session->id)
-            ->where('participant_session.present','=',1)
+        $s = Session::find($id);
+        $p_presents = \DB::table('session_user')
+            ->join('sessions', 'sessions.id', '=', 'session_user.session_id')
+            ->join('users', 'users.id', '=', 'session_user.user_id')
+            ->select('users.*')
+            ->where('sessions.id','=', $id)
+            ->where('session_user.present','=',1)
             ->get();
-        echo view('sessions.show', ['s' => $session, 'p_presents' => $p_presents]);
+
+        echo view('sessions.show', ['s' => $s, 'p_presents' => $p_presents]);
         $content = ob_get_clean();
         return ['title' => 'Détails de la session', 'content' => $content];
     }
@@ -271,7 +286,9 @@ class SessionController extends Controller
         $cours = Cour::all();
         $formateurs = Formateur::all();
         $salles = Salle::all();
-        $participants = Participant::all();
+        $participants = User::whereHas('roles', function ($query) {
+            $query->where('name', '=', 'collaborateur');
+        })->get();
         $session = Session::find($id);
 
         $prevus = [];
@@ -280,10 +297,10 @@ class SessionController extends Controller
         $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->get();
         //dd($p_presents);
         foreach ($p_prevus as $p) {
-            $prevus[] = $p->participant_id;
+            $prevus[] = $p->user_id;
         }
         foreach ($p_presents as $p) {
-            $presents[] = $p->participant_id;
+            $presents[] = $p->user_id;
         }
 
         echo view('sessions.edit', [
@@ -321,12 +338,12 @@ class SessionController extends Controller
     //     $prevus = [];
     //     $presents = [];
     //     $p_prevus = User_sessions::where(['session_id'=> $id, 'prevu'=>1])->get();
-    //     $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('participant_id')->get();
+    //     $p_presents = User_sessions::where(['session_id'=> $id, 'present'=>1])->groupBy('user_id')->get();
     //     foreach ($p_prevus as $p) {
-    //         $prevus[] = $p->participant_id;
+    //         $prevus[] = $p->user_id;
     //     }
     //     foreach ($p_presents as $p) {
-    //         $presents[] = $p->participant_id;
+    //         $presents[] = $p->user_id;
     //     }
 
     //     if(count($messages)>0){
@@ -358,13 +375,13 @@ class SessionController extends Controller
     //                 if(!in_array($par, $prevus) and !in_array($par, $sp_ids)){
     //                     $sess_participants= new User_sessions();
     //                     $sess_participants->session_id = $session_id;
-    //                     $sess_participants->participant_id = $par;
+    //                     $sess_participants->user_id = $par;
     //                     $sess_participants->prevu = 0;
     //                     $sess_participants->present = 1;
     //                     $sess_participants->save();  
     //                 }else{
-    //                     \DB::table('participant_session')
-    //                     ->where(['session_id' => $session_id,'participant_id' =>$par])
+    //                     \DB::table('session_user')
+    //                     ->where(['session_id' => $session_id,'user_id' =>$par])
     //                     ->update(['present'=>1]);
     //                 }
     //             }
@@ -372,8 +389,8 @@ class SessionController extends Controller
     //         if(!empty($presents) && !empty($request->participants)){
     //             $nouveau_presents=array_diff($presents, $request->participants); 
     //             foreach ($nouveau_presents as $nv) {
-    //                 \DB::table('participant_session')
-    //                 ->where(['session_id' => $session_id,'participant_id' =>$nv])
+    //                 \DB::table('session_user')
+    //                 ->where(['session_id' => $session_id,'user_id' =>$nv])
     //                 ->update(['present'=>0]);
     //             }
     //         }
@@ -400,12 +417,6 @@ class SessionController extends Controller
                 $evaluation->delete();
             }  
         }
-        //$parts_sess = User_sessions::where(['session_id'=> $session->id])->get();
-        // if($session->participants){
-        //     foreach($session->participants as $part_sess){
-        //         $part_sess->detach();
-        //     }  
-        // }
         $session->participants()->detach();
         $session->delete();
         return redirect('sessions');

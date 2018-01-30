@@ -34,6 +34,7 @@ class CourController extends Controller
                 'devise'           => 'required',
                 'prix'             => 'required',
                 'duree'            => 'required',
+                'photo'            => 'max:500',
             ];
             $validator = \Validator::make($request->all(), $rules);
             $cour = Cour::find($id);
@@ -44,6 +45,7 @@ class CourController extends Controller
                 'devise'           => 'required',
                 'prix'             => 'required',
                 'duree'            => 'required',
+                'photo'            => 'max:500',
             ];
             $validator = \Validator::make($request->all(), $rules);
             $cour = new Cour();

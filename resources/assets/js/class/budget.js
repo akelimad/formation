@@ -3,7 +3,7 @@ import $ from 'jquery'
 export default class chmBudget {
 
   static create (params) {
-    window.chmModal.show({type: 'GET', url: window.chmSite.url('budgets/' + params.sid + '/create/'), data: {sid: params.sid}}, {
+    window.chmModal.show({type: 'GET', url: window.chmSite.url('budgetsSession/' + params.sid + '/create'), data: {sid: params.sid}}, {
       form: {
         class: 'allInputsFormValidation',
         callback: 'chmBudget.store'

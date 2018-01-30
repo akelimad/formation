@@ -32,7 +32,7 @@ class ParticipantController extends Controller
         if($id) {
             $rules = [
                 'nom'            => 'required',
-                'email'          => 'required',
+                'email' => 'unique:users,email,'.$id
             ];
             $validator = \Validator::make($request->all(), $rules);
             $participant = User::find($id);
@@ -52,8 +52,10 @@ class ParticipantController extends Controller
         $participant->email=$request->input('email');
         $participant->password= bcrypt("default");
         $participant->save();
-        $role = Role::where('name','=','collaborateur')->first();
-        $participant->attachRole($role->id);
+        if(!$id){
+            $role = Role::where('name','=','collaborateur')->first();
+            $participant->attachRole($role->id);
+        }
         if($participant->save()) {
             return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
         } else {
@@ -64,14 +66,14 @@ class ParticipantController extends Controller
 
     public function edit($id){
         ob_start();
-        $participant = Participant::find($id);
+        $participant = User::find($id);
         echo view('participants.edit', ['p'=> $participant]);
         $content = ob_get_clean();
         return ['title' => 'Modifier un participant', 'content' => $content];
     }
 
     public function destroy(Request $request, $id){
-        $participant = Participant::find($id);
+        $participant = User::find($id);
         $participant->delete();
         return redirect('participants');
     }
@@ -79,10 +81,10 @@ class ParticipantController extends Controller
     public function espaceCollaborateurs(){
         $participant_id = \Auth::user()->id;
         $sessions = \DB::table('sessions')
-            ->join('participant_session', 'participant_session.session_id', '=', 'sessions.id')
+            ->join('session_user', 'session_user.session_id', '=', 'sessions.id')
             ->join('cours', 'cours.id', '=', 'sessions.cour_id')
             ->select('sessions.*','cours.*')
-            ->where('participant_session.user_id', '=', $participant_id)
+            ->where('session_user.user_id', '=', $participant_id)
             ->paginate(10);
         //dd($sessions);
         return view('participants.espaceCollaborateurs', compact('sessions'));
@@ -91,11 +93,11 @@ class ParticipantController extends Controller
         $cours = $request->cours;
         $participant_id = \Auth::user()->id;
         $sessions = \DB::table('sessions')
-            ->join('participant_session', 'participant_session.session_id', '=', 'sessions.id')
+            ->join('session_user', 'session_user.session_id', '=', 'sessions.id')
             ->join('cours', 'cours.id', '=', 'sessions.cour_id')
             ->select('sessions.*','cours.*')
-            ->where('participant_session.user_id', '=', $participant_id)
-            ->where('cours.titre', 'like', $cours)
+            ->where('session_user.user_id', '=', $participant_id)
+            ->where('cours.titre', 'like', '%'.$cours.'%')
             ->paginate(10);
         //dd($sessions);
 

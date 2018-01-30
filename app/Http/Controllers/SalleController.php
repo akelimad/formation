@@ -27,21 +27,18 @@ class SalleController extends Controller
         $rules = [
             'numero'            => 'required|unique:salles',
             'capacite'          => 'required',
-            'photo'              => 'max:2000',
-            'equipements'        => 'required|alpha_num',
+            'photo'              => 'max:500',
+            'equipements'        => 'required',
         ];
         if($id) {
             $rules = [
-                'capacite'          => 'required',
-                'photo'              => 'max:2000',
-                'equipements'        => 'required|alpha_num',
+                'numero' => 'required|unique:salles,numero,'.$id
             ];
-            $validator = \Validator::make($request->all(), $rules);
             $salle = Salle::find($id);
         } else {
-            $validator = \Validator::make($request->all(), $rules);
             $salle = new Salle();
         }
+        $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }

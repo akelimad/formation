@@ -1,4 +1,7 @@
 /*custom style css*/
+.card-img-top{
+    max-height: 200px;
+}
 .search-cours{
     width: 25%;
     -webkit-transition: all 1s ease-in-out;
@@ -49,7 +52,7 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-color: #171513db;
+    background-color: #000000db;
     top: 0;
     left: 0;
     bottom: 0;

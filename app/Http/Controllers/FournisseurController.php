@@ -22,34 +22,24 @@ class FournisseurController extends Controller
     }
 
     public function store(Request $request){
-        //dd($request->all());
         $id = $request->input('id', false);
+        $rules = [
+            'nom'            => 'required|unique:fournisseurs|alpha',
+            'type'           => 'required',
+            'specialite'      => 'required',
+            'tel'             => 'required|regex:/(06)[0-9]{8}/',
+            'fax'               => 'required|regex:/(05)[0-9]{8}/',
+            'email'              => 'required',
+            'personne_contacter' => 'required|alpha',
+        ];
         if($id) {
-            $rules = [
-                'nom'            => 'required|alpha',
-                'type'           => 'required',
-                'specialite'      => 'required',
-                'tel'             => 'required|regex:/(06)[0-9]{8}/',
-                'fax'               => 'required|regex:/(05)[0-9]{8}/',
-                'email'              => 'required',
-                'personne_contacter' => 'required|alpha',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
+            $rules['nom'] = 'required|alpha';
             $prestataire = Fournisseur::find($id);
         } else {
-            $rules = [
-                'nom'            => 'required|unique:fournisseurs|alpha',
-                'type'           => 'required',
-                'specialite'      => 'required',
-                'tel'             => 'required|regex:/(06)[0-9]{8}/',
-                'fax'               => 'required|regex:/(05)[0-9]{8}/',
-                'email'              => 'required',
-                'personne_contacter' => 'required|alpha',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
             $prestataire = new Fournisseur();
         }
 
+        $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }

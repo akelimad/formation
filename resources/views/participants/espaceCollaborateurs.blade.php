@@ -21,7 +21,11 @@
                         @forelse($sessions as $s)
                         <div class="col-md-3">
                             <div class="card content">
-                                <img class="card-img-top" src="@if(isset($s->photo)) {{asset('sallePhotos/'.$s->photo)}} else {{asset('/assets/img/image_placeholder.jpg')}} @endif" alt="Card image cap">
+                                @if(isset($s->photo))
+                                    <img class="card-img-top" src="{{asset('coursPhotos/'.$s->photo)}}" alt="Card image cap">
+                                @else
+                                    <img class="card-img-top" src="{{asset('/assets/img/image_placeholder.jpg')}}" alt="Card image cap">
+                                @endif
                                 <div class="card-block">
                                     <h3 class="card-title"> {{ $s->titre }} </h3>
                                     <p class="card-text"> {{ $s->description }} </p>

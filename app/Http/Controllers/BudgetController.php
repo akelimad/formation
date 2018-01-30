@@ -54,16 +54,16 @@ class BudgetController extends Controller
             ];
             $validator = \Validator::make($request->all(), $rules);
         }
-
-        foreach ($request->budgets as $b) {
-            $budget = new Budget();
-            $budget->session_id=$request->input('session');
-            $budget->budget = $b['budget'];
-            $budget->prevu  = $b['prevu'];
-            $budget->realise= $b['realise'];
-            $budget->ajustement= $b['ajustement'];
-
-            $budget->save();
+        if($request->budgets){
+            foreach ($request->budgets as $b) {
+                $budget = new Budget();
+                $budget->session_id=$request->input('session');
+                $budget->budget = $b['budget'];
+                $budget->prevu  = $b['prevu'];
+                $budget->realise= $b['realise'];
+                $budget->ajustement= $b['ajustement'];
+                $budget->save();
+            }
         }
         if($budget->save()) {
             return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];

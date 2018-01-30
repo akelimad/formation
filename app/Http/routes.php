@@ -74,7 +74,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
 
     Route::get('budgets', 'BudgetController@index');
-    Route::get('budgets/{sid}/create', 'BudgetController@create');
+    Route::get('budgetsSession/{sid}/create', 'BudgetController@create');
     Route::post('budgets/store', 'BudgetController@store');
     Route::get('budgetsSession/{id}', 'BudgetController@show');
     Route::get('budgetsSession/{id}/edit', 'BudgetController@edit');

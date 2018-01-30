@@ -86,7 +86,7 @@
                         <tbody>
                             @foreach($participants as $p)
                             <tr>
-                                <td> {{$p->nom}} </td>
+                                <td> {{$p->name}} </td>
                                 <td> {{$p->email}} </td>
                                 <td> {{$p->session}} </td>
                                 <td> {{ Carbon\Carbon::parse($p->start)->format('d/m/Y')}} </td>

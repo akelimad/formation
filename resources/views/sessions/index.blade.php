@@ -26,7 +26,7 @@
                                     <div class="form-group label-floating">
                                         <label class="control-label"> Statut </label>
                                         <select class="form-control" name="statut">
-                                            <option disabled selected>-- select --</option>
+                                            <option selected value="">-- select --</option>
                                             <option value="Aprobation en attente" @if(isset($selected) && $selected == "Aprobation en attente") selected @endif >Aprobation en attente</option>
 
                                             <option value="Programmé" @if(isset($selected) && $selected == "Programmé") selected @endif >Programmé</option>
@@ -135,4 +135,13 @@
     </div>
 </div>
 
+@endsection
+
+@section('javascript')
+<script>
+    @if(isset($selected))
+        $(".filterContent").slideToggle(300)
+        $('.btnFilter i').toggleClass('fa-plus fa-minus')
+    @endif
+</script>
 @endsection

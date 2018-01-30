@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Question;
 use App\Reponse;
 use App\Token;
-use App\Participant;
+use App\User;
 use App\Evaluation;
 use App\Http\Requests;
 use Mail;
@@ -113,7 +113,7 @@ class QuestionController extends Controller
     }
 
     public function storeResponses(Request $request,$id, $token){
-        $participants = Participant::all();
+        $participants = User::all();
         $evaluation = Evaluation::find($id);
         if($evaluation->type == "a-froid"){
             $eval_type= "à froid";
@@ -123,7 +123,7 @@ class QuestionController extends Controller
         foreach ($participants as $participant) {
             if(md5($participant->id.$participant->email.$evaluation->id) == $token){
                 $participant_email = $participant->email;
-                $participant_nom = $participant->nom;
+                $participant_nom = $participant->name;
                 $participant_id = $participant->id;
             } 
         }

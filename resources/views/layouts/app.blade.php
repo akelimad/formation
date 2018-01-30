@@ -27,6 +27,8 @@
     <link href="{{ asset('assets/vendors/sweetalert/css/sweetalert2.min.css')}}" rel="Stylesheet" >
     <link href="{{ asset('assets/vendors/select2/select2.min.css')}}" rel="Stylesheet" >
     <!--     custom style css     -->
+
+    <link href="{{ asset('assets/css/alerts.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
 
     <link href="{{ App\Asset::path('app.css') }}" rel="stylesheet">
@@ -60,11 +62,21 @@
             </div>
             <div class="logo logo-mini">
                 <a href="javascript:void(0)" class="simple-text">
-                    A
+                    @role('admin') A @endrole
+                    @role('user') U @endrole
+                    @role('collaborateur') C @endrole
                 </a>
             </div>
             <div class="sidebar-wrapper">
                 <ul class="nav">
+                    @role(['collaborateur'])
+                    <li class="{{ Request::path() == 'espace-collaborateurs' ? 'active' : '' }}" >
+                        <a href="{{url('/espace-collaborateurs')}}">
+                            <i class="fa fa-graduation-cap"></i>
+                            <p>Cours</p>
+                        </a>
+                    </li>
+                    @endrole
                     @role(['admin', 'user'])
                     <li class="{{ Request::path() == '/' ? 'active' : '' }}" >
                         <a href="{{url('/')}}">
@@ -143,7 +155,7 @@
                     @permission('sessions')
                     <li class="{{ Request::is('sessions*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#cours" class="collapsed" aria-expanded="false">
-                            <i class="fa fa-calendar"></i>
+                            <i class="fa fa-graduation-cap"></i>
                             <p>Sessions
                                 <b class="caret"></b>
                             </p>
@@ -250,7 +262,9 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="navbar-brand" href="{{ url('/') }}"> Accueil </a>
+                        @role(['admin', 'user'])
+                            <a class="navbar-brand" href="{{ url('/') }}"> Accueil </a>
+                        @endrole
                     </div>
                     <div class="collapse navbar-collapse">
                         <ul class="nav navbar-nav navbar-right">

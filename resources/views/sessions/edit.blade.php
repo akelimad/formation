@@ -91,7 +91,7 @@
                 <label class="control-label">Participants prévus</label>
                 @foreach ($s->participants as $par)
                     @if(in_array($par->id, $prevus_ids))
-                    <span class="badge" title="{{$par->email}}">{{$par->nom}}</span>
+                    <span class="badge" title="{{$par->email}}">{{$par->name}}</span>
                     @endif
                 @endforeach
             </div>
@@ -100,7 +100,7 @@
                
                 <select class="js-example-basic-multiple form-control" name="participants[]" multiple="multiple" required="required">
                     @foreach ($participants as $p)
-                        <option value="{{$p->id}}" title="{{$p->email}}" @if (in_array($p->id, $present_ids)) selected @endif > {{$p->nom}} </option>
+                        <option value="{{$p->id}}" title="{{$p->email}}" @if (in_array($p->id, $present_ids)) selected @endif > {{$p->name}} </option>
                     @endforeach
                 </select>
             </div>

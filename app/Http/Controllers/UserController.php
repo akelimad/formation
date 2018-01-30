@@ -22,7 +22,9 @@ class UserController extends Controller
     }
 
     public function users(){
-        $users = User::with('roles')->paginate(10);
+        $users = User::with('roles')->whereHas('roles', function ($query) {
+            $query->where('name', '!=', 'collaborateur');
+        })->paginate(10);
         return view('users.index', ['users' => $users]);
     }
 
@@ -38,12 +40,12 @@ class UserController extends Controller
         $id = $request->input('id', false);
         if($id) {
             $user = User::find($id);
-            $user->name = $request->name;
-            $user->email = $request->email;
             $rules=[
                 'name' => 'required|max:255',
                 'email' => 'unique:users,email,'.$user->id
             ];
+            $user->name = $request->name;
+            $user->email = $request->email;
             if(!empty($request->password) || !empty($request->password_confirmation)){
                 $rules = [
                     'password' => 'required|min:6|confirmed',
