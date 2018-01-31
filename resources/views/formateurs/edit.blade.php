@@ -7,7 +7,7 @@
                 <label class="control-label">Nom complet
                     <star>*</star>
                 </label>
-                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}"  readonly=""/>
+                <input class="form-control" name="nom" type="text" required="true" placeholder="Nom" value="{{$f->nom}}" />
             </div>
         </div>
         <div class="col-md-6">

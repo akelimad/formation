@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
-                        <h3> Recherche de formations </h3>
+                <div class="content cours">
+                    <h3> Recherche de formations </h3>
                     <div class="row">
                         <form action="{{ url('espace-collaborateurs/search') }}" >
                             <div class="col-md-1">
@@ -20,33 +20,29 @@
                     <div class="row">
                         @forelse($sessions as $s)
                         <div class="col-md-3">
-                            <div class="card content">
-                                @if(isset($s->photo))
-                                    <img class="card-img-top" src="{{asset('coursPhotos/'.$s->photo)}}" alt="Card image cap">
-                                @else
-                                    <img class="card-img-top" src="{{asset('/assets/img/image_placeholder.jpg')}}" alt="Card image cap">
-                                @endif
-                                <div class="card-block">
-                                    <h3 class="card-title"> {{ $s->titre }} </h3>
-                                    <p class="card-text"> {{ $s->description }} </p>
-                                    <a href="{{url('espace-collaborateurs/formation/'.$s->id)}}" class="btn btn-primary">En savoir plus</a>
+                            <div class="card cours-item">
+                                <div class="cours-img-wrap">
+                                    @if(isset($s->photo))
+                                        <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}"><img class="card-img-top" src="{{asset('coursPhotos/'.$s->photo)}}" alt="Card image cap"></a>
+                                    @else
+                                        <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}"><img class="card-img-top" src="{{asset('/assets/img/image_placeholder.jpg')}}" alt="Card image cap"></a>
+                                    @endif
+                                </div>
+                                <div class="content card-block">
+                                    <h4 class="card-title"> <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}">{{ $s->titre }}</a> </h4>
+                                    <p class="card-text"> {{ $s->coursDesc }} </p>
+                                    <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}" class="btn btn-primary">En savoir plus</a>
                                 </div>
                             </div>
                         </div>
                         @empty
                         <div class="col-md-12">
-                            <div class="alert alert-info alert-dismissable mt20" role="alert">
-                                <button type="button" class="close" data-dismiss="alert">
-                                    <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                                </button>
-                                <span><i class="fa fa-info-circle"></i> Aucun cours trouvé ... !!!</span>
-                            </div>
+                            @include('partials.alerts.info', ['messages' => 'Aucun cours trouvé ... !!'])
                         </div>
                         @endforelse
                     </div>
 
-                    
-
+                    {{ $sessions->links() }}
                 </div>
                 <!-- end content-->
             </div>

@@ -5506,7 +5506,7 @@ star {
     margin-top: 8px;
     display: inline-block; } }
 .alert {
-  border: 0;
+  /*border: 0;*/
   border-radius: 4px;
   color: #FFFFFF;
   padding: 12px 15px;
@@ -6239,18 +6239,18 @@ star {
   .card .icon {
     display: block;
     margin: 0 auto;
-    top: 60%;
+    top: 50%;
     position: relative;
     transform: translateY(-50%);
     -webkit-transform: translateY(-50%);
     text-align: center; }
     .card .icon i {
-      font-size: 60px;
+/*      font-size: 60px;
       padding: 18px;
       width: 110px;
       border: 2px solid #ccc5b9;
       border-radius: 50%;
-      height: 110px; }
+      height: 110px;*/ }
   .card .icon-big {
     font-size: 3em; }
   .card .numbers {

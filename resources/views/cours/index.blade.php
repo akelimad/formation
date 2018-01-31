@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
+                <div class="content cours">
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="title">La liste des cours <span class="badge">{{$cours->total()}}</span></h4>
@@ -30,6 +30,7 @@
                                     <th>Coordinateur</th>
                                     <th>Durée(j)</th>
                                     <th>Budget(DH)</th>
+                                    <th>Photo</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -40,6 +41,13 @@
                                     <td> {{ $cour->user->name }} </td>
                                     <td> {{ $cour->duree }} </td>
                                     <td> {{ $cour->prix }} </td>
+                                    <td> 
+                                        @if($cour->photo)
+                                            <img src="{{asset('coursPhotos/'.$cour->photo)}}" width="60" alt="" height="20">
+                                        @else
+                                            <img src="{{asset('assets/img/missing-photo.png')}}" width="30" height="20" alt=""> 
+                                        @endif
+                                    </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmCours.show({id:{{ $cour->id }}})" data-toggle="tooltip" title="Voir"><i class="fa fa-eye"></i></a>
@@ -57,6 +65,7 @@
                                     <th>Coordinateur</th>
                                     <th>Durée(j)</th>
                                     <th>Budget(DH)</th>
+                                    <th>Photo</th>
                                     <th class="text-right">Actions</th>
                                 </tr>
                             </tfoot>

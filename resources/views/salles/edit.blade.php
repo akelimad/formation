@@ -5,7 +5,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Numéro<star>*</star></label>
-                <input class="form-control" name="numero" type="number" readonly="" placeholder="Numero" value="{{$s->numero}}" />
+                <input class="form-control" name="numero" type="number" placeholder="Numero" value="{{$s->numero}}" />
             </div>
         </div>
         <div class="col-md-6">

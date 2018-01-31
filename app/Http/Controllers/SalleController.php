@@ -31,9 +31,7 @@ class SalleController extends Controller
             'equipements'        => 'required',
         ];
         if($id) {
-            $rules = [
-                'numero' => 'required|unique:salles,numero,'.$id
-            ];
+            $rules['numero']='required|unique:salles,numero,'.$id;
             $salle = Salle::find($id);
         } else {
             $salle = new Salle();

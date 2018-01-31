@@ -51,18 +51,19 @@ class SessionController extends Controller
         $start = Carbon::createFromFormat('d/m/Y H:i', $request->start);
         $end = Carbon::createFromFormat('d/m/Y H:i', $request->end);
         $id = $request->input('id', false);
+        $rules = [
+            'nom'            => 'required',
+            'cour'           => 'required',
+            'formateur'      => 'required',
+            'lieu'           => 'required',
+            'start'          => 'required | date_format:"d/m/Y H:i"',
+            'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
+            'methode'        => 'required',
+            'statut'         => 'required',
+            'salle'          => 'required',
+        ];
         if($id) {
-            $validator = Validator::make($request->all(), [
-                'nom'            => 'required',
-                'cour'           => 'required',
-                'formateur'      => 'required',
-                'lieu'           => 'required',
-                'start'          => 'required | date_format:"d/m/Y H:i"',
-                'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
-                'methode'        => 'required',
-                'statut'         => 'required',
-                'salle'          => 'required',
-            ]);
+            $validator = Validator::make($request->all(), $rules);
             $messages = $validator->errors();
             
             $now = Carbon::now()->format('Y-m-d h:i');
@@ -153,18 +154,7 @@ class SessionController extends Controller
                 }
             }
         }else{
-            $validator = Validator::make($request->all(), [
-                'nom'            => 'required|unique:sessions',
-                'cour'           => 'required',
-                'formateur'      => 'required',
-                'start'          => 'required | date_format:"d/m/Y H:i"',
-                'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
-                'lieu'           => 'required',
-                'methode'        => 'required',
-                'statut'         => 'required',
-                'salle'          => 'required',
-                'participants'   => 'required',
-            ]);
+            $validator = Validator::make($request->all(), $rules);
             $messages = $validator->errors();
             $salle_occupee = Session::where('salle_id', $request->salle)
             ->where(function ($query) use ($start, $end) {

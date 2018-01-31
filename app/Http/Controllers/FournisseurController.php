@@ -24,16 +24,15 @@ class FournisseurController extends Controller
     public function store(Request $request){
         $id = $request->input('id', false);
         $rules = [
-            'nom'            => 'required|unique:fournisseurs|alpha',
+            'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
             'type'           => 'required',
             'specialite'      => 'required',
             'tel'             => 'required|regex:/(06)[0-9]{8}/',
             'fax'               => 'required|regex:/(05)[0-9]{8}/',
             'email'              => 'required',
-            'personne_contacter' => 'required|alpha',
+            'personne_contacter' => 'required|regex:/^[a-zA-Z ]+$/',
         ];
         if($id) {
-            $rules['nom'] = 'required|alpha';
             $prestataire = Fournisseur::find($id);
         } else {
             $prestataire = new Fournisseur();

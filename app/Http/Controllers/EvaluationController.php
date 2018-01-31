@@ -40,23 +40,21 @@ class EvaluationController extends Controller
 
     public function store(Request $request){
         $id = $request->input('id', false);
+        $rules = [
+            'nom'            => 'required|unique:evaluations',
+            'type'           => 'required',
+            'session'        => 'required',
+        ];
         if($id) {
-            $validator = Validator::make($request->all(), [
-                'nom'            => 'required',
-                'type'           => 'required',
-                'session'        => 'required',
-            ]);
+            $rules['nom'] = 'required|unique:evaluations,nom,'.$id;
+            $validator = Validator::make($request->all(), $rules);
             $evaluation = Evaluation::find($id);
             $evaluation->nom=$request->nom;
             $evaluation->type=$request->type;
             $evaluation->session_id=$request->session;
             $evaluation->save();
         } else {
-            $validator = Validator::make($request->all(), [
-                'nom'            => 'required',
-                'type'           => 'required',
-                'session'        => 'required',
-            ]);
+            $validator = Validator::make($request->all(), $rules);
             $messages = $validator->errors();
             $evaluations = Evaluation::where(['session_id' =>$request->session, 'type'=> $request->type])->get();
             if(count($evaluations) > 0){

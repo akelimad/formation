@@ -1,13 +1,34 @@
 @extends('layouts.app')
-@section('pageTitle', 'Participants')
+@section('pageTitle', 'Détails de le session')
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
+                <div class="content details-session">
                     <div class="">
-                        <h3> Détails de formation </h3>
+                        <h3> Détails de formation {{ $session->nom }} </h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <i class="fa fa-desktop fa-5x"></i>
+                        </div>
+                        <div class="col-md-5">
+                            <p> <i class="fa fa-calendar"></i> 
+                                Date début: {{ Carbon\Carbon::parse($session->start)->format('d/m/Y')}} </p>
+                            <p> <i class="fa fa-calendar"></i> 
+                                Date fin: {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </p>
+                            <p> <i class="fa fa-map-marker"></i> Lieu: {{ $session->lieu }} </p>
+                            <button class="btn btn-default">Ajouter un plan de formation</button>
+                            <button class="btn btn-default">Organiser</button>
+                            <button class="btn btn-default">Ajouter</button>
+                        </div>
+                        <div class="col-md-5">
+                            <p> <i class="fa fa-user"></i> Formateur: {{ $session->formateur->nom }} </p>
+                            <p> <i class="fa fa-bank"></i> Salle: {{ $session->salle->numero }} </p>
+                            <p> <i class="fa fa-info-circle"></i> Statut: {{ $session->statut }} </p>
+                            <p> <i class="fa fa-info-circle"></i> Methode: {{ $session->methode }} </p>
+                        </div>
                     </div>
                     <div class="row">
                         <ul class="nav nav-tabs">

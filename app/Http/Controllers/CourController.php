@@ -27,30 +27,22 @@ class CourController extends Controller
 
     public function store(Request $request){
         $id = $request->input('id', false);
+        $rules = [
+            'titre'            => 'required|unique:cours',
+            'coordinateur'     => 'required',
+            'devise'           => 'required',
+            'prix'             => 'required',
+            'duree'            => 'required',
+            'photo'            => 'max:500',
+        ];
         if($id) {
-            $rules = [
-                'titre'            => 'required',
-                'coordinateur'     => 'required',
-                'devise'           => 'required',
-                'prix'             => 'required',
-                'duree'            => 'required',
-                'photo'            => 'max:500',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
+            $rules['titre']='required|unique:cours,titre,'.$id;
             $cour = Cour::find($id);
         } else {
-            $rules = [
-                'titre'            => 'required|unique:cours',
-                'coordinateur'     => 'required',
-                'devise'           => 'required',
-                'prix'             => 'required',
-                'duree'            => 'required',
-                'photo'            => 'max:500',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
             $cour = new Cour();
         }
 
+        $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }

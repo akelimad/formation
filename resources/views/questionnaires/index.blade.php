@@ -1,5 +1,5 @@
-@extends('layouts.basic')
-@section('pageTitle', 'Questionnaires')
+@extends('layouts.survey')
+@section('pageTitle', 'Questionnaire')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -10,9 +10,11 @@
                     {{ csrf_field() }}
                     <div class="content">
                         <h4 class="title">Le questionnaire</h4>
+                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates culpa doloremque, quasi veritatis, asperiores iste quibusdam, veniam ratione voluptate molestias natus expedita optio. </p>
                         <div class="toolbar">
                             <!-- Here you can write extra buttons/actions for the toolbar   -->
                         </div>
+
                         <div class="row">
                             @if(count($questions)>0)
                                 @foreach($questions as $key => $question)
@@ -23,7 +25,7 @@
                                                 <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                                             </div>
                                             <div class="col-md-4">
-                                                <select name="reponses[]" class="form-control" required="">
+                                                <select name="reponses[]" class="btn btn-primary" required="">
                                                     <option selected value="">=== Selectionnez ===</option>
                                                     <option value="5">Fortement satisfait</option>
                                                     <option value="4">Satisfait</option>

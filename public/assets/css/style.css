@@ -1,6 +1,60 @@
 /*custom style css*/
+body{
+    overflow: auto !important;
+}
+.wrapper{
+    height: auto;
+}
+.wrapper-survey{
+    background: #8fa9aa;
+}
+.wrapper-survey .card{
+    margin: 35px 0;
+} 
+.wrapper-survey .card .content{
+    padding: 15px 35px 10px 35px
+}
+.wrapper-survey .card .title {
+    margin: 0;
+    color: #252422;
+    font-weight: 300;
+    background: #f98686;
+    padding: 1em;
+    margin-bottom: 0.6em;
+}
+.wrapper-survey .form-group {
+    margin-bottom: 15px;
+    background: #f5f3f3;
+    padding: 1em;
+    border: 1px solid #c1bebe;
+}
 .card-img-top{
-    max-height: 200px;
+    max-height: 100%;
+}
+.cours-img-wrap{
+    height: 145px;
+    text-align: center;
+    overflow: hidden;
+}
+.cours-img-wrap img{
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+}
+.cours-item:hover img{
+    transform: rotate(3deg) scale(1.1);
+}
+.cours .card{
+    box-shadow: none;
+    border: 1px solid #dad4d4;
+}
+.details-session p i{
+    width: 31px;
+    height: 31px;
+    background: #eb5e28;
+    line-height: 31px;
+    border-radius: 50%;
+    color: white;
 }
 .search-cours{
     width: 25%;
@@ -307,7 +361,7 @@ label.star:before {
     color: #e85a1b;
 }
 
-.home .chart-js-container, .standard .chart-js-container{
+.home .chart-js-container, .standard .chart-js-container, .evaluations .chart-js-container{
     max-width: 100% !important;
     padding-left: 0px;
     min-height: 300px;

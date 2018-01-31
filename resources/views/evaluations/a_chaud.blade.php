@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Evaluations')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -65,8 +65,8 @@
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
-                            <div class="card">
+                        <div class="col-md-12">
+                            <div class="card evaluations">
                                 <div class="header">
                                     <h4 class="title">les reponses par chaque questions</h4>
                                 </div>

@@ -24,32 +24,23 @@ class FormateurController extends Controller
 
     public function store(Request $request){
         $id = $request->input('id', false);
+        $rules = [
+            'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
+            'type'           => 'required',
+            'email'          => 'required|email|unique:formateurs',
+            'tel'            => 'required|regex:/(06)[0-9]{8}/',
+            'qualification'  => 'required',
+            'expertise'      => 'required',
+            'cv'             => 'max:500',
+        ];
         if($id) {
-            $rules = [
-                'nom'            => 'required',
-                'type'           => 'required',
-                'email'          => 'required',
-                'tel'            => 'required|regex:/(06)[0-9]{8}/',
-                'qualification'  => 'required',
-                'expertise'      => 'required',
-                'cv'             => 'max:500',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
+            $rules['email'] = 'required|email|unique:formateurs,email,'.$id;
             $formateur = Formateur::find($id);
         } else {
-            $rules = [
-                'nom'            => 'required|unique:formateurs',
-                'type'           => 'required',
-                'email'          => 'required',
-                'tel'            => 'required|regex:/(06)[0-9]{8}/',
-                'qualification'  => 'required',
-                'expertise'      => 'required',
-                'cv'             => 'max:500',
-            ];
-            $validator = \Validator::make($request->all(), $rules);
             $formateur = new Formateur();
         }
 
+        $validator = \Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }

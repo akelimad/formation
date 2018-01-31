@@ -7,60 +7,25 @@
             <div class="card">
                 <div class="content">
                     @if(session()->has('no_participants'))
-                        <div class="alert alert-danger alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_participants') }} </span>
-                        </div>
+                        @include('partials.alerts.warning', ['messages' =>  session()->get('no_participants') ])
                     @endif
                     @if(session()->has('mails_sent'))
-                        <div class="alert alert-success alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-check-circle-o"></i> {{ session()->get('mails_sent') }} </span>
-                        </div>
+                        @include('partials.alerts.success', ['messages' =>  session()->get('mails_sent') ])
                     @endif
                     @if(session()->has('remembre_mails_sent'))
-                        <div class="alert alert-success alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-check-circle-o"></i> {{ session()->get('remembre_mails_sent') }} </span>
-                        </div>
+                        @include('partials.alerts.success', ['messages' =>  session()->get('remembre_mails_sent') ])
                     @endif
                     @if(session()->has('survey_add'))
-                        <div class="alert alert-success alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-check-circle-o"></i> {!! session()->get('survey_add') !!} </span>
-                        </div>
+                        @include('partials.alerts.success', ['messages' =>  session()->get('survey_add') ])
                     @endif
                     @if(session()->has('no_response'))
-                        <div class="alert alert-warning alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_response') }} </span>
-                        </div> 
+                        @include('partials.alerts.warning', ['messages' => session()->get('no_response') ])
                     @endif
                     @if(session()->has('under_3month'))
-                        <div class="alert alert-warning alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('under_3month') }} </span>
-                        </div>
+                        @include('partials.alerts.warning', ['messages' => session()->get('under_3month') ])
                     @endif
                     @if(session()->has('no_survey'))
-                        <div class="alert alert-warning alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> {{ session()->get('no_survey') }} </span>
-                        </div>
+                        @include('partials.alerts.warning', ['messages' => session()->get('no_survey') ])
                     @endif
                     <div class="row">
                         <div class="col-md-8">

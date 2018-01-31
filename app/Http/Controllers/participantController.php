@@ -83,7 +83,7 @@ class ParticipantController extends Controller
         $sessions = \DB::table('sessions')
             ->join('session_user', 'session_user.session_id', '=', 'sessions.id')
             ->join('cours', 'cours.id', '=', 'sessions.cour_id')
-            ->select('sessions.*','cours.*')
+            ->select('sessions.id as session_id', 'sessions.*', 'cours.*','cours.id as cours_id', 'cours.description as coursDesc')
             ->where('session_user.user_id', '=', $participant_id)
             ->paginate(10);
         //dd($sessions);
@@ -95,18 +95,18 @@ class ParticipantController extends Controller
         $sessions = \DB::table('sessions')
             ->join('session_user', 'session_user.session_id', '=', 'sessions.id')
             ->join('cours', 'cours.id', '=', 'sessions.cour_id')
-            ->select('sessions.*','cours.*')
+            ->select('sessions.id as session_id', 'sessions.*', 'cours.*','cours.id as cours_id', 'cours.description as coursDesc')
             ->where('session_user.user_id', '=', $participant_id)
             ->where('cours.titre', 'like', '%'.$cours.'%')
             ->paginate(10);
         //dd($sessions);
-
         return view('participants.espaceCollaborateurs', compact('sessions', 'cours'));
     }
 
     public function detailsSession($id){
         $session = Session::find($id);
-        return view('participants.detailsSession');
+        //dd($session);
+        return view('participants.detailsSession', compact('session'));
     }
 
     

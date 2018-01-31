@@ -26,26 +26,13 @@
     <link href="{{ asset('assets/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/font-muli.css')}}" rel='stylesheet' type='text/css'>
     <!--     custom style css     -->
-    <link href="{{ asset('assets/css/alerts.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
-    <style>
-        body{
-            overflow: hidden;
-        }
-        .main-panel > .content{
-            padding: 0
-        }
-    </style>
 </head>
-<body id="app-layout">
-    <div class="wrapper login">
-        <div class="main-panel">
-            <div class="content">
-                @yield('content')
-            </div>
+<body>
+    <div class="wrapper-survey">
+        <div class="content">
+            @yield('content')
         </div>
-
     </div>
-
 </body>
 </html>

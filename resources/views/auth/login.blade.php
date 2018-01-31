@@ -11,14 +11,7 @@
                             <form id="" class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
 
                                 @if ($errors->any())
-                                    @foreach ($errors->all() as $error)
-                                        <div class="alert alert-danger alert-dismissable" role="alert">
-                                            <button type="button" class="close" data-dismiss="alert">
-                                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                                            </button>
-                                            <span><strong>Erreur !</strong> {{ $error }}</span>
-                                        </div>
-                                    @endforeach
+                                    @include('partials.alerts.danger', ['messages' => $errors->all()])
                                 @endif
                                 {{ csrf_field() }}
                                 <div class="card card-login card-hidden">
