@@ -27,6 +27,11 @@
     <link href="{{ asset('assets/css/font-muli.css')}}" rel='stylesheet' type='text/css'>
     <!--     custom style css     -->
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+    <style>
+        body{
+            overflow: auto;
+        }
+    </style>
 </head>
 <body>
     <div class="wrapper-survey">

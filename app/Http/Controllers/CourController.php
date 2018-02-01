@@ -114,6 +114,8 @@ class CourController extends Controller
     public function destroy(Request $request, $id){
         $cour = Cour::find($id);
         $cour->delete();
+        $filename = public_path().'/coursPhotos/'.$cour->photo;
+        \File::delete($filename);
         return redirect('cours');
     }
 

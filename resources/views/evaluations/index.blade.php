@@ -27,6 +27,9 @@
                     @if(session()->has('no_survey'))
                         @include('partials.alerts.warning', ['messages' => session()->get('no_survey') ])
                     @endif
+                    @if(session()->has('all_answered'))
+                        @include('partials.alerts.info', ['messages' => session()->get('all_answered') ])
+                    @endif
                     <div class="row">
                         <div class="col-md-8">
                             <h4 class="title">La liste des évaluations <span class="badge">{{$evaluations->total()}}</span></h4>
@@ -76,8 +79,9 @@
                                         <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if($evaluation->questionsCount >0) return chmQuestion.edit({id: {{ $evaluation->id }} }) @else return chmQuestion.create({eid: {{ $evaluation->id }} }) @endif" title="Ajouter ou modifier le questionnaire" data-toggle="tooltip"> <i class="fa fa-question-circle-o"></i> </a>
 
                                         <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" title="Editer l'evaluation" data-toggle="tooltip" onclick="return chmEvaluation.edit({id:{{ $evaluation->id }}})"><i class="ti-pencil-alt"></i></a>
-
+                                        @role('admin')
                                         <a href="javascript:void(0)" data-id='{{$evaluation->id}}' class="btn btn-fill btn-danger btn-icon delete-evaluation" title="Supprimer l'evaluation" data-toggle="tooltip"><i class="ti-close"></i></a>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @endforeach
@@ -96,9 +100,7 @@
                         </table>
                     </div>
                     @else
-                        <div class="alert alert-info mt20">
-                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
-                        </div>
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
                     {{ $evaluations->links() }}

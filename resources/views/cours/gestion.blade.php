@@ -62,13 +62,8 @@
                             </tfoot>
                         </table>
                     </div>
-                    @else
-                        <div class="alert alert-danger alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> Aucun cours à afficher </span>
-                        </div>
+                    @elseif(isset($user_cours) && count($user_cours)<=0)
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
                     @endif
                 </div>
                 <!-- end content-->

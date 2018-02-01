@@ -184,7 +184,7 @@
                     @permission('rapports')
                     <li class="{{ Request::is('rapports*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#session" class="collapsed" aria-expanded="false">
-                            <i class="fa fa-file-text-o"></i>
+                            <i class="fa fa-bar-chart"></i>
                             <p>Rapports
                                 <b class="caret"></b>
                             </p>
@@ -221,7 +221,7 @@
                     @permission('utilisateurs')
                     <li class="{{ Request::is('utilisateurs*') ? 'active' : '' }}">
                         <a data-toggle="collapse" href="#users" class="collapsed" aria-expanded="false">
-                            <i class="fa fa-users"></i>
+                            <i class="fa fa-gear"></i>
                             <p>Administration
                                 <b class="caret"></b>
                             </p>
@@ -263,7 +263,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         @role(['admin', 'user'])
-                            <a class="navbar-brand" href="{{ url('/') }}"> Accueil </a>
+                            <a class="navbar-brand" href="{{ url('/') }}"><i class="fa fa-home"></i> Accueil </a>
                         @endrole
                     </div>
                     <div class="collapse navbar-collapse">

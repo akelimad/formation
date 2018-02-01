@@ -21,6 +21,7 @@ import chmQuestion from './class/question'
 import chmSession from './class/session'
 import chmUser from './class/user'
 import chmRole from './class/role'
+import chmPermission from './class/permission'
 
 // Store modules in window
 window.chmSite = chmSite
@@ -39,6 +40,7 @@ window.chmQuestion = chmQuestion
 window.chmSession = chmSession
 window.chmUser = chmUser
 window.chmRole = chmRole
+window.chmPermission = chmPermission
 
 // Standart jQuery script
 import './custom'

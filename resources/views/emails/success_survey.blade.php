@@ -2,13 +2,15 @@
 <html lang="en"> 
     <head>
         <title></title>
-        <style>
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
+        <style>       
             .content{
                 /*background: #f7f7f7;*/
                 /*padding: 2em;*/
             }
             p{
                 font-size: 17px;
+                font-family: 'Lato'; 
             }
         </style>
     </head>

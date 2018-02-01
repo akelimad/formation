@@ -204,28 +204,43 @@ class UserController extends Controller
         return view('users/permissions.index' ,['permissions' => $permissions]);
     }
     public function createPermission(){
-        return view('users/permissions.create');
+        ob_start();
+        echo view('users/permissions.create');
+        $content = ob_get_clean();
+        return ['title' => 'Créer une permission', 'content' => $content];
     }
     public function storePermission(Request $request){
-        $permission = new Permission();
+        $id = $request->input('id', false);
+        if($id){
+            $permission = Permission::find($id);
+        }else{
+            $permission = new Permission();
+        }
         $permission->name = $request->name;
         $permission->display_name = $request->display_name;
         $permission->description = $request->description;
         $permission->save();
-        return redirect('utilisateurs/permissions');
+        if($permission->save()) {
+            return ["status" => "success", "message" => 'Les informations ont été sauvegardées avec succès.'];
+        } else {
+            return ["status" => "warning", "message" => 'Une erreur est survenue, réessayez plus tard.'];
+        }
     }
     public function editPermission($id){
+        ob_start();
         $p = Permission::find($id);
-        return view('users/permissions.edit' ,['p' => $p]);
+        echo view('users/permissions.edit' ,['p' => $p]);
+        $content = ob_get_clean();
+        return ['title' => 'Modifier une permission', 'content' => $content];
     }
-    public function updatePermission(Request $request, $id){
-        $permission = Permission::find($id);
-        $permission->name = $request->name;
-        $permission->display_name = $request->display_name;
-        $permission->description = $request->description;
-        $permission->save();
-        return redirect('utilisateurs/permissions');
-    }
+    // public function updatePermission(Request $request, $id){
+    //     $permission = Permission::find($id);
+    //     $permission->name = $request->name;
+    //     $permission->display_name = $request->display_name;
+    //     $permission->description = $request->description;
+    //     $permission->save();
+    //     return redirect('utilisateurs/permissions');
+    // }
 
 
     public function rolePermissions(){

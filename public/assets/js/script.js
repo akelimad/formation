@@ -3,7 +3,6 @@ $(window).on('load', function() {
 });
 $(function() {
 
-
     var baseUrl =  $("base").attr("href")
 
     function validate(){
@@ -479,42 +478,6 @@ $(function() {
             },
             allowOutsideClick: false     
         }); 
-    });
-
-    ///********************************************************************************************
-    //role add form
-    $("#addRole_modal" ).on('shown.bs.modal', function(event){
-        $.get('utilisateurs/roles/create' , function( data ) {
-            $("#addRole_modal .modal-body").html(data);
-            validate();
-            //$("input:checkbox[name='permissions']").bootstrapSwitch();
-        });
-    });
-    //show edit form role in modal
-    $(".editRole").on("click", function(e) {
-        var id= $(this).data('id')
-        var route = 'utilisateurs/roles/'+ id + '/edit'
-        $.get(route , function( data ) {
-            $("#editRole_modal .modal-body").html(data);
-            validate();
-        });
-    });
-    ///********************************************************************************************
-    //permissions add form
-    $("#addPermission_modal" ).on('shown.bs.modal', function(event){
-        $.get('utilisateurs/permissions/create' , function( data ) {
-            $("#addPermission_modal .modal-body").html(data);
-            validate();
-        });
-    });
-    //show edit form Permissions in modal
-    $(".editPermission").on("click", function(e) {
-        var id= $(this).data('id')
-        var route = 'utilisateurs/permissions/'+ id + '/edit'
-        $.get(route , function( data ) {
-            $("#editPermission_modal .modal-body").html(data);
-            validate();
-        });
     });
 
 

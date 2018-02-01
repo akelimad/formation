@@ -28,7 +28,7 @@ class FormateurController extends Controller
             'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
             'type'           => 'required',
             'email'          => 'required|email|unique:formateurs',
-            'tel'            => 'required|regex:/(06)[0-9]{8}/',
+            'tel'            => 'required|regex:/(06)[0-9]{8}$/',
             'qualification'  => 'required',
             'expertise'      => 'required',
             'cv'             => 'max:500',

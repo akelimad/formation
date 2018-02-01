@@ -43,7 +43,6 @@
             <div class="content">
                 <!-- <div class="title"><i class="fa fa-ban fa-3x"></i> Vous êtes pas autorisés d'accéder ! </div> -->
             </div>
-            <a href="{{url('/')}}" class="btn btn-primary"> Retour </a>
         </div>
     </body>
 </html>

@@ -97,8 +97,9 @@
                                         <a href="javascript:void(0)" onclick="return chmSession.show({id:{{ $session->id }}})" class="btn btn-fill btn-default btn-icon" title="Afficher les détails" data-toggle="tooltip"><i class="fa fa-eye"></i></a>
                                         <a href="javascript:void(0)" class="btn btn-fill btn-info btn-icon" onclick="@if(count($session->budgets)>0) return chmBudget.edit({id: {{ $session->id }} }) @else return chmBudget.create({sid: {{ $session->id }} }) @endif" data-toggle="tooltip" title="Ajouter ou modifier le budget"><i class="fa fa-usd"></i></a>
                                         <a href="javascript:void(0)" onclick="return chmSession.edit({id:{{ $session->id }}})" class="btn btn-fill btn-warning btn-icon" data-toggle="tooltip" title="Modifier" ><i class="ti-pencil-alt"></i></a>
-
+                                        @role('admin')
                                         <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-session" data-id="{{$session->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @endforeach
@@ -119,9 +120,7 @@
                         </table>
                     </div>
                     @else
-                        <div class="alert alert-info mt20">
-                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
-                        </div>
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
                     {{ $sessions->links() }}

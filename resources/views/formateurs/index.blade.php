@@ -36,8 +36,9 @@
                                         <a href="javascript:void(0)" onclick="return chmFormateur.show({id:{{ $formateur->id }}})" class="btn btn-fill btn-default btn-icon" data-toggle="tooltip" title="Voir"><i class="fa fa-eye"></i></a>
 
                                         <a href="javascript:void(0)" onclick="return chmFormateur.edit({id:{{ $formateur->id }}})" class="btn btn-fill btn-warning btn-icon" data-toggle="tooltip" title="Modifier"><i class="ti-pencil-alt"></i></a>
-
+                                        @role('admin')
                                         <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-formateur" data-id="{{$formateur->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @endforeach
@@ -55,9 +56,7 @@
                         </table>
                     </div>
                     @else
-                        <div class="alert alert-info mt20">
-                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
-                        </div>
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
                     {{ $formateurs->links() }}

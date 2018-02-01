@@ -27,8 +27,8 @@ class FournisseurController extends Controller
             'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
             'type'           => 'required',
             'specialite'      => 'required',
-            'tel'             => 'required|regex:/(06)[0-9]{8}/',
-            'fax'               => 'required|regex:/(05)[0-9]{8}/',
+            'tel'             => 'required|regex:/(06)[0-9]{8}$/',
+            'fax'               => 'required|regex:/(05)[0-9]{8}$/',
             'email'              => 'required',
             'personne_contacter' => 'required|regex:/^[a-zA-Z ]+$/',
         ];

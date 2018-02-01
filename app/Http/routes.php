@@ -21,24 +21,21 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:admin|user']], fun
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs']], function() {
-    Route::get('utilisateurs', 'UserController@users');
+    Route::get('utilisateurs', 'UserController@users')->name('list utilisateurs');
     Route::delete('utilisateurs/{id}/delete', 'UserController@destroyUser');
     Route::get('utilisateurs/roles', 'UserController@roles');
     Route::get('utilisateurs/roles/create', 'UserController@createRole');
     Route::post('utilisateurs/roles', 'UserController@storeRole');
     Route::get('utilisateurs/roles/{id}/edit', 'UserController@editRole');
-    // Route::put('utilisateurs/roles/{id}', 'UserController@updateRole');
     Route::delete('utilisateurs/roles/{id}/delete', 'UserController@deleteRole');
+    Route::get('utilisateurs/permissions', 'UserController@permissions');
     Route::get('utilisateurs/permissions/create', 'UserController@createPermission');
-    Route::post('utilisateurs/permissions', 'UserController@storePermission');
+    Route::post('utilisateurs/permissions/store', 'UserController@storePermission');
     Route::get('utilisateurs/permissions/{id}/edit', 'UserController@editPermission');
-    Route::put('utilisateurs/permissions/{id}', 'UserController@updatePermission');
     Route::get('utilisateurs/droits-acces', 'UserController@rolePermissions');
     Route::get('utilisateurs/create', 'UserController@createUser');
     Route::get('utilisateurs/{id}/edit', 'UserController@editUser');
     Route::post('utilisateurs/store', 'UserController@storeUser');
-    // Route::put('utilisateurs/{id}', 'UserController@updateUser');
-
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], function() {
@@ -46,14 +43,12 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], fu
     Route::get('cours/create', 'CourController@create');
     Route::get('cours/{id}', 'CourController@show');
     Route::post('cours/store', 'CourController@store');
-    // Route::post('cours', 'CourController@store');
     Route::get('cours/{id}/edit', 'CourController@edit');
-    // Route::put('cours/{id}', 'CourController@update');
-    Route::delete('cours/{id}/delete', 'CourController@destroy');
-    //Route::resource('cours', 'CourController');
     Route::get('cours/c/export', 'CourController@export');
     Route::get('cours/u/gestion', 'CourController@usersCours');
+    Route::delete('cours/{id}/delete',['middleware' => ['auth', 'permission:delete-cours'], 'uses' =>'CourController@destroy']);
 });
+
 
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']], function() {
@@ -62,24 +57,22 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::get('sessions/{id}', 'SessionController@show');
     Route::post('sessions/store', 'SessionController@store');
     Route::get('sessions/{id}/edit', 'SessionController@edit');
-    // Route::put('sessions/{id}', 'SessionController@update');
-    Route::delete('sessions/{id}/delete', 'SessionController@destroy');
+    Route::delete('sessions/{id}/delete', ['middleware' => ['auth', 'permission:delete-sessions'], 'uses' =>'SessionController@destroy']);
     Route::get('sessions/filter/search', 'SessionController@filterSessions');
-    // Route::resource('sessions', 'SessionController');
+
     Route::get('participants', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
     Route::get('participants/create', 'ParticipantController@create');
     Route::post('participants/store', 'ParticipantController@store');
     Route::get('participants/{id}/edit', 'ParticipantController@edit');
-    Route::delete('participants/{id}/delete', 'ParticipantController@destroy');
+    Route::delete('participants/{id}/delete', ['middleware' => ['auth', 'permission:delete-participants'], 'uses' =>'ParticipantController@destroy']);
 
     Route::get('budgets', 'BudgetController@index');
     Route::get('budgetsSession/{sid}/create', 'BudgetController@create');
     Route::post('budgets/store', 'BudgetController@store');
     Route::get('budgetsSession/{id}', 'BudgetController@show');
     Route::get('budgetsSession/{id}/edit', 'BudgetController@edit');
-    // Route::put('budgetsSession/{id}', 'BudgetController@update');
-    Route::delete('budgetsSession/{id}/delete', 'BudgetController@destroy');
+    Route::delete('budgetsSession/{id}/delete', ['middleware' => ['auth', 'permission:delete-budgets'], 'uses' =>'BudgetController@destroy']);
 
 });
 
@@ -93,12 +86,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires
     Route::get('prestataires', 'FournisseurController@index');
     Route::get('prestataires/create', 'FournisseurController@create');
     Route::post('prestataires/store', 'FournisseurController@store');
-    // Route::post('prestataires', 'FournisseurController@store');
     Route::get('prestataires/{id}', 'FournisseurController@show');
     Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
-    // Route::put('prestataires/{id}', 'FournisseurController@update');
-    Route::delete('prestataires/{id}/delete', 'FournisseurController@delete');
-    //Route::resource('prestataires', 'FournisseurController');
+    Route::delete('prestataires/{id}/delete', ['middleware' => ['auth', 'permission:delete-prestataires'], 'uses' =>'FournisseurController@delete']);
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {
@@ -107,9 +97,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']
     Route::post('formateurs/store', 'FormateurController@store');
     Route::get('formateurs/{id}', 'FormateurController@show');
     Route::get('formateurs/{id}/edit', 'FormateurController@edit');
-    // Route::put('formateurs/{id}', 'FormateurController@update');
-    Route::delete('formateurs/{id}/delete', 'FormateurController@destroy');
-    //Route::resource('formateurs', 'FormateurController');
+    Route::delete('formateurs/{id}/delete', ['middleware' => ['auth', 'permission:delete-formateurs'], 'uses' =>'FormateurController@destroy']);
     Route::get('formateurs/s/gestion', 'FormateurController@gestion');
 });
 
@@ -117,12 +105,9 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], f
     Route::get('salles', 'SalleController@index');
     Route::get('salles/create', 'SalleController@create');
     Route::post('salles/store', 'SalleController@store');
-    // Route::post('salles', 'SalleController@store');
     Route::get('salles/{id}', 'SalleController@show');
     Route::get('salles/{id}/edit', 'SalleController@edit');
-    // Route::put('salles/{id}', 'SalleController@update');
-    Route::delete('salles/{id}/delete', 'SalleController@destroy');
-    //Route::resource('salles', 'SalleController');
+    Route::delete('salles/{id}/delete', ['middleware' => ['auth', 'permission:delete-salles'], 'uses' =>'SalleController@destroy']);
     Route::get('salles/s/gestion', 'SalleController@gestion');
 });
 
@@ -131,9 +116,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     Route::get('evaluations/create', 'EvaluationController@create');
     Route::post('evaluations/store', 'EvaluationController@store');
     Route::get('evaluations/{id}/edit', 'EvaluationController@edit');
-    // Route::put('evaluations/{id}', 'EvaluationController@update');
-    Route::delete('evaluations/{id}/delete', 'EvaluationController@destroy');
-    //Route::resource('evaluations', 'EvaluationController');
+    Route::delete('evaluations/{id}/delete', ['middleware' => ['auth', 'permission:delete-evaluations'], 'uses' =>'EvaluationController@destroy']);
     
     Route::get('evaluations/{id}/sendMail', 'EvaluationController@sendMailParticipants');
     Route::get('evaluations/{id}/remembreMail', 'EvaluationController@remembreMailParticipants');
@@ -145,7 +128,6 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:evaluations'
     Route::post('questionnaires/store', 'QuestionController@store');
     Route::get('questionnaires/{id}', 'QuestionController@show');
     Route::get('questionnaires/{id}/edit', 'QuestionController@edit');
-    // Route::put('questionnaires/{id}', 'QuestionController@update');
     Route::delete('questionnaire/{id}/delete', 'QuestionController@destroy');
 });
 

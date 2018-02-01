@@ -224,7 +224,7 @@ class EvaluationController extends Controller
                     $evaluation->save();
                     return redirect()->back()->with('mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom);
                 }
-                if($evaluation->type == "a-froid" and $diff->m <=3){ // 3mois
+                if($evaluation->type == "a-froid" and $diff->m >=3){ // 3mois
                     foreach($part_presents as $part){
                         $p = User::find($part->user_id);
                         $sent = Mail::send('emails.send_survey', 
@@ -266,7 +266,7 @@ class EvaluationController extends Controller
         $part_presents = User_sessions::where(['session_id'=> $session->id, 'present'=>1])->get();
         $p_session = [];
         foreach ($part_presents as $p) {
-            $p_session[] = $p->participant_id;
+            $p_session[] = $p->user_id;
         }
 
         $s_id=$evaluation->session->id;
@@ -284,24 +284,29 @@ class EvaluationController extends Controller
         }
 
         $participants_nn_repondus =array_diff($p_session, $p_repondus);
-        foreach ($participants_nn_repondus as $participant) {
-            $p = User::find($participant);
-            $sent = Mail::send('emails.send_survey', 
-                [
-                    'session' => $session->nom, 
-                    'participant'=>$p->name, 
-                    'token'=> md5($p->id.$p->email.$evaluation->id),
-                    'evaluation_id' => $evaluation->id,
-                    'evaluation_type' => $eval_type
-                ]
-                , function ($m) use($p){
-                    $m->to($p->email, $p->name)->subject('Rappel évaluation à chaud');
-            });
+        if(count($participants_nn_repondus)>0){
+            dd($participants_nn_repondus);
+            foreach ($participants_nn_repondus as $participant) {
+                $p = User::find($participant);
+                $sent = Mail::send('emails.send_survey', 
+                    [
+                        'session' => $session->nom, 
+                        'participant'=>$p->name, 
+                        'token'=> md5($p->id.$p->email.$evaluation->id),
+                        'evaluation_id' => $evaluation->id,
+                        'evaluation_type' => $eval_type
+                    ]
+                    , function ($m) use($p){
+                        $m->to($p->email, $p->name)->subject('Rappel évaluation à chaud');
+                });
+            }
+            $now = new DateTime();
+            $evaluation->rappele_le= $now;
+            $evaluation->save();
+            return redirect()->back()->with('remembre_mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom.' sur laquelle ils n\'ont pas repondu');
+        }else{
+            return redirect()->back()->with('all_answered', "Il n'ya aucun participant non répondu sur cet évaluation: ".$evaluation->nom."(".$eval_type.")"." de la session: ".$session->nom);
         }
-        $now = new DateTime();
-        $evaluation->rappele_le= $now;
-        $evaluation->save();
-        return redirect()->back()->with('remembre_mails_sent', 'un email contenant le lien du questionnaire de cet évaluation: '.$evaluation->nom.'('.$eval_type.')'.' a bien été envoyé aux participants de la session: '.$session->nom.' sur laquelle ils n\'ont pas repondu');
     }
 
 

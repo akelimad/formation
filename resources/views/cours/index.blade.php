@@ -9,7 +9,7 @@
                 <div class="content cours">
                     <div class="row">
                         <div class="col-md-8">
-                            <h4 class="title">La liste des cours <span class="badge">{{$cours->total()}}</span></h4>
+                            <h4 class="title"><i class="fa fa-list"></i> La liste des cours <span class="badge">{{$cours->total()}}</span></h4>
                         </div>
                         
                         <div class="col-md-4">
@@ -53,8 +53,9 @@
                                         <a href="javascript:void(0)" class="btn btn-fill btn-default btn-icon" onclick="return chmCours.show({id:{{ $cour->id }}})" data-toggle="tooltip" title="Voir"><i class="fa fa-eye"></i></a>
 
                                         <a href="javascript:void(0)" class="btn btn-fill btn-warning btn-icon" onclick="return chmCours.edit({id:{{ $cour->id }}})" data-toggle="tooltip" title="Editer"><i class="ti-pencil-alt"></i></a>
-
+                                        @role('admin')
                                         <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-cours" data-id="{{$cour->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @endforeach
@@ -72,9 +73,7 @@
                         </table>
                     </div>
                     @else
-                        <div class="alert alert-info mt20">
-                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i> Aucune donnée trouvée dans la table </span>
-                        </div>
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
                     {{ $cours->links() }}

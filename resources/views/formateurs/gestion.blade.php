@@ -75,12 +75,7 @@
                             </table>
                         </div>
                     @elseif(isset($sessions_formateur) && count($sessions_formateur)<= 0)
-                        <div class="alert alert-info alert-dismissable" role="alert">
-                            <button type="button" class="close" data-dismiss="alert">
-                                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-                            </button>
-                            <span><i class="fa fa-exclamation-circle"></i> Aucune session à afficher </span>
-                        </div>
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
                     @endif
                 </div>
                 <!-- end content-->

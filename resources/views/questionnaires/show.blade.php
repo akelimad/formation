@@ -8,7 +8,7 @@
                         <input type="hidden" name="questionsIds[]" value="{{$question->id}}">
                     </div>
                     <div class="col-md-4">
-                        <select name="reponses[]" class="form-control" required="">
+                        <select name="reponses[]" class="btn btn-primary" required="" >
                             <option selected value="">=== Selectionnez ===</option>
                             <option value="5">Fortement satisfait</option>
                             <option value="4">Satisfait</option>

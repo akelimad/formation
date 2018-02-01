@@ -37,9 +37,7 @@
                                             <canvas id="pieChart" width="200" height="200"></canvas>
                                         </div>
                                     @elseif(isset($session_budgets) && count($session_budgets)<=0)
-                                        <div class="alert alert-info">
-                                            <button type="button" data-dismiss="alert" aria-hidden="true" class="close">x</button><span><i class="fa fa-info-circle"></i>  certte session n'a pas de budgets</span>
-                                        </div>
+                                        @include('partials.alerts.info', ['messages' => "certte session n'a pas de budgets... !!" ])
                                     @endif
                                 </div>
                             </div>

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('pageTitle', 'Users')
+@section('pageTitle', 'Utilisateurs')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -10,6 +10,7 @@
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
+                    @if(count($users)>0)
                     <div class="material-datatables">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -39,8 +40,9 @@
                                     <td class="text-right">
                                         {{ csrf_field() }}
                                         <a href="javascript:void(0)" onclick="return chmUser.edit({id:{{ $user->id }}})" class="btn btn-fill btn-warning btn-icon" data-toggle="tooltip" title="Modifier"><i class="ti-pencil-alt"></i></a>
-
+                                        @role('admin')
                                         <a href="javascript:void(0)" class="btn btn-fill btn-danger btn-icon delete-user" data-id="{{$user->id}}" data-toggle="tooltip" title="Supprimer"><i class="ti-close"></i></a>
+                                        @endrole
                                     </td>
                                 </tr>
                                 @endforeach
@@ -57,6 +59,9 @@
                             </tfoot>
                         </table>
                     </div>
+                    @else
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
+                    @endif
 
                     {{ $users->links() }}
 

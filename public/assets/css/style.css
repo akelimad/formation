@@ -1,12 +1,13 @@
 /*custom style css*/
 body{
-    overflow: auto !important;
-}
-.wrapper{
-    height: auto;
+    overflow: hidden;
 }
 .wrapper-survey{
     background: #8fa9aa;
+    min-height: 100vh;
+}
+.wrapper-survey select option{
+    font-size: 17px;
 }
 .wrapper-survey .card{
     margin: 35px 0;
@@ -227,7 +228,7 @@ label.star:before {
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -249,6 +250,7 @@ label.star:before {
     height: 25px;
     width: 25px;
     background-color: #eee;
+    border: 1px solid #ad5252;
 }
 
 /* On mouse-over, add a grey background color */

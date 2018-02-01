@@ -2,6 +2,7 @@
 <html lang="en"> 
     <head>
         <title></title>
+        <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
         <style>
             .content{
                 /*background: #f7f7f7;*/
@@ -9,6 +10,7 @@
             }
             p{
                 font-size: 17px;
+                font-family: 'Lato'; 
             }
         </style>
     </head>
