@@ -54,6 +54,15 @@
                 <img src="{{asset('coursPhotos/'.$c->photo)}}" width="60" alt="">
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group label-floating">
+                <label class="control-label">Support</label>
+                <input type="file" name="support" class="form-control" accept=".pdf,.doc, docx, .pptx, .ppt" />
+                @if(!empty($c->support))
+                <a href="{{asset('coursSupport/'.$c->support)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le support </a>
+                @endif
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

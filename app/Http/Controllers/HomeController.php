@@ -94,6 +94,7 @@ class HomeController extends Controller
             'countCours'=> $countCours,
             'sommeBudgets'=> $sommeBudgets,
             'sessionsPerMonth'=> $sessionsPerMonth,
+            'isEmptySPM' => count($sessionsPerMonthResult)
         ]);
     }
 }

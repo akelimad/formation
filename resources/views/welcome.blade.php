@@ -55,9 +55,9 @@
                             <div class="numbers">
                                 <p>Budget</p>
                             </div>
-                                <span class="badge">Prevu: {{$sommeBudgets[0]->totalPrevu ? $sommeBudgets[0]->totalPrevu : 0 }}</span>
-                                <span class="badge">Realisé: {{$sommeBudgets[0]->totalRealise ? $sommeBudgets[0]->totalRealise : 0}}</span>
-                                <span class="badge">Ajustement: {{$sommeBudgets[0]->totalPrevu - $sommeBudgets[0]->totalRealise}} </span>
+                                <span class="badge">Prevu</span> <span>{{$sommeBudgets[0]->totalPrevu ? $sommeBudgets[0]->totalPrevu : 0 }}</span> | 
+                                <span class="badge">Realisé</span> <span>{{$sommeBudgets[0]->totalRealise ? $sommeBudgets[0]->totalRealise : 0}}</span> | 
+                                <span class="badge">Ajustement</span> <span>{{$sommeBudgets[0]->totalPrevu - $sommeBudgets[0]->totalRealise}}</span> 
                         </div>
                     </div>
                 </div>
@@ -71,6 +71,7 @@
                     <h4 class="title">Les participants aux sessions</h4>
                     <!-- <p class="category">New employees on 15th December, 2016</p> -->
                 </div>
+                @if(count($participants)>0)
                 <div class="content table-responsive">
                     <table class="table table-hover">
                         <thead class="text-primary">
@@ -96,6 +97,11 @@
                         </tbody>
                     </table>
                 </div>
+                @else
+                    <div class="content">
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
+                    </div>
+                @endif
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
@@ -104,9 +110,13 @@
                     <h4 class="title">Les sessions prochaines</h4>
                 </div>
                 <div class="content card-padding hommeBarchart">
+                    @if($isEmptySPM>0)
                     <div class="chart chart-js-container">
                         <canvas id="barChart" style="width: 100%" height="200"></canvas>
                     </div>
+                    @else
+                        @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
+                    @endif
                 </div>
             </div>
         </div>
@@ -115,6 +125,7 @@
 @endsection
 
 @section('javascript')
+    @if($isEmptySPM>0)
     <script>
         $(function() {
             var barChartData = {
@@ -179,4 +190,5 @@
             }
         })
     </script>
+    @endif
 @endsection

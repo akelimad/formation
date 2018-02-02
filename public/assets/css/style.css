@@ -33,7 +33,7 @@ body{
     max-height: 100%;
 }
 .cours-img-wrap{
-    height: 145px;
+    max-height: 274px;
     text-align: center;
     overflow: hidden;
 }

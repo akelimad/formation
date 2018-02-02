@@ -54,6 +54,12 @@
                 <input type="file" name="photo" class="form-control" accept="image/*" />
             </div>
         </div>
+        <div class="col-md-6">
+            <div class="form-group label-floating">
+                <label class="control-label">Support</label>
+                <input type="file" name="support" class="form-control" accept=".pdf,.doc, docx, .pptx, .ppt" />
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-12">

@@ -285,7 +285,7 @@ class EvaluationController extends Controller
 
         $participants_nn_repondus =array_diff($p_session, $p_repondus);
         if(count($participants_nn_repondus)>0){
-            dd($participants_nn_repondus);
+            //dd($participants_nn_repondus);
             foreach ($participants_nn_repondus as $participant) {
                 $p = User::find($participant);
                 $sent = Mail::send('emails.send_survey', 

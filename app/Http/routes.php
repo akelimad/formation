@@ -76,7 +76,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
 
 });
 
-Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:admin,collaborateur']], function() {
+Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:collaborateur']], function() {
     Route::get('espace-collaborateurs', 'ParticipantController@espaceCollaborateurs');
     Route::get('espace-collaborateurs/search', 'ParticipantController@searchCours');
     Route::get('espace-collaborateurs/formation/{id}', 'ParticipantController@detailsSession');

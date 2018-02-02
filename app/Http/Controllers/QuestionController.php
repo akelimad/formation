@@ -8,6 +8,7 @@ use App\Reponse;
 use App\Token;
 use App\User;
 use App\Evaluation;
+use App\Session;
 use App\Http\Requests;
 use Mail;
 
@@ -115,6 +116,7 @@ class QuestionController extends Controller
     public function storeResponses(Request $request,$id, $token){
         $participants = User::all();
         $evaluation = Evaluation::find($id);
+        $session = Session::find($evaluation->session_id);
         if($evaluation->type == "a-froid"){
             $eval_type= "à froid";
         }else if($evaluation->type == "a-chaud"){
@@ -144,7 +146,8 @@ class QuestionController extends Controller
         $sent = Mail::send('emails.success_survey', 
             [
                 'participant'=>$participant_nom, 
-                'eval_type'=>$eval_type 
+                'eval_type'=>$eval_type,
+                'session'=>$session->nom 
             ]
             , function ($m) use($participant_email, $participant_nom){
                 $m->to($participant_email, $participant_nom)->subject('Confirmation');

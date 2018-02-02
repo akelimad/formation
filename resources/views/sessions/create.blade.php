@@ -74,7 +74,7 @@
                             <option disabled selected>-- select --</option>
                             <option value="Aprobation en attente" >Aprobation en attente</option>
                             <option value="Programmé" selected="">Programmé</option>
-                            <option value="Terminé" >Terminé</option>
+                            <option disabled="" value="" >Terminé</option>
                             <option value="Annulé" >Annulé</option>
                         </select>
                     </div>

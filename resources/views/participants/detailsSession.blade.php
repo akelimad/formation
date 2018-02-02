@@ -7,11 +7,11 @@
             <div class="card">
                 <div class="content details-session">
                     <div class="">
-                        <h3> Détails de formation {{ $session->nom }} </h3>
+                        <h3> Détails de la formation: {{ $session->nom }} </h3>
                     </div>
                     <div class="row">
                         <div class="col-md-2">
-                            <i class="fa fa-desktop fa-5x"></i>
+                            <img class="img-responsive" src="{{asset('coursPhotos/'.$session->cour->photo)}}" alt="cours photo">
                         </div>
                         <div class="col-md-5">
                             <p> <i class="fa fa-calendar"></i> 
@@ -19,9 +19,9 @@
                             <p> <i class="fa fa-calendar"></i> 
                                 Date fin: {{ Carbon\Carbon::parse($session->end)->format('d/m/Y')}} </p>
                             <p> <i class="fa fa-map-marker"></i> Lieu: {{ $session->lieu }} </p>
-                            <button class="btn btn-default">Ajouter un plan de formation</button>
-                            <button class="btn btn-default">Organiser</button>
-                            <button class="btn btn-default">Ajouter</button>
+                            @if(isset($session->cour->support))
+                            <p> <i class="fa fa-download"></i> <a href="{{asset('coursSupport/'.$session->cour->support)}}" style="color: #5e9ef5" target="_blank" >Télécharger le support </a> </p>
+                            @endif
                         </div>
                         <div class="col-md-5">
                             <p> <i class="fa fa-user"></i> Formateur: {{ $session->formateur->nom }} </p>
@@ -30,6 +30,7 @@
                             <p> <i class="fa fa-info-circle"></i> Methode: {{ $session->methode }} </p>
                         </div>
                     </div>
+                    <hr>
                     <div class="row">
                         <ul class="nav nav-tabs">
                             <li class="active"><a data-toggle="tab" href="#tab1"> Tab 1 </a></li>

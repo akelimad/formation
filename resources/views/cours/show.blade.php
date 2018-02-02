@@ -39,12 +39,6 @@
 <div class="row">
     <div class="col-md-6">
         <div class="form-group label-floating">
-            <label class="control-label">Description</label>
-            <p class="form-control"> {{ $c->description }} </p>
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group label-floating">
             <label class="control-label">Photo</label>
             @if($c->photo)
                 <img src="{{asset('coursPhotos/'.$c->photo)}}" alt="" class="img-responsive">
@@ -52,5 +46,22 @@
                 <img src="{{asset('assets/img/missing-photo.png')}}" alt="" class="img-responsive">
             @endif
         </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group label-floating">
+            <label class="control-label">Support</label>
+            @if($c->photo)
+                <a href="{{asset('coursSupport/'.$c->support)}}" class="form-control" style="color: #5e9ef5" target="_blank" ><i class="fa fa-download"></i> Télécharger le support </a>
+            @endif
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="form-group label-floating">
+            <label class="control-label">Description</label>
+            <p class="form-control"> {{ $c->description }} </p>
+        </div>
+    </div>
     </div>
 </div>

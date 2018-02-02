@@ -57,21 +57,91 @@ class SessionController extends Controller
             'formateur'      => 'required',
             'lieu'           => 'required',
             'start'          => 'required | date_format:"d/m/Y H:i"',
-            'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
+            // 'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
         ];
+
+        $salle_occupee = Session::where('salle_id', $request->salle)
+        ->where(function ($query) use ($start, $end) {
+            $query->where(function ($q) use ($start, $end) {
+                $q->where('start', '>=', $start)
+                   ->where('start', '<', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('start', '<=', $start)
+                   ->where('end', '>', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('end', '>', $start)
+                   ->where('end', '<=', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('start', '>=', $start)
+                   ->where('end', '<=', $end);
+            });
+        })->count();
+
+        $formateur_occupe = Session::where('formateur_id', $request->formateur)
+        ->where(function ($query) use ($start, $end) {
+            $query->where(function ($q) use ($start, $end) {
+                $q->where('start', '>=', $start)
+                   ->where('start', '<', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('start', '<=', $start)
+                   ->where('end', '>', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('end', '>', $start)
+                   ->where('end', '<=', $end);
+            })->orWhere(function ($q) use ($start, $end) {
+                $q->where('start', '>=', $start)
+                   ->where('end', '<=', $end);
+            });
+        })->count();
+
         if($id) {
             $validator = Validator::make($request->all(), $rules);
             $messages = $validator->errors();
-            
-            $now = Carbon::now()->format('Y-m-d h:i');
-            if($request->statut == "Terminé" && $end > $now){
-                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            $salle_occupee = Session::where('salle_id', $request->salle)->where('id', '<>', $id)
+            ->where(function ($query) use ($start, $end) {
+                $query->where(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('start', '<', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '<=', $start)
+                       ->where('end', '>', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('end', '>', $start)
+                       ->where('end', '<=', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('end', '<=', $end);
+                });
+            })->count();
+
+            $formateur_occupe = Session::where('formateur_id', $request->formateur)->where('id', '<>', $id)
+            ->where(function ($query) use ($start, $end) {
+                $query->where(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('start', '<', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '<=', $start)
+                       ->where('end', '>', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('end', '>', $start)
+                       ->where('end', '<=', $end);
+                })->orWhere(function ($q) use ($start, $end) {
+                    $q->where('start', '>=', $start)
+                       ->where('end', '<=', $end);
+                });
+            })->count();
+            if($salle_occupee>0) {
+                $messages->add('salle', 'La salle est reservée pour ces horaires!');
             }
-            // if($start > $end ) {
-            //     $messages->add('date', 'La date début ne peut pas être suppérieure à dete fin !');
+            if($formateur_occupe>0) {
+                $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
+            }
+            $now = Carbon::now()->format('Y-m-d h:i');
+            // if($request->statut == "Terminé" && $end > $now){
+            //     $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
             // }
 
             $prevus = [];
@@ -127,10 +197,15 @@ class SessionController extends Controller
                                     'session' => $session->nom, 
                                     'participant'=>$p->name, 
                                     'email'=>$p->email, 
-                                    'password'=> $password, 
+                                    'password'=> $password,
+                                    'start'=> $session->start,
+                                    'end'=> $session->end,
+                                    'cours'=> $session->cour->titre,
+                                    'lieu'=> $session->lieu,
                                 ]
                                 , function ($m) use($p){
-                                    $m->to($p->email, $p->name)->subject("Confirmation d'inscription");
+                                    $m->to($p->email, $p->name)
+                                    ->subject("Confirmation d'inscription à la session: ".$session->cour->titre);
                             });  
                         }else{
                             \DB::table('session_user')
@@ -156,39 +231,7 @@ class SessionController extends Controller
         }else{
             $validator = Validator::make($request->all(), $rules);
             $messages = $validator->errors();
-            $salle_occupee = Session::where('salle_id', $request->salle)
-            ->where(function ($query) use ($start, $end) {
-                $query->where(function ($q) use ($start, $end) {
-                    $q->where('start', '>=', $start)
-                       ->where('start', '<', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('start', '<=', $start)
-                       ->where('end', '>', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('end', '>', $start)
-                       ->where('end', '<=', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('start', '>=', $start)
-                       ->where('end', '<=', $end);
-                });
-            })->count();
 
-            $formateur_occupe = Session::where('formateur_id', $request->formateur)
-            ->where(function ($query) use ($start, $end) {
-                $query->where(function ($q) use ($start, $end) {
-                    $q->where('start', '>=', $start)
-                       ->where('start', '<', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('start', '<=', $start)
-                       ->where('end', '>', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('end', '>', $start)
-                       ->where('end', '<=', $end);
-                })->orWhere(function ($q) use ($start, $end) {
-                    $q->where('start', '>=', $start)
-                       ->where('end', '<=', $end);
-                });
-            })->count();
 
             $now = Carbon::now()->format('Y-m-d h:i');
 
@@ -198,9 +241,9 @@ class SessionController extends Controller
             if($formateur_occupe>0) {
                 $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
             }
-            if($request->statut == "Terminé" && $request->end > $now) {
-                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
-            }
+            // if($request->statut == "Terminé" && $request->end > $now) {
+            //     $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            // }
             if(count($messages)>0){ 
                 return ["status" => "danger", "message" => $messages];
             }else{

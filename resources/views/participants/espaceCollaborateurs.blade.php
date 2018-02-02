@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content cours">
-                    <h3> Recherche de formations </h3>
+                    <h3> Rechercher les formations </h3>
                     <div class="row">
                         <form action="{{ url('espace-collaborateurs/search') }}" >
                             <div class="col-md-1">
@@ -29,7 +29,7 @@
                                     @endif
                                 </div>
                                 <div class="content card-block">
-                                    <h4 class="card-title"> <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}">{{ $s->titre }}</a> </h4>
+                                    <h5 class="card-title"> <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}">{{ $s->titre }}</a> </h5>
                                     <p class="card-text"> {{ $s->coursDesc }} </p>
                                     <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}" class="btn btn-primary">En savoir plus</a>
                                 </div>

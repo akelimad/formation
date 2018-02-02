@@ -19,7 +19,9 @@ class CourController extends Controller
 
     public function create(){
         ob_start();
-        $users = User::all();
+        $users = User::with('roles')
+        ->whereHas('roles', function ($query) {$query->where('name', '!=', 'collaborateur');})
+        ->get();
         echo view('cours.create', ['users' => $users]);
         $content = ob_get_clean();
         return ['title' => 'Ajouter un cours', 'content' => $content];
@@ -34,6 +36,7 @@ class CourController extends Controller
             'prix'             => 'required',
             'duree'            => 'required',
             'photo'            => 'max:500',
+            'support'            => 'max:2000',
         ];
         if($id) {
             $rules['titre']='required|unique:cours,titre,'.$id;
@@ -60,6 +63,15 @@ class CourController extends Controller
 
             $file->move($destinationPath,$fileName);
             $cour->photo = $fileName ;
+        }
+        if($file = $request->hasFile('support')) {
+            $file = $request->file('support') ;
+            
+            $fileName = time()."_".$file->getClientOriginalName();
+            $destinationPath = public_path('/coursSupport') ;
+
+            $file->move($destinationPath,$fileName);
+            $cour->support = $fileName ;
         }
         $cour->user_id=$request->input('coordinateur');
         $cour->save();
