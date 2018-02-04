@@ -1,6 +1,16 @@
 {{ csrf_field() }}
 <input type="hidden" name="id">
 <div class="content">
+    <div class="form-group">
+        <label for="civilite" class="col-md-3 control-label">Civilite <star>*</star></label>
+        <div class="col-md-8">
+            <select name="civilite" id="civilite" class="form-control">
+                <option value="Mr">Mr</option>
+                <option value="Mme">Mme</option>
+                <option value="Mlle">Mlle</option>
+            </select>
+        </div>
+    </div>
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="col-md-3 control-label">Nom complet <star>*</star></label>
         <div class="col-md-8">

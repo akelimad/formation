@@ -9,10 +9,12 @@
                     <input type="hidden" name="_method" value="PUT">
                     {{ csrf_field() }}
                     <div class="content">
-                        <h4 class="title">Le questionnaire</h4>
-                        <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates culpa doloremque, quasi veritatis, asperiores iste quibusdam, veniam ratione voluptate molestias natus expedita optio. </p>
+                        <h4 class="title text-center"> Fiche d'évaluation </h4>
+                        <p> Vous venez de participer une formation sur le {{}} organisé par Espoir Maroc. afin de nous permettre de juger de la qualité de cette formation et de la faire évoluer, nous vous serrions reconnaissants de bien vouloir compléter le questionnaire suivant.  </p>
+                        <p> Intitulé de la formation: {{}} </p>
+                        <p> Dates: {{}} </p>
                         <div class="toolbar">
-                            <!-- Here you can write extra buttons/actions for the toolbar   -->
+                            Merci de rensigner votre niveau de satisfaction concernant les critèr  es suivants.
                         </div>
 
                         <div class="row">

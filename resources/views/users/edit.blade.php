@@ -1,6 +1,16 @@
 <input type="hidden" name="id" value="{{ (isset($user->id)) ? $user->id : null }}">
 {{ csrf_field() }}
 <div class="content">
+    <div class="form-group">
+        <label for="civilite" class="col-md-3 control-label">Civilite <star>*</star></label>
+        <div class="col-md-8">
+            <select name="civilite" id="civilite" class="form-control">
+                <option value="Mr" {{ $user->civilite == "Mr" ? 'selected':'' }} >Mr</option>
+                <option value="Mme" {{ $user->civilite == "Mme" ? 'selected':'' }} >Mme</option>
+                <option value="Mlle" {{ $user->civilite == "Mlle" ? 'selected':'' }} >Mlle</option>
+            </select>
+        </div>
+    </div>
     <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
         <label for="name" class="col-md-3 control-label">Nom complet <star>*</star></label>
         <div class="col-md-8">

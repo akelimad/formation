@@ -44,6 +44,7 @@ class UserController extends Controller
                 'name' => 'required|max:255',
                 'email' => 'unique:users,email,'.$user->id
             ];
+            $user->civilite = $request->civilite;
             $user->name = $request->name;
             $user->email = $request->email;
             if(!empty($request->password) || !empty($request->password_confirmation)){
@@ -70,6 +71,7 @@ class UserController extends Controller
                 return ["status" => "danger", "message" => $validator->errors()->all()];
             }
             $user = new User();
+            $user->civilite = $request->civilite;
             $user->name= $request->name;
             $user->email= $request->email;
             $user->password= bcrypt($request->password);
