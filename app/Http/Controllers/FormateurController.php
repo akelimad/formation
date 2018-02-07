@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Formateur;
+use App\Prestataire;
 use App\Http\Requests;
 use Illuminate\Http\UploadedFile;
 
@@ -17,7 +18,8 @@ class FormateurController extends Controller
 
     public function create(){
         ob_start();
-        echo view('formateurs.create');
+        $prestataires = Prestataire::select('id', 'nom')->get();
+        echo view('formateurs.create', compact('prestataires'));
         $content = ob_get_clean();
         return ['title' => 'Ajouter un formateur', 'content' => $content];
     }
@@ -28,7 +30,7 @@ class FormateurController extends Controller
             'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
             'type'           => 'required',
             'email'          => 'required|email|unique:formateurs',
-            'tel'            => 'required|regex:/(06)[0-9]{8}$/',
+            'tel'            => 'required|regex:/[0-9]{10}$/',
             'qualification'  => 'required',
             'expertise'      => 'required',
             'cv'             => 'max:500',
@@ -47,6 +49,11 @@ class FormateurController extends Controller
 
         $formateur->nom=$request->input('nom');
         $formateur->type=$request->input('type');
+        if( $request->prestataire_id != 0  && $request->type == "Externe") {
+            $formateur->prestataire_id= $request->prestataire_id;
+        }else{
+            $formateur->prestataire_id= 0;
+        }
         $formateur->email=$request->input('email');
         $formateur->tel=$request->input('tel');
         $formateur->qualification=$request->input('qualification');
@@ -83,7 +90,8 @@ class FormateurController extends Controller
     public function edit($id){
         ob_start();
         $f = Formateur::find($id);
-        echo view('formateurs.edit', ['f' => $f]);
+        $prestataires = Prestataire::select('id', 'nom')->get();
+        echo view('formateurs.edit', ['f' => $f, 'prestataires'=> $prestataires]);
         $content = ob_get_clean();
         return ['title' => 'Modifier un formateur', 'content' => $content];
     }
@@ -125,6 +133,9 @@ class FormateurController extends Controller
     public function destroy($id){
         $formateur = Formateur::find($id);
         $formateur->delete();
+        $cv = $formateur->cv;
+        $filename = public_path().'/cvs/'.$cv;
+        \File::delete($filename);
         return redirect('formateurs');
     }
 
@@ -132,7 +143,7 @@ class FormateurController extends Controller
         $formateur = Formateur::find($request->formateur);
         $selected= $request->formateur;
         $formateurs = Formateur::all();
-        if($request->formateur) $sessions_formateur = $formateur->sessions;
+        if($request->formateur) $sessions_formateur = $formateur->sessions()->paginate(15);
         return view('formateurs.gestion', compact('formateurs', 'selected','sessions_formateur'));
     }
 }

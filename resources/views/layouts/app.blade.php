@@ -320,6 +320,7 @@
     <script src="{{ asset('assets/vendors/bootstrapValidator.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/material.min.js')}}" type="text/javascript"></script>
     <script src="{{ asset('assets/vendors/perfect-scrollbar.jquery.min.js')}}" type="text/javascript"></script>
+    <script src="{{ asset('assets/vendors/jquery-equal-height.min.js')}}" type="text/javascript"></script>
     <!-- Forms Validations Plugin -->
     <script src="{{ asset('assets/vendors/jquery.validate.min.js')}}"></script>
     <!--  Plugin for Date Time Picker and Full Calendar Plugin-->
@@ -332,9 +333,11 @@
     <script src="{{ asset('assets/vendors/jquery.bootstrap-wizard.js')}}"></script>
     <!--  Notifications Plugin    -->
     <script src="{{ asset('assets/vendors/bootstrap-notify.js')}}"></script>
-    <!-- DateTimePicker Plugin -->
+    <!-- DateTimePicker fr Plugin -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
     <script src="{{ asset('assets/vendors/bootstrap-datetimepicker.js')}}"></script>
     <!--  Checkbox, Radio, Switch and Tags Input Plugins -->
+    <!-- DateTimePicker Plugin -->
     <script src="{{ asset('assets/js/bootstrap-checkbox-radio-switch-tags.js')}}"></script>
     <!-- Vector Map plugin -->
     <script src="{{ asset('assets/vendors/jquery-jvectormap.js')}}"></script>

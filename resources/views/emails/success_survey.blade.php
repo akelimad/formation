@@ -57,7 +57,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="content">
-                                    <p class="text-center name">Bonjour Mme/Mr. <b>{{ $participant }},</b> </p>
+                                    <p class="text-center name">Bonjour {{ $civilite }}. <b>{{ $participant }},</b> </p>
                                     <p>
                                         Vous venez de répondre avec succès sur le questionnaire de l'evaluation <b>{{$eval_type}}</b> de la session <b>{{ $session }}</b>
                                     </p>

@@ -48,7 +48,9 @@ class ParticipantController extends Controller
             return ["status" => "danger", "message" => $validator->errors()->all()];
         }
         
+        $participant->civilite=$request->input('civilite');
         $participant->name=$request->input('nom');
+        $participant->last_name=$request->input('last_name');
         $participant->email=$request->input('email');
         $participant->password= bcrypt("default");
         $participant->save();

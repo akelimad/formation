@@ -57,9 +57,9 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="content">
-                                    <p class="text-center name">Bonjour Mme/Mr. <b>{{ $participant }},</b> </p>
+                                    <p class="text-center name">Bonjour {{ $civilite }}. <b>{{ $participant }},</b> </p>
                                     <p>
-                                        Dans le cadre de l’évaluation <b>{{$evaluation_type}}</b> de la session de formation <b>{{$session}}</b>, vous demandons de bien vouloir remplir le questionnaire ci-après <br>
+                                        Dans le cadre de l’évaluation <b>{{$evaluation_type}}</b> de la session de formation <b>{{$session}}</b>,nous vous demandons de bien vouloir remplir le questionnaire ci-après <br>
                                         <a href="{{ url('/questionnaire/'.$evaluation_id.'/'.$token.'/questions') }}">
                                             {{ url('/questionnaire/'.$evaluation_id.'/'.$token.'/questions') }}
                                         </a>

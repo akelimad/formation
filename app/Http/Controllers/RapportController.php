@@ -45,6 +45,8 @@ class RapportController extends Controller
         ->groupBy(function($date) {
             return $this->getMonthFR(Carbon::parse($date->start)->format('F')); // grouping by months
         });
+
+        //dd($budgetsPerMonthResult);
         $budgetCount = [];
         $budgetsPerMonth = [];
         $somme= 0;
@@ -54,8 +56,8 @@ class RapportController extends Controller
                     $somme =$somme + $budget->prevu;
                     $budgetCount[$key] = $somme;
                 }
-                $somme= 0;
             }
+            $somme= 0;
         }
         foreach($months as $month){
             if(!empty($budgetCount[$month])){

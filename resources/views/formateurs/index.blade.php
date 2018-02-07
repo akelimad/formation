@@ -1,5 +1,5 @@
 @extends('layouts.app')
-
+@section('pageTitle', 'Formateurs')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -17,6 +17,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Type</th>
+                                    <th>Prestataire</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
                                     <th>Rating</th>
@@ -28,6 +29,7 @@
                                 <tr>
                                     <td> {{ $formateur->nom }} </td>
                                     <td> {{ $formateur->type }} </td>
+                                    <td> @if($formateur->prestataire_id != 0) {{$formateur->prestataire->nom}} @else --- @endif </td>
                                     <td> {{ $formateur->email }} </td>
                                     <td> {{ $formateur->tel }} </td>
                                     <td> {{ $formateur->rating ? $formateur->rating .'%' : '0%' }} </td>
@@ -47,6 +49,7 @@
                                 <tr>
                                     <th>Nom</th>
                                     <th>Type</th>
+                                    <th>Prestataire</th>
                                     <th>Email</th>
                                     <th>Téléphone</th>
                                     <th>Rating</th>

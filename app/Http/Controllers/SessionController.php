@@ -56,8 +56,8 @@ class SessionController extends Controller
             'cour'           => 'required',
             'formateur'      => 'required',
             'lieu'           => 'required',
-            'start'          => 'required | date_format:"d/m/Y H:i"',
-            // 'end'            => 'required | date_format:"d/m/Y H:i"|after:start',
+            'start'          => 'required | date_format:"d/m/Y H:i"|before:end',
+            'end'            => 'required | date_format:"d/m/Y H:i"',
             'methode'        => 'required',
             'statut'         => 'required',
             'salle'          => 'required',
@@ -139,10 +139,10 @@ class SessionController extends Controller
             if($formateur_occupe>0) {
                 $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
             }
-            $now = Carbon::now()->format('Y-m-d h:i');
-            // if($request->statut == "Terminé" && $end > $now){
-            //     $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
-            // }
+            $now = Carbon::now()->format('Y-m-d H:i');
+            if($request->statut == "Terminé" && $end > $now){
+                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            }
 
             $prevus = [];
             $presents = [];
@@ -241,9 +241,9 @@ class SessionController extends Controller
             if($formateur_occupe>0) {
                 $messages->add('formateur', 'Le formateur affecté n\'est pas disponible pour ces dates!');
             }
-            // if($request->statut == "Terminé" && $request->end > $now) {
-            //     $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
-            // }
+            if($request->statut == "Terminé" && $request->end > $now) {
+                $messages->add('horraire', 'La session ne peut être terminée sauf si la date fin est depassée !');
+            }
             if(count($messages)>0){ 
                 return ["status" => "danger", "message" => $messages];
             }else{
@@ -278,12 +278,17 @@ class SessionController extends Controller
                         $sent = Mail::send('emails.register_session', 
                             [
                                 'session' => $session->nom, 
+                                'civilite'=>$p->civilite, 
                                 'participant'=>$p->name, 
                                 'email'=>$p->email, 
-                                'password'=> $password, 
+                                'password'=> $password,
+                                'start'=> $session->start,
+                                'end'=> $session->end,
+                                'cours'=> $session->cour->titre,
+                                'lieu'=> $session->lieu,
                             ]
-                            , function ($m) use($p){
-                                $m->to($p->email, $p->name)->subject("Confirmation d'inscription");
+                            , function ($m) use($p, $session){
+                                $m->to($p->email, $p->name)->subject("Confirmation d'inscription à la session ".$session->nom);
                         });
                     }
                 }

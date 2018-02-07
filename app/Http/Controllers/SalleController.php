@@ -107,22 +107,22 @@ class SalleController extends Controller
 
     public function destroy($id){
         $salle = Salle::find($id);
+        $salle->delete();
         $photo = $salle->photo;
         $filename = public_path().'/sallePhotos/'.$photo;
         \File::delete($filename);
-        $salle->delete();
         return redirect('salles');
     }
 
     public function gestion(Request $request){
-        $now = Carbon::now()->format('Y-m-d h:i:s');
+        $now = Carbon::now()->format('Y-m-d');
         $selected= $request->salle;
         $salles = Salle::select('id', 'numero')->get();
         if($request->salle) {
             $salle = Salle::find($request->salle);
             $occupations = Session::with('salle')
                 ->select('id', 'nom','start', 'end')
-                ->where('salle_id', '=', $salle->id)->where('start','>=', $now)
+                ->where('salle_id', '=', $salle->id)->where(\DB::raw("(DATE_FORMAT(start,'%Y-%m-%d'))"),">=", $now)
                 ->get();
             //dd($occupations); 
             // foreach ($occupations as $occupation) {

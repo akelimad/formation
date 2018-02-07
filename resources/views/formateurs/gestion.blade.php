@@ -74,6 +74,7 @@
                                 </tfoot>
                             </table>
                         </div>
+                        {{ $sessions_formateur->links() }}
                     @elseif(isset($sessions_formateur) && count($sessions_formateur)<= 0)
                         @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
                     @endif

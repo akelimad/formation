@@ -57,15 +57,11 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="content">
-                                    <p class="text-center name">Bonjour Mme/Mr. <b>{{ $participant }},</b> </p>
+                                    <p class="text-center name">Bonjour {{ $civilite }}. <b>{{ $participant }},</b> </p>
 
-                                    <p>Nous vous remercions pour l’intérêt que vous portez à notre institution.</p>
+                                    <p>Vous êtes inscris pour la formation : <b>{{ $session }}</b> .qui commencera le <b>{{ Carbon\Carbon::parse($start)->format('d/m/Y H:i')}}</b> et se terminera le <b>{{ Carbon\Carbon::parse($end)->format('d/m/Y H:i')}}</b>, la formation aura lieu à <b>{{ $lieu }}</b> </p>
 
-                                    <p>Votre inscription à la session <b>{{ $session }}</b> a bien été enregistrée.</p>
-
-                                    <p>Nous vous rappelons vos données de connexion vous permettront d'accéder à votre espace membre et de voir les sessions auquelles vous êtes invités</p>
-
-                                    <p>le lien: <a href="{{ url('/login') }}">{{ url('/login') }}</a></p>
+                                    <p>Vous pouvez consulter le détail de la formation sur le lien : <a href="{{ url('/login') }}">{{ url('/login') }}</a></p>
 
                                     <p class="btn"><a href="{{ url('/login') }}" class="btn-primary">Visiter votre espace</a></p>
 

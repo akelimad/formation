@@ -25,7 +25,7 @@
                             <tbody>
                                 @foreach ($users as $user)
                                 <tr>
-                                    <td> {{ $user->name }} </td>
+                                    <td> {{ $user->name }} {{ $user->last_name }} </td>
                                     <td> {{ $user->email }} </td>
                                     <td> {{ Carbon\Carbon::parse($user->created_at)->format('d/m/Y H:i')}} </td>
                                     <td>

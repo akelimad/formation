@@ -25,7 +25,7 @@
                                 <div class="col-md-2">
                                     <div class="form-group label-floating">
                                         <label class="control-label"> Statut </label>
-                                        <select class="form-control" name="statut">
+                                        <select class="btn btn-default" name="statut">
                                             <option selected value="">-- select --</option>
                                             <option value="Aprobation en attente" @if(isset($selected) && $selected == "Aprobation en attente") selected @endif >Aprobation en attente</option>
 

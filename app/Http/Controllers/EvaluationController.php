@@ -139,7 +139,9 @@ class EvaluationController extends Controller
                 'note' => $note, 
                 'taux'=>$taux,
                 'eval_id' => $evaluation->id,
-                'eval_type' => $evaluation->type,
+                'eval_nom' => $evaluation->nom,
+                'session_nom' => $session->nom,
+                'eval_type' => $evaluation->type == "a-chaud" ? "à chaud": "à froid",
                 'participants_repondus' => $participants_repondus,
                 'participants_nn_repondus' => $participants_nn_repondus,
                 // 'sess_participants' => $part_presents,
@@ -210,14 +212,15 @@ class EvaluationController extends Controller
                         $p = User::find($part->user_id);
                         $sent = Mail::send('emails.send_survey', 
                             [
+                                'civilite' => $p->civilite,
                                 'session' => $session->nom, 
                                 'participant'=>$p->name, 
                                 'token'=> md5($p->id.$p->email.$evaluation->id),
                                 'evaluation_id' => $evaluation->id,
                                 'evaluation_type' => $eval_type
                             ]
-                            , function ($m) use($p){
-                                $m->to($p->email, $p->name)->subject('Evaluation à chaud');
+                            , function ($m) use($p, $session){
+                                $m->to($p->email, $p->name)->subject('Evaluation à chaud de la session '.$session->nom);
                         });
                     }
                     $evaluation->envoye_le= $now;
@@ -229,14 +232,15 @@ class EvaluationController extends Controller
                         $p = User::find($part->user_id);
                         $sent = Mail::send('emails.send_survey', 
                             [
+                                'civilite' => $p->civilite,
                                 'session' => $session->nom, 
                                 'participant'=>$p->name, 
                                 'token'=> md5($p->id.$p->email.$evaluation->id),
                                 'evaluation_id' => $evaluation->id,
                                 'evaluation_type' => $eval_type
                             ]
-                            , function ($m) use($p){
-                                $m->to($p->email, $p->name)->subject('Evaluation à froid');
+                            , function ($m) use($p, $session){
+                                $m->to($p->email, $p->name)->subject('Evaluation à froid de la session '.$session->nom);
                         });
                     }
                     $evaluation->envoye_le= $now;
@@ -290,6 +294,7 @@ class EvaluationController extends Controller
                 $p = User::find($participant);
                 $sent = Mail::send('emails.send_survey', 
                     [
+                        'civilite' => $p->civilite,
                         'session' => $session->nom, 
                         'participant'=>$p->name, 
                         'token'=> md5($p->id.$p->email.$evaluation->id),

@@ -2,6 +2,33 @@
 body{
     overflow: hidden;
 }
+/*.prestataires-select {
+    display: none;
+}*/
+.header-title span{
+    text-transform: uppercase;
+    color: black;
+}
+.header-title h4{
+    padding: 0.7em;
+    border-left: 3px solid #647b3c;
+    background: #efefef;
+}
+.labelReponses{
+    float: right;
+    margin-bottom: 1.2em;
+}
+.questionnaire .toolbar{
+    padding: 0.7em;
+    font-weight: bold;
+    font-size: 17px;
+    text-align: center;
+    border-bottom: 2px solid #f16f6f;
+}
+.descSurvey{
+    border: 1px solid #ccc7c7;
+    padding: 10px;
+}
 .wrapper-survey{
     background: #8fa9aa;
     min-height: 100vh;
@@ -18,10 +45,12 @@ body{
 .wrapper-survey .card .title {
     margin: 0;
     color: #252422;
-    font-weight: 300;
     background: #f98686;
     padding: 1em;
     margin-bottom: 0.6em;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 3px;
 }
 .wrapper-survey .form-group {
     margin-bottom: 15px;
@@ -33,9 +62,15 @@ body{
     max-height: 100%;
 }
 .cours-img-wrap{
-    max-height: 274px;
     text-align: center;
     overflow: hidden;
+    border-bottom: 1px solid #efefef;
+}
+.cours-item .card-title{
+    text-transform: uppercase;
+}
+.cours-img-wrap{
+    height: 150px;
 }
 .cours-img-wrap img{
     -webkit-transition: all .5s ease-in-out;
@@ -43,11 +78,22 @@ body{
     transition: all .5s ease-in-out;
 }
 .cours-item:hover img{
-    transform: rotate(3deg) scale(1.1);
+    transform: scale(1.1);
 }
-.cours .card{
+.cours-item{
+    -webkit-transition: all .5s ease-in-out;
+    -moz-transition: all .5s ease-in-out;
+    transition: all .5s ease-in-out;
+    box-shadow: rgba(58, 56, 56, 0.35) 3px 13px 30px;
+}
+.cours-item:hover{
     box-shadow: none;
-    border: 1px solid #dad4d4;
+}
+.cours-item:hover .action{
+    background: #ff6c00;
+}
+.cours-item:hover .action a{
+    color: white;
 }
 .details-session p i{
     width: 31px;
@@ -67,6 +113,21 @@ body{
 .search-cours:focus{
     width: 100%;
     border: 1px solid #55a5b9
+}
+.action{
+    border-top: 1px solid rgba(0,0,0,.1);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 15px 0;
+    background: rgba(0,0,0,.03);
+    text-align: center;
+    font-size: 18px;
+}
+.action:hover{
+    background: #ff6c00;
+}
+.action:hover a{
+    color: white;
 }
 .panel{
     background: none;
@@ -409,8 +470,11 @@ select.session {
     box-shadow: -1px 3px 11px 1px #50403d;
 }
 
-.standard .card, .personnalise .card{
-    box-shadow: 1px 1px 2px 3px rgba(204, 197, 185, 0.5);
+.evaluations-wrap i{
+    color: #30a3c7;
+}
+.standard .card, .personnalise .card, .evaluations-wrap .card{
+    box-shadow: 1px 1px 2px 3px rgba(154, 152, 149, 0.5);
 }
 .modal-header {
     border: 0 none;
@@ -420,6 +484,18 @@ select.session {
 }
 .fc-unthemed td.fc-today{
     background: #ec813f;
+}
+
+@media (max-width: 480px) {
+    .cours h3{
+        font-size: 1.5em;
+    }
+    .search-cours{
+        width: 100%;
+    }
+    .login-page > .content, .lock-page > .content {
+        padding-top: 5vh;
+    }
 }
 
 @media (max-width: 1400px) {

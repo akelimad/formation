@@ -26,8 +26,8 @@
                                 <tr>
                                     <th>Session</th>
                                     <th>Budget</th>
-                                    <th>Prevu</th>
-                                    <th>Realisé</th>
+                                    <th>Prévu</th>
+                                    <th>Réalisé</th>
                                     <th>Ajustement</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>
@@ -67,8 +67,8 @@
                                 <tr>
                                     <th>Session</th>
                                     <th>Budget</th>
-                                    <th>Prevu</th>
-                                    <th>Realisé</th>
+                                    <th>Prévu</th>
+                                    <th>Réalisé</th>
                                     <th>Ajustement</th>
                                     <th class="disabled-sorting text-right">Actions</th>
                                 </tr>

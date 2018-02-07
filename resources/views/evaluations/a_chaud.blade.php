@@ -5,35 +5,40 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="content">
+                <div class="content evaluations-wrap">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12 header-title">
+                            <h4> Statistiques de l'évaluation <span class="alert alert-info">{{ $eval_type }}</span>: {{ $eval_nom }}  pour la session:  <span class="alert alert-info">{{$session_nom}} </span> </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 eh">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Les participants repondus: {{ count($participants_repondus) }}</h4>
+                                    <h4 class="title"><i class="fa fa-users"></i> Les participants repondus: {{ count($participants_repondus) }}</h4>
                                 </div>
 
                                 <div class="content card-padding">
-                                    <div class="chart chart-js-container">
+                                    <div class="">
                                         <ul class="list-unstyled">
                                             @foreach($participants_repondus as $p)
-                                                <badge class="badge">{{$p->name}}</badge>
+                                                <span class="badge" title="{{ $p->email }}">{{$p->name}}</span>
                                             @endforeach
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6 eh">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Les participants nom repondus: {{ count($participants_nn_repondus) }}</h4>
+                                    <h4 class="title"><i class="fa fa-users"></i> Les participants non repondus: {{ count($participants_nn_repondus) }}</h4>
                                 </div>
                                 <div class="content card-padding">
-                                    <div class="chart chart-js-container">
+                                    <div class="">
                                         <ul class="list-unstyled">
                                             @foreach($participants_nn_repondus as $p)
-                                                <badge class=" badge">{{$p}}</badge>
+                                                <span class=" badge">{{$p}}</span>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -45,7 +50,7 @@
                         <form action="{{url('evaluations/'.$eval_id.'/'.$eval_type)}}" method="get">
                             <div class="content">
                                 <div class="col-md-5">
-                                    <h4 class="title">choisissez un participant pour voir ses resultats</h4>
+                                    <h4 class="title"><i class="fa fa-filter"></i> Choisissez un participant pour voir ses réponses</h4>
                                 </div>
                                 <div class="col-md-3">
                                     <select class="selectpicker" name="participant" data-style="btn btn-primary btn-round" title="Single Select" data-size="7" required="">
@@ -65,17 +70,26 @@
                         </form>
                     </div>
                     <div class="row">
-                        <div class="col-md-8">
+                        <div class="col-md-12">
                             <div class="card evaluations">
                                 <div class="header">
-                                    <h4 class="title">les reponses par chaque questions</h4>
+                                    <h4 class="title"><i class="fa fa-check"></i> Les réponses par chaque question</h4>
                                 </div>
-
-                                <div class="content card-padding">
-                                    <div class="chart chart-js-container">
-                                        <canvas id="densityChart"></canvas>
+                                <div class="col-md-8 col-md-offset-2">
+                                    <div class="content card-padding">
+                                        <div class="chart chart-js-container">
+                                            <canvas id="densityChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="labelReponses">
+                                        <span class="label label-success">1. Fortement insatisfait</span>
+                                        <span class="label label-info">2. Pas satisfait</span>
+                                        <span class="label label-default">3. Neutre</span>
+                                        <span class="label label-warning">4. Satisfait</span>
+                                        <span class="label label-danger">5. Fortement satisfait</span>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                     </div>
@@ -83,7 +97,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">la note globale: {{$note}}</h4>
+                                    <h4 class="title"><i class="fa fa-info-circle"></i> La note globale: {{ $note }} </h4>
                                 </div>
                                 <div class="content card-padding">
                                     <fieldset class="rating-note" data-value="{{$note_floor}}">
@@ -125,7 +139,7 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title">Taux de reponse: {{$taux}}%</h4>
+                                    <h4 class="title"><i class="fa fa-info-circle"></i> Taux de réponse: {{$taux}}%</h4>
                                 </div>
                                 <div class="content card-padding">
                                     <div id="circularGaugeContainer"></div>
@@ -154,7 +168,7 @@
         Chart.defaults.global.defaultFontFamily = "Arial";
         Chart.defaults.global.defaultFontSize = 13;
         var densityData = {
-            label: 'Taux de reponses',
+            label: 'Taux de réponses',
             data: [
                 @foreach($reponses as $reponse)
                     {{$reponse->total}} , 

@@ -19,19 +19,24 @@ class QuestionController extends Controller
     }
 
     public function questionnaire($id, $token){
+        $evaluation= Evaluation::find($id);
+        $session= $evaluation->session;
         $q = Question::where('evaluation_id', $id)->get();
         $tokens = Token::where(['token' => $token])->get();
         if(count($tokens) > 0){
             return view('questionnaires.already_answred');
         }else{
-            return view('questionnaires.index',['questions' => $q, 'eval_id' => $id, 'token' => $token ]);
+            return view('questionnaires.index',[
+                'questions' => $q, 'eval_id' => $id, 'token' => $token , 'session'=>$session]);
         }
     }
 
     public function show($id){
         ob_start();
         $q = Question::where('evaluation_id', $id)->get();
-        echo view('questionnaires.show',['questions' => $q ]);
+        $evaluation= Evaluation::find($id);
+        $session= $evaluation->session;
+        echo view('questionnaires.show',['questions' => $q , 'session' => $session]);
         $content = ob_get_clean();
         return ['title' => 'Le questionnaire', 'content' => $content];
     }
@@ -127,6 +132,7 @@ class QuestionController extends Controller
                 $participant_email = $participant->email;
                 $participant_nom = $participant->name;
                 $participant_id = $participant->id;
+                $participant_civilite = $participant->civilite;
             } 
         }
 
@@ -145,12 +151,13 @@ class QuestionController extends Controller
 
         $sent = Mail::send('emails.success_survey', 
             [
+                'civilite' => $participant_civilite,
                 'participant'=>$participant_nom, 
                 'eval_type'=>$eval_type,
                 'session'=>$session->nom 
             ]
-            , function ($m) use($participant_email, $participant_nom){
-                $m->to($participant_email, $participant_nom)->subject('Confirmation');
+            , function ($m) use($participant_email, $participant_nom, $evaluation, $session){
+                $m->to($participant_email, $participant_nom)->subject("Confirmation de la réponse sur le questionnaire de l'évaluation ".$evaluation->nom. " de la session ".$session->nom);
         });
 
         return view('questionnaires.survey_success');

@@ -83,12 +83,12 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'role:collaborateur']], 
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires']], function() {
-    Route::get('prestataires', 'FournisseurController@index');
-    Route::get('prestataires/create', 'FournisseurController@create');
-    Route::post('prestataires/store', 'FournisseurController@store');
-    Route::get('prestataires/{id}', 'FournisseurController@show');
-    Route::get('prestataires/{id}/edit', 'FournisseurController@edit');
-    Route::delete('prestataires/{id}/delete', ['middleware' => ['auth', 'permission:delete-prestataires'], 'uses' =>'FournisseurController@delete']);
+    Route::get('prestataires', 'PrestataireController@index');
+    Route::get('prestataires/create', 'PrestataireController@create');
+    Route::post('prestataires/store', 'PrestataireController@store');
+    Route::get('prestataires/{id}', 'PrestataireController@show');
+    Route::get('prestataires/{id}/edit', 'PrestataireController@edit');
+    Route::delete('prestataires/{id}/delete', ['middleware' => ['auth', 'permission:delete-prestataires'], 'uses' =>'PrestataireController@delete']);
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {

@@ -8,6 +8,7 @@ use App\User;
 use App\Http\Requests;
 use Excel;
 use DateTime;
+use Intervention\Image\Facades\Image as Image;
 
 class CourController extends Controller
 {
@@ -51,7 +52,7 @@ class CourController extends Controller
         }
         
         $cour->titre=$request->input('titre');
-        $cour->description=$request->input('description');
+        $cour->description=trim($request->input('description'));
         $cour->devise=$request->input('devise');
         $cour->prix=$request->input('prix');
         $cour->duree=$request->input('duree');
@@ -128,6 +129,8 @@ class CourController extends Controller
         $cour->delete();
         $filename = public_path().'/coursPhotos/'.$cour->photo;
         \File::delete($filename);
+        $filename1 = public_path().'/coursSupport/'.$cour->support;
+        \File::delete($filename1);
         return redirect('cours');
     }
 
@@ -153,10 +156,12 @@ class CourController extends Controller
 
     public function usersCours(Request $request){
         $user = User::find($request->user);
-        $users = User::all();
+        $users = User::with('roles')->whereHas('roles', function ($query) {
+            $query->where('name', '!=', 'collaborateur');
+        })->get();
         $selected= $request->user;
         if($request->user){
-            $user_cours = $user->cours;
+            $user_cours = $user->cours()->paginate(15);
         }
         return view('cours.gestion', compact('users', 'selected','user_cours'));
     }

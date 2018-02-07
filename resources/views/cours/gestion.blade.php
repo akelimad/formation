@@ -62,6 +62,8 @@
                             </tfoot>
                         </table>
                     </div>
+                    {{ $user_cours->links() }}
+                    
                     @elseif(isset($user_cours) && count($user_cours)<=0)
                         @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée ... !!" ])
                     @endif

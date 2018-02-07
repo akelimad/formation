@@ -59,7 +59,7 @@
                 <div class="col-md-6">
                     <div class="form-group label-floating">
                         <label class="control-label">Methode <star>*</star></label>
-                        <select class="selectpicker  form-control" name="methode" required="required">
+                        <select class="form-control" name="methode" required="required">
                             <option disabled selected>-- select --</option>
                             <option value="Salle de classe" selected="">Salle de classe</option>
                             <option value="Autoformation">Autoformation</option>
@@ -123,10 +123,6 @@
             width: "100%",
             'placeholder':'Selectionnez',
         });
-        // $('.select2').select2({
-        //     width: "100%",
-        //     'placeholder':'Selectionnez',
-        // });
         demo.initFormExtendedDatetimepickers();
     })
 </script>

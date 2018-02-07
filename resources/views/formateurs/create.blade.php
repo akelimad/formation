@@ -13,9 +13,18 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Type <star>*</star></label>
-                <select name="type" id="type" class="form-control" required="required">
+                <select name="type" id="formateur-type" class="form-control" required="required">
                     <option value="Interne">Interne</option>
                     <option value="Externe">Externe</option>
+                </select>
+            </div>
+            <div class="form-group prestataires-select" style="display: none;">
+                <label class="label-control">Prestataire <star>*</star></label>
+                <select class="form-control" name="prestataire_id" required="required">
+                    <option value=""> == Select ==</option>
+                    @foreach($prestataires as $p)
+                        <option value="{{ $p->id }}"> {{ $p->nom }} </option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -30,7 +39,7 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Tel <star>*</star></label>
-                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="(06)[0-9]{8}" />
+                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="[0-9]{10}" />
             </div>
         </div>
     </div>
@@ -85,3 +94,18 @@
     </div>
     <div class="category form-category"><star>*</star> Champ obligatoire</div>
 </div>
+
+<script>
+    $(function() {
+        $("#formateur-type").on('change', function(){
+            if($(this).val() === "Externe"){
+                $(".prestataires-select").show()
+                $(".prestataires-select select").prop("required", true);
+            }else{
+                $(".prestataires-select").hide()
+                $(".prestataires-select select").prop("required", false);
+            }
+        })
+        $("#formateur-type").change()
+    })
+</script>

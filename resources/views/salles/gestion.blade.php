@@ -10,7 +10,7 @@
                         <form action="" method="get">
                             <div class="content">
                                 <div class="col-md-6">
-                                    <h5 class="title">Selectionnez une salle pour voir ses occupations</h5>
+                                    <h5 class="title">Selectionnez une salle pour voir ses occupations prochaines</h5>
                                 </div>
                                 <div class="col-md-4">
                                     <select class="form-control" name="salle" required="">

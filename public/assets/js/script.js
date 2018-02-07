@@ -1,5 +1,6 @@
 $(window).on('load', function() {
-    $('.spinner-wp').fadeOut()
+    $('.spinner-wp').fadeOut();
+    $('.eh').jQueryEqualHeight();
 });
 $(function() {
 
@@ -479,7 +480,6 @@ $(function() {
             allowOutsideClick: false     
         }); 
     });
-
 
 
 });

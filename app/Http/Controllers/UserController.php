@@ -46,6 +46,7 @@ class UserController extends Controller
             ];
             $user->civilite = $request->civilite;
             $user->name = $request->name;
+            $user->last_name = $request->last_name;
             $user->email = $request->email;
             if(!empty($request->password) || !empty($request->password_confirmation)){
                 $rules = [
@@ -73,6 +74,7 @@ class UserController extends Controller
             $user = new User();
             $user->civilite = $request->civilite;
             $user->name= $request->name;
+            $user->last_name = $request->last_name;
             $user->email= $request->email;
             $user->password= bcrypt($request->password);
             $user->save();

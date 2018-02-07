@@ -23,7 +23,7 @@
                             <tbody>
                                 @foreach ($participants as $participant)
                                 <tr>
-                                    <td> {{ $participant->name }} </td>
+                                    <td> {{ $participant->name }} {{ $participant->last_name }} </td>
                                     <td> {{ $participant->email }} </td>
                                     <td class="text-right">
                                         {{ csrf_field() }}

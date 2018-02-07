@@ -30,6 +30,7 @@
                                             <label for="password" class="col-md-4 control-label">Mot de passe</label>
                                             <div class="col-md-6">
                                                 <input id="password" type="password" class="form-control" name="password" required="required">
+                                                <i class="fa fa-eye fa-2x" onclick="showPassword()" style="cursor: pointer;"></i>
                                             </div>
                                         </div>
 
@@ -43,7 +44,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <div class="col-md-6 col-md-offset-4">
+                                            <div class="col-md-6 col-md-offset-4 text-center">
                                                 <button type="submit" class="btn btn-primary">
                                                     <i class="fa fa-btn fa-sign-in"></i> Se connecter
                                                 </button>
@@ -60,4 +61,26 @@
             </div>
         </div>
     </div>
+
 @endsection
+
+@section('javascript')
+    <script>
+            function showPassword() {
+                var password = document.getElementById("password");;
+                if (password.type === "password") {
+                    password.type = "text";
+                } else {
+                    password.type = "password";
+                }
+            }
+        $(function(){
+            $(".fa-eye").click(function(){
+                $(this).toggleClass("fa-eye fa-eye-slash")
+            })
+        })
+
+    </script>
+@endsection
+
+

@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Fournisseur;
+use App\Prestataire;
 use App\Http\Requests;
 
-class FournisseurController extends Controller
+class PrestataireController extends Controller
 {
     public function index(){
-        $prestataires = Fournisseur::OrderBy('id', 'desc')->paginate(10);
+        $prestataires = Prestataire::OrderBy('id', 'desc')->paginate(10);
         return view('prestataires.index', ['prestataires'=>$prestataires]);
     }
 
@@ -27,15 +27,15 @@ class FournisseurController extends Controller
             'nom'            => 'required|regex:/^[a-zA-Z ]+$/',
             'type'           => 'required',
             'specialite'      => 'required',
-            'tel'             => 'required|regex:/(06)[0-9]{8}$/',
-            'fax'               => 'required|regex:/(05)[0-9]{8}$/',
+            'tel'             => 'required|regex:/[0-9]{10}$/',
+            'fax'               => 'required|regex:/[0-9]{10}$/',
             'email'              => 'required',
             'personne_contacter' => 'required|regex:/^[a-zA-Z ]+$/',
         ];
         if($id) {
-            $prestataire = Fournisseur::find($id);
+            $prestataire = Prestataire::find($id);
         } else {
-            $prestataire = new Fournisseur();
+            $prestataire = new Prestataire();
         }
 
         $validator = \Validator::make($request->all(), $rules);
@@ -66,7 +66,7 @@ class FournisseurController extends Controller
 
     public function edit($id){
         ob_start();
-        $p = Fournisseur::find($id);
+        $p = Prestataire::find($id);
         echo view('prestataires.edit', ['p' => $p]);
         $content = ob_get_clean();
         return ['title' => 'Editer les infos du prestataire', 'content' => $content];
@@ -74,7 +74,7 @@ class FournisseurController extends Controller
 
     public function show($id){
         ob_start();
-        $prestataire =  Fournisseur::find($id);
+        $prestataire =  Prestataire::find($id);
         echo view('prestataires.show', compact('prestataire'));
         $content = ob_get_clean();
         return ['title' => 'Détails du prestataire', 'content' => $content];
@@ -95,7 +95,7 @@ class FournisseurController extends Controller
     //         return ["status" => "danger", "message" => $validator->errors()->all()];
     //     }
 
-    //     $prestataire = Fournisseur::find($id);
+    //     $prestataire = Prestataire::find($id);
     //     $prestataire->nom=$request->input('nom');
     //     $prestataire->type=$request->input('type');
     //     $prestataire->specialite=$request->input('specialite');
@@ -117,7 +117,7 @@ class FournisseurController extends Controller
     // }
 
     public function delete($id){
-        $prestataire =  Fournisseur::find($id);
+        $prestataire =  Prestataire::find($id);
         if($prestataire->delete()) {
             return ['title' => '<i class="fa fa-check-circle"></i>&nbsp;Le prestataire a été bien supprimé.'];
         } else {

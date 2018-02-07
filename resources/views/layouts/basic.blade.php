@@ -29,9 +29,6 @@
     <link href="{{ asset('assets/css/alerts.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
     <style>
-        body{
-            overflow: hidden;
-        }
         .main-panel > .content{
             padding: 0
         }
@@ -46,6 +43,7 @@
         </div>
 
     </div>
-
+    <script src="{{ asset('assets/vendors/jquery-3.1.1.min.js')}}" type="text/javascript"></script> 
+    @yield('javascript')
 </body>
 </html>

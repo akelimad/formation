@@ -45,13 +45,13 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">N° de téléphone <star>*</star></label>
-                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="(06)[0-9]{8}" />
+                <input class="form-control" name="tel" type="tel" placeholder="0600000000" required="required" pattern="[0-9]{10}" />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">N° de Fax <star>*</star></label>
-                <input class="form-control" name="fax" type="tel" placeholder="0500000000" required="required" pattern="(05)[0-9]{8}"/>
+                <input class="form-control" name="fax" type="tel" placeholder="0500000000" required="required" pattern="[0-9]{10}"/>
             </div>
         </div>
     </div>

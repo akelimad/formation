@@ -1,11 +1,6 @@
 import $ from 'jquery'
 
 $(document).ready(function () {
-  $.ajaxSetup({
-    headers: {
-      'X-CSRF-TOKEN': document.head.querySelector('[name="csrf-token"]').content
-    }
-  })
   // Check all table rows
   $('.chmTable_checkAll').change(function () {
     $('.chmTable_checkAll').not($(this)).prop('checked', $(this).is(':checked'))

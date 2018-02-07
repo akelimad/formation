@@ -13,9 +13,18 @@
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Type <star>*</star></label>
-                <select name="type" id="type" class="form-control" required="required">
+                <select name="type" id="formateur-type" class="form-control" required="required">
                     <option value="Interne" {{$f->type == 'Interne' ? 'selected':''}}>Interne</option>
                     <option value="Externe" {{$f->type == 'Externe' ? 'selected':''}}>Externe</option>
+                </select>
+            </div>
+            <div class="form-group prestataires-select">
+                <label class="label-control">Prestataire <star>*</star></label>
+                <select class="form-control" name="prestataire_id" required="required">
+                    <option value=""> == Select ==</option>
+                    @foreach($prestataires as $p)
+                        <option value="{{ $p->id }}" {{ $p->id == $f->prestataire_id ? 'selected':'' }}> {{ $p->nom }} </option>
+                    @endforeach
                 </select>
             </div>
         </div>
@@ -93,3 +102,18 @@
     </div>
     <div class="category form-category"><star>*</star> Champ obligatoire</div>
 </div>
+
+<script>
+    $(function() {
+        $("#formateur-type").on('change', function(){
+            if($(this).val() === "Externe"){
+                $(".prestataires-select").show()
+                $(".prestataires-select select").prop("required", true);
+            }else{
+                $(".prestataires-select").hide()
+                $(".prestataires-select select").prop("required", false);
+            }
+        })
+        $("#formateur-type").change()
+    })
+</script>
