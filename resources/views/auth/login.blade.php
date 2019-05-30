@@ -2,6 +2,19 @@
 
 @section('content')
 
+<style>
+    .passwordContainer {
+        position: relative;
+    }
+    .passwordContainer .showPassIcon {
+        position: absolute;
+        right: 0;
+        top: 0;
+        padding-right: 15px;
+        padding-top: 5px;
+    }
+</style>
+
 <div class="wrapper wrapper-full-page">
         <div class="full-page login-page"  data-color="blue">
             <div class="content">
@@ -28,9 +41,9 @@
 
                                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                                             <label for="password" class="col-md-4 control-label">Mot de passe</label>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 passwordContainer">
                                                 <input id="password" type="password" class="form-control" name="password" required="required">
-                                                <i class="fa fa-eye fa-2x" onclick="showPassword()" style="cursor: pointer;"></i>
+                                                <i class="fa fa-eye fa-2x showPassIcon" onclick="showPassword()" style="cursor: pointer;"></i>
                                             </div>
                                         </div>
 
