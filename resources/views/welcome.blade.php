@@ -66,7 +66,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-6">
-            <div class="card" style="min-height: 508px">
+            <div class="card" style="height: 508px;overflow: auto;">
                 <div class="header card-header-text">
                     <h4 class="title">Les participants aux sessions</h4>
                     <!-- <p class="category">New employees on 15th December, 2016</p> -->
@@ -105,7 +105,7 @@
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
-            <div class="card" style="min-height: 508px">
+            <div class="card" style="height: 508px;overflow: auto;">
                 <div class="header card-header-text">
                     <h4 class="title">Les sessions prochaines</h4>
                 </div>
