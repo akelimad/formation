@@ -17,7 +17,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" >
 
     <!--  Paper Dashboard CSS    -->
-    <link href="{{ asset('assets/css/amaze.css')}}" rel="stylesheet" >
+    <link href="{{ asset('assets/css/app.css')}}" rel="stylesheet" >
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{ asset('assets/css/demo.css')}}" rel="stylesheet" >

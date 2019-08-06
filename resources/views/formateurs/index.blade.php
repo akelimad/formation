@@ -6,11 +6,11 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content"> 
-                    <h4 class="title">La liste des formateurs <span class="badge">{{$formateurs->total()}}</span> <a href="javascript:void(0)" onclick="return chmFormateur.create()" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter""> <i class="fa fa-plus"></i>  </a></h4>
+                    <h4 class="title">La liste des formateurs <span class="badge">{{$results->total()}}</span> <a href="javascript:void(0)" onclick="return chmFormateur.create()" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter""> <i class="fa fa-plus"></i>  </a></h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
-                    @if(count($formateurs)>0)
+                    @if(count($results)>0)
                     <div class="material-datatables">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -25,7 +25,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($formateurs as $formateur)
+                                @foreach ($results as $formateur)
                                 <tr>
                                     <td> {{ $formateur->nom }} </td>
                                     <td> {{ $formateur->type }} </td>
@@ -62,7 +62,7 @@
                         @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
-                    {{ $formateurs->links() }}
+                    @include('partials.pagination')
 
                 </div>
                 <!-- end content-->

@@ -97,7 +97,9 @@
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="header">
-                                    <h4 class="title"><i class="fa fa-info-circle"></i> La note globale: {{ $note }} </h4>
+                                    <h4 class="title"><i class="fa fa-info-circle"></i> La note globale: 
+                                        {{ $note }}
+                                </h4>
                                 </div>
                                 <div class="content card-padding">
                                     <fieldset class="rating-note" data-value="{{$note_floor}}">

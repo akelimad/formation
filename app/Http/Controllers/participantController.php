@@ -13,11 +13,22 @@ use App\Http\Requests;
 class ParticipantController extends Controller
 {
 
-    public function index(){
+    public function index(Request $request){
+        $per_page = $selected = 10;
+        if( isset($request->per_page) && $request->per_page != "all" ){
+            $per_page = $request->per_page;
+            $selected = $per_page;
+        }else if(isset($request->per_page) && $request->per_page == "all"){
+            $per_page = 500;
+            $selected = "all";
+        }
         $participants = User::whereHas('roles', function ($query) {
             $query->where('name', '=', 'collaborateur');
-        })->paginate(10);
-        return view('participants.index', ['participants'=>$participants]);
+        })->paginate($per_page);
+        return view('participants.index', [
+            'results'   =>$participants,
+            'selected'  =>$selected,
+        ]);
     }
 
     public function create(){

@@ -30,7 +30,7 @@
                                 </div>
                                 <div class="content card-block">
                                     <h5 class="card-title"> <a href="{{url('espace-collaborateurs/formation/'.$s->session_id)}}">{{ str_limit($s->titre, $limit = 20, $end = '...') }}</a> </h5>
-                                    <p class="card-text">  {{ !empty($s->coursDesc) ? str_limit($s->coursDesc, $limit = 50, $end = '...') : "Aucune description pour ce cours n'a été trouvé." }}</p>
+                                    <p class="card-text" style="height: 43px;">  {{ !empty($s->coursDesc) ? str_limit($s->coursDesc, $limit = 50, $end = '...') : "Aucune description pour ce cours n'a été trouvée." }}</p>
 
                                 </div>
                                 <div class="action">

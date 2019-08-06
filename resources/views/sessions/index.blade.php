@@ -6,7 +6,7 @@
         <div class="col-md-12">
             <div class="card filterCard">
                 <div class="content">
-                    <h5>Filters <button class="btn btn-primary pull-right btnFilter"> <i class="fa fa-plus"></i> </button></h5>
+                    <h5><i class="fa fa-filter"></i> Filtrer <button class="btn btn-primary pull-right btnFilter"> <i class="fa fa-plus"></i> </button></h5>
                     <div class="filterContent">
                         <form action="{{url('sessions/filter/search')}}" method="get" novalidate="novalidate">
                             <div class="filter">
@@ -53,7 +53,7 @@
                 <div class="content">
                     <div class="row">
                         <div class="col-md-6">
-                            <h4 class="title">La liste des sessions <span class="badge">{{$sessions->total()}}</span> </h4>
+                            <h4 class="title">La liste des sessions <span class="badge">{{$results->total()}}</span> </h4>
                         </div>
                         <div class="col-md-6">
                             <a href="javascript:void(0)"  onclick="return chmSession.create()" class="btn btn-primary pull-right " > <i class="fa fa-plus"></i> Session </a>
@@ -65,7 +65,7 @@
                     <div class="toolbar">
                         
                     </div>
-                    @if(count($sessions)>0)
+                    @if(count($results)>0)
                     <div class="material-datatables">
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -78,15 +78,15 @@
                                     <th style="width: 9%">Date début</th>
                                     <th style="width: 9%">Date fin</th>
                                     <th style="width: 9%">Statut</th>
-                                    <th style="width: 20%" class="disabled-sorting text-right">Actions</th>
+                                    <th style="width: 20%" class="disabled-sorting text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($sessions as $session)
+                                @foreach ($results as $session)
                                 <tr>
-                                    <td> {{ $session->nom }} </td>
+                                    <td title="{{$session->nom}}"> {{ str_limit($session->nom, 17) }} </td>
                                     <td> {{ $session->cour->titre }} </td>
-                                    <td> {{ $session->formateur->nom }} </td>
+                                    <td title="{{$session->formateur->nom}}"> {{ str_limit($session->formateur->nom, 10) }} </td>
                                     <td> {{ $session->salle->numero }} </td>
                                     <td> {{ $session->lieu }} </td>
                                     <td> {{ Carbon\Carbon::parse($session->start)->format('d/m/Y')}} </td>
@@ -123,7 +123,7 @@
                         @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
-                    {{ $sessions->links() }}
+                    @include('partials.pagination')
 
                 </div>
                 <!-- end content-->

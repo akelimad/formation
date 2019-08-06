@@ -1,4 +1,5 @@
-<div class="content">
+
+    <div class="content">
         @if(count($questions)>0)
             @foreach($questions as $key => $question)
                 <div class="form-group">
@@ -33,4 +34,4 @@
                 <h4> Cette evaluation n'a pas encore de questionnaire !  <a href="{{ url('evaluations') }}" class="btn btn-primary"> <i class="fa fa-long-arrow-left"></i> Retour</a></h4>
             </div>
         @endif
-</div>
+    </div>

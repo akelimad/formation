@@ -11,9 +11,20 @@ use Illuminate\Http\UploadedFile;
 class FormateurController extends Controller
 {
 
-    public function index(){
-        $Formateurs = Formateur::orderBy('id','desc')->paginate(10);
-        return view('formateurs.index', ['formateurs'=>$Formateurs]);
+    public function index(Request $request){
+        $per_page = $selected = 10;
+        if( isset($request->per_page) && $request->per_page != "all" ){
+            $per_page = $request->per_page;
+            $selected = $per_page;
+        }else if(isset($request->per_page) && $request->per_page == "all"){
+            $per_page = 500;
+            $selected = "all";
+        }
+        $Formateurs = Formateur::orderBy('id','desc')->paginate($per_page);
+        return view('formateurs.index', [
+            'results'=>$Formateurs,
+            'selected'  =>$selected,
+        ]);
     }
 
     public function create(){

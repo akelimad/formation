@@ -1,7 +1,7 @@
 <input type="hidden" name="id" value="{{ (isset($f->id)) ? $f->id : null }}">
 {{ csrf_field() }}
 <div class="content">
-    <div class="row">
+
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Nom complet
@@ -28,8 +28,7 @@
                 </select>
             </div>
         </div>
-    </div>
-    <div class="row">
+        <div class="clearfix"></div>
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Email <star>*</star></label>
@@ -42,8 +41,7 @@
                 <input class="form-control" name="tel" type="tel" placeholder="0600000000" value="{{$f->tel}}" required="required" />
             </div>
         </div>
-    </div>
-    <div class="row">
+
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Qualification <star>*</star></label>
@@ -56,16 +54,14 @@
                 <input class="form-control" name="expertise" type="text" placeholder="Expertise" value="{{$f->expertise}}" required="required" />
             </div>
         </div>
-    </div>
-    <div class="row">
+
         <div class="col-md-12">
             <div class="form-group label-floating">
                 <label class="control-label">Autres</label>
                 <textarea name="autres" id="" class="form-control" rows="3">{{$f->autres}}</textarea>
             </div>
         </div>
-    </div>
-    <div class="row">
+
         <div class="col-md-6">
             <div class="form-group label-floating">
                 <label class="control-label">Importer le C.V en pièce jointe</label>
@@ -80,8 +76,7 @@
                 </div>
             </div>
         @endif   
-    </div>
-    <div class="row">
+
         <div class="col-md-2 ">
             <label class="control-label rating">Rating</label>
         </div>
@@ -99,7 +94,6 @@
                 <label class="star star-1-q" for="star-1-q" title=" Qualité 1/5"></label>
             </div>
         </div>
-    </div>
     <div class="category form-category"><star>*</star> Champ obligatoire</div>
 </div>
 

@@ -15,7 +15,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css')}}" rel="stylesheet" >
     
     <!--  Paper Dashboard CSS    -->
-    <link href="{{ asset('assets/css/amaze.css')}}" rel="stylesheet" >
+    <link href="{{ asset('assets/css/app.css')}}" rel="stylesheet" >
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
     <link href="{{ asset('assets/css/demo.css')}}" rel="stylesheet" >
@@ -88,41 +88,35 @@
 
                     @permission('prestataires')
                     <li class="{{ Request::is('prestataires*') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#prestataires" class="collapsed" aria-expanded="false">
+                        <a data-toggle="collapse" href="#prestataires" class="{{ Request::is('prestataires*') ? '' : 'collapsed' }}" aria-expanded="{{ Request::is('prestataires*') ? 'true' : 'false' }}">
                             <i class="fa fa-handshake-o"></i>
                             <p>Prestataires
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="collapse" id="prestataires" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <div class="collapse {{ Request::is('prestataires*') ? 'in' : '' }}" id="prestataires" role="navigation" aria-expanded="{{ Request::is('prestataires*') ? 'true' : 'false' }}" >
                             <ul class="nav">
-                                <li>
-                                    <a href="{{ url('prestataires') }}"><i class="fa fa-list"></i> Prestataires</a>
+                                <li class="{{ Request::is('prestataires') ? 'active' : '' }}">
+                                    <a href="{{ url('prestataires') }}"><i class="fa fa-list"></i> Liste</a>
                                 </li>
-                                <!-- <li>
-                                    <a href="{{ url('prestataires/create') }}"> <i class="fa fa-plus"></i> </a>
-                                </li> -->
                             </ul>
                         </div>
                     </li>
                     @endpermission
                     @permission('cours')
                     <li class="{{ Request::is('cours*') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#formations" class="collapsed" aria-expanded="false">
+                        <a data-toggle="collapse" href="#cours" class="{{ Request::is('prestataires*') ? '' : 'collapsed' }}" aria-expanded="{{ Request::is('prestataires*') ? 'true' : 'false' }}">
                             <i class="fa fa-book"></i>
                             <p>Cours
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="collapse" id="formations" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <div class="collapse {{ Request::is('cours*') ? 'in' : '' }}" id="cours" role="navigation" aria-expanded="{{ Request::is('prestataires*') ? 'true' : 'false' }}" >
                             <ul class="nav">
-                                <li>
-                                    <a href="{{ url('cours') }}"><i class="fa fa-list"></i> Cours</a>
+                                <li class="{{ Request::is('cours/list') ? 'active' : '' }}">
+                                    <a href="{{ url('cours/list') }}"><i class="fa fa-list"></i>Liste</a>
                                 </li>
-                                <!-- <li>
-                                    <a href="{{ url('cours/create') }}"> <i class="fa fa-plus"></i> </a>
-                                </li> -->
-                                <li>
+                                <li class="{{ Request::is('cours/u/gestion') ? 'active' : '' }}">
                                     <a href="{{ url('cours/u/gestion') }}"><i class="fa fa-gear"></i> Gestion</a>
                                 </li>
                             </ul>
@@ -131,21 +125,18 @@
                     @endpermission
                     @permission('salles')
                     <li class="{{ Request::is('salles*') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#salles" class="collapsed" aria-expanded="false">
+                        <a data-toggle="collapse" href="#salles" class="collapsed" aria-expanded="{{ Request::is('salles*') ? 'true' : 'false' }}">
                             <i class="fa fa-university"></i>
                             <p>Salles
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="collapse" id="salles" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <div class="collapse {{ Request::is('salles*') ? 'in' : '' }}" id="salles" role="navigation" aria-expanded="{{ Request::is('salles*') ? 'true' : 'false' }}" >
                             <ul class="nav">
-                                <li>
-                                    <a href="{{url('salles')}}"><i class="fa fa-list"></i> Salles</a>
+                                <li class="{{ Request::is('salles/list') ? 'active' : '' }}">
+                                    <a href="{{url('salles/list')}}"><i class="fa fa-list"></i>Liste</a>
                                 </li>
-                                <!-- <li>
-                                    <a href="{{url('salles/create')}}"> <i class="fa fa-plus"></i> </a>
-                                </li> -->
-                                <li>
+                                <li class="{{ Request::is('salles/s/gestion') ? 'active' : '' }}">
                                     <a href="{{url('salles/s/gestion')}}"><i class="fa fa-gear"></i> Occupations</a>
                                 </li>
                             </ul>
@@ -154,28 +145,28 @@
                     @endpermission
                     @permission('sessions')
                     <li class="{{ Request::is('sessions*') ? 'active' : '' }}">
-                        <a data-toggle="collapse" href="#cours" class="collapsed" aria-expanded="false">
+                        <a data-toggle="collapse" href="#sessions" class="collapsed" aria-expanded="{{ Request::is('sessions*') ? 'true' : 'false' }}">
                             <i class="fa fa-graduation-cap"></i>
                             <p>Sessions
                                 <b class="caret"></b>
                             </p>
                         </a>
-                        <div class="collapse" id="cours" role="navigation" aria-expanded="false" style="height: 0px;">
+                        <div class="collapse {{ Request::is('sessions*') ? 'in' : '' }}" id="sessions" role="navigation" aria-expanded="{{ Request::is('sessions*') ? 'true' : 'false' }}" >
                             <ul class="nav">
-                                <li>
-                                    <a href="{{ url('sessions') }}"><i class="fa fa-list"></i> Sessions</a>
+                                <li class="{{ Request::is('sessions/list') ? 'active' : '' }}">
+                                    <a href="{{ url('sessions/list') }}"><i class="fa fa-list"></i>Liste</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('participants') }}"><i class="fa fa-list"></i> Participants</a>
+                                <li class="{{ Request::is('sessions/participants/list') ? 'active' : '' }}">
+                                    <a href="{{ url('sessions/participants/list') }}"><i class="fa fa-list"></i> Participants</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('budgets') }}"><i class="fa fa-usd"></i> Budgets</a>
+                                <li class="{{ Request::is('sessions/budgets/list') ? 'active' : '' }}">
+                                    <a href="{{ url('sessions/budgets/list') }}"><i class="fa fa-usd"></i> Budgets</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('formateurs') }}"><i class="fa fa-list"></i> Formateurs</a>
+                                <li class="{{ Request::is('sessions/formateurs/list') ? 'active' : '' }}">
+                                    <a href="{{ url('sessions/formateurs/list') }}"><i class="fa fa-list"></i> Formateurs</a>
                                 </li>
-                                <li>
-                                    <a href="{{ url('formateurs/s/gestion') }}"><i class="fa fa-gear"></i> Gestion de formateurs</a>
+                                <li class="{{ Request::is('sessions/formateurs/gestion') ? 'active' : '' }}">
+                                    <a href="{{ url('sessions/formateurs/gestion') }}"><i class="fa fa-gear"></i> Gestion de formateurs</a>
                                 </li>
                             </ul>
                         </div>
@@ -212,7 +203,7 @@
                         <div class="collapse" id="evaluation" role="navigation" aria-expanded="false" style="height: 0px;">
                             <ul class="nav">
                                 <li>
-                                    <a href="{{ url('evaluations') }}"><i class="fa fa-list" aria-hidden="true"></i> Evaluations</a>
+                                    <a href="{{ url('evaluations') }}"><i class="fa fa-list" aria-hidden="true"></i>Liste</a>
                                 </li>
                             </ul>
                         </div>
@@ -301,7 +292,7 @@
                         <script>
                             document.write(new Date().getFullYear())
                         </script>
-                        <a href="javascript:void(0)">Admin</a>
+                        <a href="javascript:void(0)">e-Formation</a>
                     </p>
                 </div>
             </footer>

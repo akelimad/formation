@@ -13,9 +13,20 @@ use Intervention\Image\Facades\Image as Image;
 class CourController extends Controller
 {
 
-    public function index(){
-        $cours = Cour::orderBy('id', 'desc')->paginate(10);
-        return view('cours.index', ['cours'=>$cours]);
+    public function index(Request $request){
+        $per_page = $selected = 10;
+        if( isset($request->per_page) && $request->per_page != "all" ){
+            $per_page = $request->per_page;
+            $selected = $per_page;
+        }else if(isset($request->per_page) && $request->per_page == "all"){
+            $per_page = 500;
+            $selected = "all";
+        }
+        $cours = Cour::orderBy('id', 'desc')->paginate($per_page);
+        return view('cours.index', [
+            'results'=>$cours,
+            'selected'  =>$selected,
+        ]);
     }
 
     public function create(){

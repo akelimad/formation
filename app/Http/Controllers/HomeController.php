@@ -50,7 +50,7 @@ class HomeController extends Controller
             ->join('sessions', 'sessions.id', '=', 'session_user.session_id')
             ->join('users', 'users.id', '=', 'session_user.user_id')
             ->select('users.*', 'sessions.nom as session', 'sessions.start as start', 'sessions.end as end')
-            ->take(10)->get();
+            ->take(7)->get();
         $now = Carbon::now()->format('Y-m-d h:i');
         $sessions = Session::where('start','>', $now)->take(10)->get();
 

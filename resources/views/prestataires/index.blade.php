@@ -6,13 +6,13 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="content">
-                    <h4 class="title">La liste des prestataires <span class="badge">{{$prestataires->total()}}</span>
+                    <h4 class="title">La liste des prestataires <span class="badge">{{$results->total()}}</span>
                         <a href="javascript:void(0)" onclick="return chmPrestataire.create()" class="btn btn-primary pull-right addBtn" data-toggle="tooltip" title="Ajouter"">  <i class="fa fa-plus"></i> </a>
                     </h4>
                     <div class="toolbar">
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
-                    @if(count($prestataires)>0)
+                    @if(count($results)>0)
                     <div class="material-datatables">
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
@@ -27,7 +27,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($prestataires as $f)
+                                @foreach ($results as $f)
                                 <tr>
                                     <td> {{ $f->nom }} </td>
                                     <td> {{ $f->type }} </td>
@@ -64,7 +64,7 @@
                         @include('partials.alerts.info', ['messages' => "Aucune donnée trouvée dans la table ... !!" ])
                     @endif
 
-                    {{$prestataires->links()}}
+                    {{$results->links()}}
 
                 </div>
                 <!-- end content-->

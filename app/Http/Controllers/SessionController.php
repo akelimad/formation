@@ -24,9 +24,20 @@ class SessionController extends Controller
         return substr(str_shuffle($chars),0,$length);
     }
 
-    public function index(){
-        $sessions = Session::orderBy('id', 'desc')->paginate(10);
-        return view('sessions.index', ['sessions'=>$sessions]);
+    public function index(Request $request){
+        $per_page = $selected = 10;
+        if( isset($request->per_page) && $request->per_page != "all" ){
+            $per_page = $request->per_page;
+            $selected = $per_page;
+        }else if(isset($request->per_page) && $request->per_page == "all"){
+            $per_page = 500;
+            $selected = "all";
+        }
+        $sessions = Session::orderBy('id', 'desc')->paginate($per_page);
+        return view('sessions.index', [
+            'results'   =>$sessions,
+            'selected'  =>$selected,
+        ]);
     }
 
     public function create(){
@@ -173,6 +184,7 @@ class SessionController extends Controller
 
                 $session_id = $session->id;
                 $participants=array();
+                $sp_ids = [];
                 $participants= $request->participants;
                 $sess_par= $session->participants;
                 foreach ($sess_par as $s_p) {
@@ -197,13 +209,14 @@ class SessionController extends Controller
                                     'session' => $session->nom, 
                                     'participant'=>$p->name, 
                                     'email'=>$p->email, 
+                                    'civilite'=>$p->civilitev, 
                                     'password'=> $password,
                                     'start'=> $session->start,
                                     'end'=> $session->end,
                                     'cours'=> $session->cour->titre,
                                     'lieu'=> $session->lieu,
                                 ]
-                                , function ($m) use($p){
+                                , function ($m) use($p, $session){
                                     $m->to($p->email, $p->name)
                                     ->subject("Confirmation d'inscription à la session: ".$session->cour->titre);
                             });  

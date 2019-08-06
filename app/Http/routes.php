@@ -39,7 +39,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:utilisateurs
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], function() {
-    Route::get('cours', 'CourController@index');
+    Route::get('cours/list', 'CourController@index');
     Route::get('cours/create', 'CourController@create');
     Route::get('cours/{id}', 'CourController@show');
     Route::post('cours/store', 'CourController@store');
@@ -52,7 +52,7 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:cours']], fu
 
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']], function() {
-    Route::get('sessions', 'SessionController@index');
+    Route::get('sessions/list', 'SessionController@index');
     Route::get('sessions/create', 'SessionController@create');
     Route::get('sessions/{id}', 'SessionController@show');
     Route::post('sessions/store', 'SessionController@store');
@@ -60,14 +60,14 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:sessions']],
     Route::delete('sessions/{id}/delete', ['middleware' => ['auth', 'permission:delete-sessions'], 'uses' =>'SessionController@destroy']);
     Route::get('sessions/filter/search', 'SessionController@filterSessions');
 
-    Route::get('participants', 'ParticipantController@index');
+    Route::get('sessions/participants/list', 'ParticipantController@index');
     Route::get('participants/create', 'ParticipantController@create');
     Route::get('participants/create', 'ParticipantController@create');
     Route::post('participants/store', 'ParticipantController@store');
     Route::get('participants/{id}/edit', 'ParticipantController@edit');
     Route::delete('participants/{id}/delete', ['middleware' => ['auth', 'permission:delete-participants'], 'uses' =>'ParticipantController@destroy']);
 
-    Route::get('budgets', 'BudgetController@index');
+    Route::get('sessions/budgets/list', 'BudgetController@index');
     Route::get('budgetsSession/{sid}/create', 'BudgetController@create');
     Route::post('budgets/store', 'BudgetController@store');
     Route::get('budgetsSession/{id}', 'BudgetController@show');
@@ -92,17 +92,17 @@ Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:prestataires
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:formateurs']], function() {
-    Route::get('formateurs', 'FormateurController@index');
+    Route::get('sessions/formateurs/list', 'FormateurController@index');
     Route::get('formateurs/create', 'FormateurController@create');
     Route::post('formateurs/store', 'FormateurController@store');
     Route::get('formateurs/{id}', 'FormateurController@show');
     Route::get('formateurs/{id}/edit', 'FormateurController@edit');
     Route::delete('formateurs/{id}/delete', ['middleware' => ['auth', 'permission:delete-formateurs'], 'uses' =>'FormateurController@destroy']);
-    Route::get('formateurs/s/gestion', 'FormateurController@gestion');
+    Route::get('sessions/formateurs/gestion', 'FormateurController@gestion');
 });
 
 Route::group(['prefix' => '/', 'middleware' => ['auth', 'permission:salles']], function() {
-    Route::get('salles', 'SalleController@index');
+    Route::get('salles/list', 'SalleController@index');
     Route::get('salles/create', 'SalleController@create');
     Route::post('salles/store', 'SalleController@store');
     Route::get('salles/{id}', 'SalleController@show');
