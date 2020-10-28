@@ -30,6 +30,7 @@
 
     <link href="{{ asset('assets/css/alerts.css')}}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css')}}" rel="stylesheet">
+    <link href="{{ asset('assets/css/margin-padding.css')}}" rel="stylesheet">
 
     <link href="{{ App\Asset::path('app.css') }}" rel="stylesheet">
 </head>

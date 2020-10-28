@@ -12,7 +12,7 @@
                                 <div class="col-md-6">
                                     <h4 class="title">Selectionnez un formateur pour voir ses sessions</h4>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-sm-20">
                                     <select class="form-control" name="formateur" required="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($formateurs as $f)

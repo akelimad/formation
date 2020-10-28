@@ -11,7 +11,7 @@
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
                     @if(count($users)>0)
-                    <div class="material-datatables">
+                    <div class="material-datatables table-responsive">
                         <table class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>

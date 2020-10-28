@@ -12,7 +12,7 @@
                                 <div class="col-md-6">
                                     <h5 class="title">Selectionnez une salle pour voir ses occupations prochaines</h5>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-20">
                                     <select class="form-control" name="salle" required="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($salles as $s)

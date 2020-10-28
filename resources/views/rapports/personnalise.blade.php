@@ -17,7 +17,7 @@
                                             <div class="col-md-6">
                                                 <h5 class="title">Choisissez une session pour voir ses budgets</h5>
                                             </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-3 mb-sm-20">
                                                 <select class="form-control" name="session" required="">
                                                     <option disabled selected value="">-- select --</option>
                                                     @foreach ($sessions as $s)

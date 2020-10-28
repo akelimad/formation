@@ -44,7 +44,7 @@
                         <!-- Here you can write extra buttons/actions for the toolbar   -->
                     </div>
                     @if(count($evaluations)>0)
-                    <div class="material-datatables">
+                    <div class="material-datatables table-responsive">
                         <table id="datatables" class="table table-striped table-no-bordered table-hover" style="width:100%;cellspacing:0">
                             <thead>
                                 <tr>

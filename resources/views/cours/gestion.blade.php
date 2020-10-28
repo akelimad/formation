@@ -12,7 +12,7 @@
                                 <div class="col-md-6">
                                     <h4 class="title">Selectionnez un utilisateur pour voir ses cours</h4>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-4 mb-sm-20">
                                     <select class="form-control" name="user" required="">
                                         <option disabled selected value="">-- select --</option>
                                         @foreach ($users as $u)
